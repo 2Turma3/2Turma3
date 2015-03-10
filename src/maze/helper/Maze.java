@@ -1,3 +1,5 @@
+package maze.helper;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -52,7 +54,7 @@ public class Maze {
 	
 	private Cell[][] cells;
 	
-	Maze(int rows, int cols){
+	public Maze(int rows, int cols){
 		this.setRows(rows);
 		this.setCols(cols);
 		

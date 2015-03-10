@@ -1,4 +1,10 @@
+package maze.logic;
+
+import maze.helper.Maze;
+
+import java.util.ArrayList;
 import java.util.Random;
+
 
 
 public class MazeMap {
@@ -31,13 +37,29 @@ public class MazeMap {
 		this.setCols(cols);
 		
 		convertMaze(new Maze((rows-1)/2,(cols-1)/2));
+	}
+	
+	public ArrayList<Position> getWalkablePositions(){
+		ArrayList<Position> walkablePos = new ArrayList<Position>();
 		
-		
-		
+		for (int row = 0; row < map.length; row++)
+			for(int col = 0; col < map[row].length; col++){
+				if(map[row][col].isWalkable())
+					walkablePos.add(new Position(row,col));
+			}
+		return walkablePos;
 	}
 	
 	public boolean isWalkable(int row, int col){
 		return map[row][col].isWalkable();
+	}
+	
+	public boolean isWalkable(Position position){
+		return isWalkable(position.getRow(), position.getCol());
+	}
+	
+	public void setWalkable(Position position, boolean walkable){
+		map[position.getRow()][position.getCol()].setWalkable(walkable);;
 	}
 	
 	private void convertMaze(Maze thinMaze)
@@ -107,37 +129,29 @@ public class MazeMap {
 		case 0:
 			do{
 				setExit(new Position(0,rnd.nextInt(cols-2) + 1 ));
-				if(map[getExit().getRow()+1][getExit().getCol()].isWalkable()){
-					map[getExit().getRow()][getExit().getCol()].setWalkable(true);
+				if(map[getExit().getRow()+1][getExit().getCol()].isWalkable())
 					break;
-				}
 			} while(true);
 			break;
 		case 1:
 			do{
 				setExit(new Position(rows-1, rnd.nextInt(cols-2) + 1));
-				if(map[getExit().getRow()-1][getExit().getCol()].isWalkable()){
-					map[getExit().getRow()][getExit().getCol()].setWalkable(true);
+				if(map[getExit().getRow()-1][getExit().getCol()].isWalkable())
 					break;
-				}
 			} while(true);
 			break;
 		case 2:
 			do{
 				setExit(new Position(rnd.nextInt(rows-2) + 1, 0));
-				if(map[getExit().getRow()][getExit().getCol()+1].isWalkable()){
-					map[getExit().getRow()][getExit().getCol()].setWalkable(true);
+				if(map[getExit().getRow()][getExit().getCol()+1].isWalkable())
 					break;
-				}
 			} while(true);
 			break;
 		case 3:
 			do{
 				setExit(new Position(rnd.nextInt(rows-2) + 1, cols-1));
-				if(map[getExit().getRow()][getExit().getCol()-1].isWalkable()){
-					map[getExit().getRow()][getExit().getCol()].setWalkable(true);
+				if(map[getExit().getRow()][getExit().getCol()-1].isWalkable())
 					break;
-				}
 			} while(true);
 			break;
 		}
