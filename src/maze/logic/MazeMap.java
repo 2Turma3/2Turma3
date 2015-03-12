@@ -3,6 +3,7 @@ package maze.logic;
 import maze.helper.Maze;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 
 
@@ -11,17 +12,33 @@ public class MazeMap {
 	
 	public class Cell{
 		private boolean walkable;
+		private LinkedList<Entity> entities;
 		
 		Cell(boolean walkable){
 			this.setWalkable(walkable);
 		}
 
+		public boolean isEmpty(){
+			return entities.isEmpty();
+		}
+		
 		public boolean isWalkable() {
 			return walkable;
 		}
 
 		public void setWalkable(boolean walkable) {
 			this.walkable = walkable;
+		}
+
+		public LinkedList<Entity> getEntities() {
+			return entities;
+		}
+
+		public void addEntity(Entity entity){
+			entities.add(entity);
+		}
+		public void removeEntity(Entity entity){
+			entities.remove(entity);
 		}
 	}
 	
@@ -61,6 +78,19 @@ public class MazeMap {
 	public void setWalkable(Position position, boolean walkable){
 		map[position.getRow()][position.getCol()].setWalkable(walkable);;
 	}
+	
+	public void addEntity(Entity entity){
+		map[entity.getPos().getRow()][entity.getPos().getCol()].addEntity(entity);
+	}
+	
+	public void removeEntity(Entity entity){
+		map[entity.getPos().getRow()][entity.getPos().getCol()].removeEntity(entity);
+	}
+	
+	public boolean isEmptyCell(Position position){
+		return map[position.getRow()][position.getCol()].isEmpty();
+	}
+		
 	
 	private void convertMaze(Maze thinMaze)
 	{

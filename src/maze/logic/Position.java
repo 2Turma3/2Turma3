@@ -38,4 +38,9 @@ public class Position {
 	public Position clone(){
 		return new Position(this.getRow(), this.getCol());
 	}
+	
+	public static boolean isAdjacent(Position pos1, Position pos2){
+		return pos1.getCol() == pos2.getCol() && Math.abs(pos1.getRow() - pos2.getRow()) == 1 ||
+				pos1.getRow() == pos2.getRow() && Math.abs(pos1.getCol() - pos2.getCol()) == 1;
+	}
 }

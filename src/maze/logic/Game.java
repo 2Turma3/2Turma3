@@ -1,20 +1,22 @@
 package maze.logic;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Random;
 
 import maze.logic.Weapon.Type;
 
 public class Game {
 	Hero hero;
-	ArrayList<Dragon> dragons;
-	ArrayList<Weapon> weapons;
+	LinkedList<Dragon> dragons;
+	LinkedList<Weapon> weapons;
 	
 	MazeMap map;
 	
 	
-	private enum Direction{UP, DOWN, LEFT, RIGHT}
-	private enum Action{MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, ATTACK_UP, ATTACK_DOWN, ATTACK_LEFT, ATTACK_RIGHT}
+	public enum Direction{UP, DOWN, LEFT, RIGHT}
+	public enum Action{MOVE, ATTACK}
 	
 	Game(int rows, int cols, int numDragons){
 		map = new MazeMap(rows, cols);
@@ -67,8 +69,9 @@ public class Game {
             	if(newPos.equals(dragon.getPos()))
             		return false;
             
-            
+            map.removeEntity(entity);
             entity.setPos(newPos);
+            map.addEntity(entity);
             return true;
     }
    
@@ -115,29 +118,33 @@ public class Game {
     }
     
     public void resolutionPhase(){
-    	for(Weapon weapon : weapons)
+    	for(Iterator<Weapon> it = weapons.descendingIterator(); it.hasNext(); ){
+    		Weapon weapon = it.next();
     		if(weapon.getPos().equals(hero.getPos())){
     			hero.addWeapon(weapon);
-    			weapons.remove(weapon);
+    			it.remove();
     			break;
     		}
+    	}
     	
-    	//TODO Acabar
-    	/*
-    	for(Dragon dragon : dragons){
-    		if( dragon.getPos().getRow() == hero.getPos().getRow() && Math.abs(dragon.getPos().getCol() - hero.getPos().getCol()) == 1 ||
-    			dragon.getPos().getCol() == hero.getPos().getCol() && Math.abs(dragon.getPos().getRow() - hero.getPos().getRow()) == 1){
-    			for(Weapon weapon : hero.getWeapons()){
-    				if(weapon.getType() == Type.SWORD)
-    					dragons.remove(dragon);
-    			}
+    	for(Iterator<Dragon> it = dragons.descendingIterator(); it.hasNext(); ){
+    		Dragon dragon = it.next();
+    		if(Position.isAdjacent(dragon.getPos(), hero.getPos())){
+    			for(Weapon weapon : weapons)
+    				if(weapon.getType() == Weapon.Type.SWORD){
+    			    	map.removeEntity(dragon);
+    			    	it.remove();
+    			    	break;
+    				}
+
     		}
-    	}*/
+    	}
     	
     	if (dragons.isEmpty())
     		map.setWalkable(map.getExit(), true);
     }
 
+    // TODO Acabar throw_dart, usar iteradores para remover dragões
     private void throwDart(Direction direction)
     {
     	for (Weapon weapon : hero.getWeapons()){
@@ -210,36 +217,18 @@ public class Game {
     	}
     }
 	
-	public void turn(Action action){
-		
-		switch(action){
-			case MOVE_UP:
-				moveEntity(hero, Direction.UP);
-				break;
-			case MOVE_DOWN:
-				moveEntity(hero, Direction.DOWN);
-				break;
-			case MOVE_LEFT:
-				moveEntity(hero, Direction.LEFT);
-				break;
-			case MOVE_RIGHT:
-				moveEntity(hero, Direction.RIGHT);
-				break;
-			case ATTACK_UP:
-				throwDart(Direction.UP);
-				break;
-			case ATTACK_DOWN:
-				throwDart(Direction.DOWN);
-				break;
-			case ATTACK_LEFT:
-				throwDart(Direction.LEFT);
-				break;
-			case ATTACK_RIGHT:
-				throwDart(Direction.RIGHT);
-				break;
-		}
-		
-		
+    public void turn(Action action, Direction direction){
+
+    	switch(action){
+    	case MOVE:
+    		moveEntity(hero,direction);
+    		break;
+    	case ATTACK:
+    		throwDart(direction);
+    		break;
+    	}
+
+
 		
 		for(Dragon dragon : dragons)
 			moveDragon(dragon);
