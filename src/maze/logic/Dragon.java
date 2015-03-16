@@ -13,6 +13,7 @@ public class Dragon extends Entity {
 	public Dragon(Position pos, boolean active, boolean canMove, boolean canSleep) {
 		super(pos, active);
 		setSleeping(false);
+		availableActions = new ArrayList<Action>();
 		
 		if(canMove){
 			getAvailableActions().add(Action.MOVE_UP);

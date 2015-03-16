@@ -16,6 +16,7 @@ public class MazeMap {
 		
 		Cell(boolean walkable){
 			this.setWalkable(walkable);
+			entities = new LinkedList<Entity>();
 		}
 
 		public boolean isEmpty(){

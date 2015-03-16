@@ -12,13 +12,13 @@ public class Game {
 	LinkedList<Dragon> dragons;
 	LinkedList<Weapon> weapons;
 	
-	MazeMap map;
+	public MazeMap map;
 	
 	
 	public enum Direction{UP, DOWN, LEFT, RIGHT}
 	public enum Action{MOVE, ATTACK}
 	
-	Game(int rows, int cols, int numDragons){
+	public Game(int rows, int cols, int numDragons){
 		map = new MazeMap(rows, cols);
 		
 		
@@ -28,6 +28,7 @@ public class Game {
 		while(numDragons > 0){
 			newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
 			Dragon newDragon = new Dragon(newPos,true, true, true); // TODO Modificar para aceitar as opções de modo dos dragões
+			map.addEntity(newDragon);
 			walkablePos.remove(newPos);
 			numDragons--;
 		}
@@ -36,6 +37,7 @@ public class Game {
 		
 		newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
 		hero = new Hero(newPos,true);
+		map.addEntity(hero);
 		walkablePos.remove(newPos);
 	}
 	

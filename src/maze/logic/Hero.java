@@ -1,17 +1,18 @@
 package maze.logic;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Hero extends Entity {
-	private ArrayList<Weapon> weapons;
+	private LinkedList<Weapon> weapons;
 	
 	public enum Action{MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT}
 	
 	
 	public Hero(Position pos, boolean active) {
 		super(pos, active);
+		weapons = new LinkedList<Weapon>();
 	}
-	public ArrayList<Weapon> getWeapons() {
+	public LinkedList<Weapon> getWeapons() {
 		return weapons;
 	}
 	

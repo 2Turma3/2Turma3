@@ -16,8 +16,8 @@ import maze.logic.*;
 public class CommandLine implements UserInterface{
 	private Scanner scanner;
 	private Map<String, Command> inputMapping;
-	private enum cellData {EMPTY, WALL, HERO, HERO_SWORD, DRAGON, DRAGON_SLEEP, SWORD, DART, SHIELD, DRAGON_ON_WEAPON, DRAGON_SLEEP_WEAPON, EXIT}
-	private Map<cellData, Character> cellMapping;
+	private enum CellData {EMPTY, WALL, HERO, HERO_SWORD, DRAGON, DRAGON_SLEEP, SWORD, DART, SHIELD, DRAGON_ON_WEAPON, DRAGON_SLEEP_WEAPON, EXIT}
+	private Map<CellData, Character> cellMapping;
 	
 	private class Command {
 		private Action action;
@@ -44,23 +44,24 @@ public class CommandLine implements UserInterface{
 	public CommandLine() {
 		scanner = new Scanner(System.in);
 		inputMapping = new HashMap<String, Command>();
+		cellMapping = new HashMap<CellData, Character>();
 		initInputMapping();
 		initCellMapping();
 	}
 	
 	private void initCellMapping(){
-		cellMapping.put(cellData.EMPTY, ' ');
-		cellMapping.put(cellData.WALL, 'X');
-		cellMapping.put(cellData.HERO, 'H');
-		cellMapping.put(cellData.HERO_SWORD, 'A');
-		cellMapping.put(cellData.DRAGON, 'D');
-		cellMapping.put(cellData.DRAGON_SLEEP, 'd');
-		cellMapping.put(cellData.DRAGON_ON_WEAPON, 'F');
-		cellMapping.put(cellData.DRAGON_SLEEP_WEAPON, 'f');
-		cellMapping.put(cellData.SWORD, 'E');
-		cellMapping.put(cellData.SHIELD, 'O');
-		cellMapping.put(cellData.DART, 'I');
-		cellMapping.put(cellData.EXIT, 'S');
+		cellMapping.put(CellData.EMPTY, ' ');
+		cellMapping.put(CellData.WALL, 'X');
+		cellMapping.put(CellData.HERO, 'H');
+		cellMapping.put(CellData.HERO_SWORD, 'A');
+		cellMapping.put(CellData.DRAGON, 'D');
+		cellMapping.put(CellData.DRAGON_SLEEP, 'd');
+		cellMapping.put(CellData.DRAGON_ON_WEAPON, 'F');
+		cellMapping.put(CellData.DRAGON_SLEEP_WEAPON, 'f');
+		cellMapping.put(CellData.SWORD, 'E');
+		cellMapping.put(CellData.SHIELD, 'O');
+		cellMapping.put(CellData.DART, 'I');
+		cellMapping.put(CellData.EXIT, 'S');
 	}
 	
 	private void initInputMapping()
@@ -100,10 +101,11 @@ public class CommandLine implements UserInterface{
 		for(int i = 0; i < map.getRows(); i++)
 			for (int j = 0; j < map.getCols(); j++)
 			{
+				System.out.println();
 				if (map.isEmptyCell(new Position(i, j)))
 				{
-					printableMap[i][j] = map.isWalkable(i, j) ? cellMapping.get(cellData.EMPTY) : cellMapping.get(cellData.WALL);
-					break;
+					printableMap[i][j] = map.isWalkable(i, j) ? cellMapping.get(CellData.EMPTY) : cellMapping.get(CellData.WALL);
+					continue;
 				}
 				hasDragon = false;
 				hasSword = false;
@@ -148,36 +150,26 @@ public class CommandLine implements UserInterface{
 					}	
 				}
 				
-				
-				if(hasSword || hasShield || hasDart){
-					if(hasSword){
-						printableMap[i][j] = cellMapping.get(cellData.SWORD);
-						break;
-					}
-					if(hasShield){
-						printableMap[i][j] = cellMapping.get(cellData.SHIELD);
-						break;
-					}
-					if(hasDart){						
-						printableMap[i][j] = cellMapping.get(cellData.DART);
-						break;
-					}
-				}
-				else if(dragonIsSleeping)
+				if (hasDragon)
+				{
 					if(hasSword || hasShield || hasDart)
-						printableMap[i][j] = cellMapping.get(cellData.DRAGON_SLEEP_WEAPON);
+						printableMap[i][j] = dragonIsSleeping ? cellMapping.get(CellData.DRAGON_SLEEP_WEAPON) : cellMapping.get(CellData.DRAGON_ON_WEAPON);
 					else
-						printableMap[i][j] = cellMapping.get(cellData.DRAGON_SLEEP);
-				else if(hasDragon)
-					printableMap[i][j] = cellMapping.get(cellData.DRAGON);					
+						printableMap[i][j] = dragonIsSleeping ? cellMapping.get(CellData.DRAGON_SLEEP) : cellMapping.get(CellData.DRAGON);
+				}
 				
-				if(heroHasSword)
-					printableMap[i][j] = cellMapping.get(cellData.HERO_SWORD);
 				else if(hasHero)
-					printableMap[i][j] = cellMapping.get(cellData.HERO);
+					printableMap[i][j] = heroHasSword ? cellMapping.get(CellData.HERO_SWORD) : cellMapping.get(CellData.HERO);
+			
+				else if (hasShield)
+					printableMap[i][j] = cellMapping.get(CellData.SHIELD);
+				else if (hasDart)					
+					printableMap[i][j] = cellMapping.get(CellData.DART);
+				else if (hasSword)
+					printableMap[i][j] = cellMapping.get(CellData.SWORD);
 			}
 
-		printableMap[map.getExit().getRow()][map.getExit().getCol()] =  cellMapping.get(cellData.EXIT);
+		printableMap[map.getExit().getRow()][map.getExit().getCol()] =  cellMapping.get(CellData.EXIT);
 		
 		
 		
