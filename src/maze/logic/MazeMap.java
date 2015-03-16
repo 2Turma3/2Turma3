@@ -87,6 +87,11 @@ public class MazeMap {
 		map[entity.getPos().getRow()][entity.getPos().getCol()].removeEntity(entity);
 	}
 	
+	public LinkedList<Entity> getEntities(Position position)
+	{
+		return map[position.getRow()][position.getCol()].getEntities();
+	}
+	
 	public boolean isEmptyCell(Position position){
 		return map[position.getRow()][position.getCol()].isEmpty();
 	}
