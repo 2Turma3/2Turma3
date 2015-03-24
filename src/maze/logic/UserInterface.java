@@ -1,10 +1,9 @@
-package maze.cli;
+package maze.logic;
 
 import java.io.IOException;
 
 import maze.logic.Game.Action;
 import maze.logic.Game.Direction;
-import maze.logic.MazeMap;
 
 public interface UserInterface {
 	public void getInput(Action action, Direction direction) throws IOException;

@@ -9,8 +9,6 @@ import java.util.Map;
 import maze.logic.Entity;
 import maze.logic.Game.Action;
 import maze.logic.Game.Direction;
-import maze.logic.MazeMap;
-import maze.logic.Position;
 import maze.logic.*;
 
 public class CommandLine implements UserInterface{
