@@ -23,4 +23,11 @@ public class Hero extends Entity {
 	public void removeWeapon(Weapon weapon){
 		weapons.remove(weapon);
 	}
+	
+	public boolean hasSword(){
+		for(Weapon weapon: weapons)
+			if(weapon.getType().equals(Weapon.Type.SWORD))
+				return true;
+		return false;
+	}
 }

@@ -17,28 +17,7 @@ public class CommandLine implements UserInterface{
 	private enum CellData {EMPTY, WALL, HERO, HERO_SWORD, DRAGON, DRAGON_SLEEP, SWORD, DART, SHIELD, DRAGON_ON_WEAPON, DRAGON_SLEEP_WEAPON, EXIT}
 	private Map<CellData, Character> cellMapping;
 	
-	private class Command {
-		private Action action;
-		private Direction direction;
-		
-		Command(Action action, Direction direction) {
-			this.setAction(action);
-			this.setDirection(direction);
-		}
-		public Action getAction() {
-			return action;
-		}
-		public void setAction(Action action) {
-			this.action = action;
-		}
-		public Direction getDirection() {
-			return direction;
-		}
-		public void setDirection(Direction direction) {
-			this.direction = direction;
-		}
-	}
-	
+
 	public CommandLine() {
 		scanner = new Scanner(System.in);
 		inputMapping = new HashMap<String, Command>();
@@ -75,14 +54,13 @@ public class CommandLine implements UserInterface{
 	}
 	
 	@Override
-	public void getInput(Action action, Direction direction) throws IOException {
+	public Command getInput() throws IOException {
 		String line = scanner.nextLine();
 		if (!inputMapping.containsKey(line))
 			throw new IOException();
 		
 		Command command = inputMapping.get(line);
-		action = command.getAction();
-		direction = command.getDirection();
+		return command;
 	}
 
 	@Override
@@ -99,7 +77,6 @@ public class CommandLine implements UserInterface{
 		for(int i = 0; i < map.getRows(); i++)
 			for (int j = 0; j < map.getCols(); j++)
 			{
-				System.out.println();
 				if (map.isEmptyCell(new Position(i, j)))
 				{
 					printableMap[i][j] = map.isWalkable(i, j) ? cellMapping.get(CellData.EMPTY) : cellMapping.get(CellData.WALL);

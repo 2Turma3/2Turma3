@@ -1,6 +1,10 @@
 import maze.cli.CommandLine;
 import maze.logic.*;
+import maze.logic.Game.Action;
+import maze.logic.Game.Direction;
+import maze.logic.UserInterface.Command;
 
+import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -26,9 +30,24 @@ public class Labirinto {
 //	}
 	
 	
-	public static void main(String[] args){
+	public static void main(String[] args) throws IOException{
 		Game game = new Game(10,10,3);
 		CommandLine cli	= new CommandLine();
-		cli.displayMaze(game.map);
+		Command command = null;
+		while(!game.isGameOver()){
+			cli.displayMaze(game.map);
+			try{
+			command = cli.getInput();
+			}catch(IOException e){
+				cli.displayMessage("Input Inválido\n");
+				continue;
+			}
+			game.turn(command.getAction(), command.getDirection());			
+		}
+		if(game.isWon())
+			cli.displayMessage("Good job!\n");
+		else{
+			cli.displayMessage("Too bad :(\n");
+		}
 	}
 }
