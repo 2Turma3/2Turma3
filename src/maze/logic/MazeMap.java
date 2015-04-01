@@ -97,6 +97,65 @@ public class MazeMap {
 		return map[position.getRow()][position.getCol()].isEmpty();
 	}
 		
+	public boolean isInLineOfSight(Position pos1, Position pos2, int distance){
+		
+		if( Math.pow((pos1.getCol() - pos2.getCol()), 2) + Math.pow(pos1.getRow() - pos2.getRow(), 2) > Math.pow(distance,2))
+			return false;
+		
+		
+		
+		if(pos1.getCol() == pos2.getCol()){
+			for(int i = 1; i <= distance; i++){
+				if(pos1.getRow() + i < rows)
+					if(this.isWalkable(pos1.getRow() + i, pos1.getCol())){
+						if(pos1.getRow() + i == pos2.getRow())
+							return true;
+					}
+					else{
+						break;
+					}
+			}
+			for(int i = 1; i <= distance; i++){
+				if(pos1.getRow() - i > 0)
+					if(this.isWalkable(pos1.getRow() - i, pos1.getCol())){
+						if(pos1.getRow() - i == pos2.getRow())
+							return true;
+					}
+					else{
+						break;
+					}
+						
+			}
+		}
+		
+		if(pos1.getRow() == pos2.getRow()){
+			for(int i = 1; i <= distance; i++){
+				if(pos1.getCol() + i < cols)
+					if(this.isWalkable(pos1.getRow(), pos1.getCol() + i)){
+						if(pos1.getCol() + i == pos2.getCol())
+							return true;
+					}
+					else{
+						break;
+					}
+						
+			}
+			
+			for(int i = 1; i <= distance; i++){
+				if(pos1.getCol() - i > 0)
+					if(this.isWalkable(pos1.getRow(), pos1.getCol() - i)){
+						if( pos1.getCol() - i == pos2.getCol())
+							return true;
+					}
+					else{
+						break;
+					}
+						
+			}
+		}
+		
+		return false;
+	}
 	
 	private void convertMaze(Maze thinMaze)
 	{

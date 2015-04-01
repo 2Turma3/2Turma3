@@ -11,6 +11,7 @@ public class Game {
 	Hero hero;
 	LinkedList<Dragon> dragons;
 	LinkedList<Weapon> weapons;
+	LinkedList<Flame> fire;
 	
 	public MazeMap map;
 	private boolean gameOver;
@@ -30,8 +31,8 @@ public class Game {
 		Random rnd = new Random();
 		Position newPos;
 		generateDragons(numDragons, walkablePos);
-				
 		generateWeapons(3, walkablePos);
+		fire = new LinkedList<Flame>();
 		
 		newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
 		hero = new Hero(newPos,true);
@@ -68,7 +69,7 @@ public class Game {
 		Position newPos;
 		while(numDragons > 0){
 			newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
-			Dragon newDragon = new Dragon(newPos,true, true, true); // TODO Modificar para aceitar as opções de modo dos dragões
+			Dragon newDragon = new Dragon(newPos,true, true, true, true); // TODO Modificar para aceitar as opções de modo dos dragões
 			dragons.push(newDragon);
 			map.addEntity(newDragon);
 			walkablePos.remove(newPos);
@@ -76,10 +77,7 @@ public class Game {
 		}
 	}
 	
-	
-	private void generateDragons(int numDragons){
-		
-	}
+
 	
 	public boolean isFinished(){
 		return this.hero.getPos().equals(map.getExit());
@@ -128,46 +126,88 @@ public class Game {
             Position newPos = dragon.getPos().clone();
             ArrayList<Dragon.Action> availableActions = dragon.getAvailableActions();
             
-            boolean validAction = true;
+            
+            if(shouldAttack(dragon)){
+            	System.out.println("Vai atacar");
+            	dragonAttack(dragon);
+            }
+            else{
+                boolean validAction = true;
+            	do {
+            		switch(availableActions.get(rnd.nextInt(availableActions.size()))){
+            		case MOVE_UP:
+            			//            		System.out.print("Dragon " + dragon.hashCode() + "moved up\n");
+            			validAction = moveEntity(dragon, Direction.UP);
+            			dragon.setSleeping(false);
+            			break;
+            		case MOVE_DOWN:
+            			//            		System.out.print("Dragon " + dragon.hashCode() + "moved down\n");
+            			validAction = moveEntity(dragon, Direction.DOWN);
+            			dragon.setSleeping(false);
+            			break;
 
-            do {
-            	switch(availableActions.get(rnd.nextInt(availableActions.size()))){
-            	case MOVE_UP:
-            		System.out.print(availableActions.size());
-//            		System.out.print("Dragon " + dragon.hashCode() + "moved up\n");
-            		validAction = moveEntity(dragon, Direction.UP);
-            		dragon.setSleeping(false);
-            		break;
-            	case MOVE_DOWN:
-//            		System.out.print("Dragon " + dragon.hashCode() + "moved down\n");
-            		validAction = moveEntity(dragon, Direction.DOWN);
-            		dragon.setSleeping(false);
-            		break;
+            		case MOVE_LEFT:
+            			//            		System.out.print("Dragon " + dragon.hashCode() + "moved left\n");
+            			validAction = moveEntity(dragon, Direction.LEFT);
+            			dragon.setSleeping(false);
+            			break;
 
-            	case MOVE_LEFT:
-//            		System.out.print("Dragon " + dragon.hashCode() + "moved left\n");
-            		validAction = moveEntity(dragon, Direction.LEFT);
-            		dragon.setSleeping(false);
-            		break;
+            		case MOVE_RIGHT:
+            			//            		System.out.print("Dragon " + dragon.hashCode() + "moved right\n");
+            			validAction = moveEntity(dragon, Direction.RIGHT);
+            			dragon.setSleeping(false);
+            			break;
 
-            	case MOVE_RIGHT:
-//            		System.out.print("Dragon " + dragon.hashCode() + "moved right\n");
-            		validAction = moveEntity(dragon, Direction.RIGHT);
-            		dragon.setSleeping(false);
-            		break;
+            		case STOP:
+            			dragon.setSleeping(false);
+            			validAction = true;
+            			break;
 
-            	case STOP:
-            		dragon.setSleeping(false);
-            		validAction = true;
-            		break;
-
-            	case SLEEP:
-            		dragon.setSleeping(true);
-            		validAction = true;
-            		break;
-            	}
-            } while (!validAction);
+            		case SLEEP:
+            			dragon.setSleeping(true);
+            			validAction = true;
+            			break;
+            		default:
+            				break;
+            		}
+            	} while (!validAction);
+            }
     }
+
+	private void dragonAttack(Dragon dragon) {
+		Position pos = dragon.getPos();
+		if(pos.getCol() == hero.getPos().getCol()){
+			if(hero.getPos().getRow() < pos.getRow())
+				for(int i = 1; i <= Dragon.ATTACK_RADIUS && pos.getRow() - i > 0 && map.isWalkable(pos.getRow() - i, pos.getCol()); i++)
+					setOnFire(new Position(pos.getRow() - i, pos.getCol()));
+			else
+				for(int i = 1; i <= Dragon.ATTACK_RADIUS && pos.getRow() + i < map.getRows() && map.isWalkable(pos.getRow() + i, pos.getCol()); i++)
+					setOnFire(new Position(pos.getRow() + i, pos.getCol()));
+		}
+		
+		if(pos.getRow() == hero.getPos().getRow()){
+			if(hero.getPos().getRow() < pos.getRow())
+				for(int i = 1; i <= Dragon.ATTACK_RADIUS && pos.getCol() - i > 0 && map.isWalkable(pos.getRow(), pos.getCol() - i); i++)
+					setOnFire(new Position(pos.getRow(), pos.getCol() - i));
+			else
+				for(int i = 1; i <= Dragon.ATTACK_RADIUS && pos.getCol() + i < map.getCols() && map.isWalkable(pos.getRow(), pos.getCol() + i); i++)
+					setOnFire(new Position(pos.getRow(), pos.getCol() + i));
+		}
+	}
+	
+	private void setOnFire(Position pos){
+		Flame flame = new Flame(pos,true);
+		fire.add(flame);
+		map.addEntity(flame);
+	}
+
+	private boolean shouldAttack(Dragon dragon) {
+		if(dragon.getAvailableActions().contains(Dragon.Action.ATTACK)){
+			if(map.isInLineOfSight(dragon.getPos(), hero.getPos(), Dragon.ATTACK_RADIUS))
+				return true;
+		}
+		return false;
+	}
     
     public void resolutionPhase(){
     	for(Iterator<Weapon> it = weapons.descendingIterator(); it.hasNext(); ){
@@ -184,7 +224,7 @@ public class Game {
     	for(Iterator<Dragon> it = dragons.descendingIterator(); it.hasNext(); ){
     		Dragon dragon = it.next();
     		if(Position.isAdjacent(dragon.getPos(), hero.getPos())){
-    			System.out.print("dragon " + dragon.hashCode() + "is adjacent to hero\n" );
+//    			System.out.print("dragon " + dragon.hashCode() + "is adjacent to hero\n" );
 //    			try {
 //					Thread.sleep(2000);
 //				} catch (InterruptedException e) {
@@ -202,6 +242,18 @@ public class Game {
     			}
     		}
     	}
+
+    	for(Flame flame : fire){
+    		if(flame.getPos().equals(hero.getPos()) && !hero.hasShield()){
+    			gameOver = true;
+    			won = false;
+    			System.out.println("Morreu queimado");
+    			return;
+    		}
+    		map.removeEntity(flame);
+    	}
+
+    	fire.clear();
     	
     	if (dragons.isEmpty())
     		map.setWalkable(map.getExit(), true);
@@ -210,13 +262,16 @@ public class Game {
     		won = true;
     	}
     	
+    	
+    	
+    	/*
     	System.out.println("Hero (" + hero.getPos());
     	for (Weapon weapon : hero.getWeapons())
     		System.out.println(weapon.getType());
     	for (Dragon dragon : dragons)
     		System.out.println("" + dragon.hashCode() + dragon.getPos());
     	for (Weapon weapon : weapons)
-    		System.out.println(weapon.getType() + " " + weapon.getPos());
+    		System.out.println(weapon.getType() + " " + weapon.getPos());*/
     	System.out.println("gameOver: " + gameOver);
     	System.out.println("won: " + won);
     }

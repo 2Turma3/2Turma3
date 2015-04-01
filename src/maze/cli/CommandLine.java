@@ -14,7 +14,7 @@ import maze.logic.*;
 public class CommandLine implements UserInterface{
 	private Scanner scanner;
 	private Map<String, Command> inputMapping;
-	private enum CellData {EMPTY, WALL, HERO, HERO_SWORD, DRAGON, DRAGON_SLEEP, SWORD, DART, SHIELD, DRAGON_ON_WEAPON, DRAGON_SLEEP_WEAPON, EXIT}
+	private enum CellData {EMPTY, WALL, HERO, HERO_SWORD, DRAGON, DRAGON_SLEEP, SWORD, DART, SHIELD, DRAGON_ON_WEAPON, DRAGON_SLEEP_WEAPON, EXIT, FLAME}
 	private Map<CellData, Character> cellMapping;
 	
 
@@ -39,6 +39,7 @@ public class CommandLine implements UserInterface{
 		cellMapping.put(CellData.SHIELD, 'O');
 		cellMapping.put(CellData.DART, 'I');
 		cellMapping.put(CellData.EXIT, 'S');
+		cellMapping.put(CellData.FLAME, 'Y');
 	}
 	
 	private void initInputMapping()
@@ -73,6 +74,7 @@ public class CommandLine implements UserInterface{
 		boolean hasHero;
 		boolean heroHasSword;
 		boolean dragonIsSleeping;
+		boolean hasFlame;
 		
 		for(int i = 0; i < map.getRows(); i++)
 			for (int j = 0; j < map.getCols(); j++)
@@ -89,6 +91,7 @@ public class CommandLine implements UserInterface{
 				hasHero = false;
 				heroHasSword = false;
 				dragonIsSleeping = false;
+				hasFlame = false;
 				
 				LinkedList<Entity> entities = map.getEntities(new Position(i, j));
 				for (Entity entity : entities)
@@ -122,9 +125,13 @@ public class CommandLine implements UserInterface{
 								hasShield = true;
 								break;
 						}
-					}	
+					}
+					else if(entity instanceof Flame)
+						hasFlame = true;
 				}
-				
+				if(hasFlame){
+					printableMap[i][j] = cellMapping.get(CellData.FLAME);
+				}
 				if (hasDragon)
 				{
 					if(hasSword || hasShield || hasDart)

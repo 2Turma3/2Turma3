@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class Dragon extends Entity {
 	private boolean sleeping;
 	
-	public static enum Action {MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, STOP, SLEEP};
+	public static enum Action {MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, STOP, SLEEP, ATTACK};
 	private ArrayList<Action> availableActions;
+	public static final int ATTACK_RADIUS = 3;
 	
 	
-	
-	public Dragon(Position pos, boolean active, boolean canMove, boolean canSleep) {
+	public Dragon(Position pos, boolean active, boolean canMove, boolean canSleep, boolean canAttack) {
 		super(pos, active);
 		setSleeping(false);
 		availableActions = new ArrayList<Action>();
@@ -23,6 +23,9 @@ public class Dragon extends Entity {
 		}
 		if(canSleep)
 			getAvailableActions().add(Action.SLEEP);
+		if(canAttack){
+			getAvailableActions().add(Action.ATTACK);
+		}
 		
 		getAvailableActions().add(Action.STOP);
 	}

@@ -44,6 +44,7 @@ public class Position {
 				pos1.getRow() == pos2.getRow() && Math.abs(pos1.getCol() - pos2.getCol()) == 1;
 	}
 	
+	
 	@Override
 	public String toString() {
 		return "(" + this.row + ", " + this.col +")";

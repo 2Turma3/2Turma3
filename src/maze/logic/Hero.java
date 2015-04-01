@@ -30,4 +30,11 @@ public class Hero extends Entity {
 				return true;
 		return false;
 	}
+	
+	public boolean hasShield(){
+		for(Weapon weapon: weapons)
+			if(weapon.getType().equals(Weapon.Type.SHIELD))
+				return true;
+		return false;
+	}
 }
