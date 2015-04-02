@@ -31,7 +31,7 @@ public class Labirinto {
 	
 	
 	public static void main(String[] args) throws IOException{
-		Game game = new Game(10,10,3);
+		Game game = new Game(10,10,3, true, true, true);
 		CommandLine cli	= new CommandLine();
 		Command command = null;
 		while(!game.isGameOver()){

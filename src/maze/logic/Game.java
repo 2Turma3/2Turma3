@@ -20,7 +20,7 @@ public class Game {
 	public enum Direction{UP, DOWN, LEFT, RIGHT}
 	public enum Action{MOVE, ATTACK}
 	
-	public Game(int rows, int cols, int numDragons){
+	public Game(int rows, int cols, int numDragons, boolean canMove, boolean canSleep, boolean canAttack){
 		map = new MazeMap(rows, cols);
 		dragons = new LinkedList<Dragon>();
 		weapons = new LinkedList<Weapon>();
@@ -30,7 +30,7 @@ public class Game {
 		ArrayList<Position> walkablePos = map.getWalkablePositions();
 		Random rnd = new Random();
 		Position newPos;
-		generateDragons(numDragons, walkablePos);
+		generateDragons(numDragons, walkablePos, canMove, canSleep, canAttack);
 		generateWeapons(3, walkablePos);
 		fire = new LinkedList<Flame>();
 		
@@ -64,12 +64,12 @@ public class Game {
 	}
 
 	private void generateDragons(int numDragons,
-			ArrayList<Position> walkablePos) {
+			ArrayList<Position> walkablePos, boolean canMove, boolean canSleep, boolean canAttack) {
 		Random rnd = new Random();
 		Position newPos;
 		while(numDragons > 0){
 			newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
-			Dragon newDragon = new Dragon(newPos,true, true, true, true); // TODO Modificar para aceitar as opções de modo dos dragões
+			Dragon newDragon = new Dragon(newPos,true, canMove, canSleep, canAttack);
 			dragons.push(newDragon);
 			map.addEntity(newDragon);
 			walkablePos.remove(newPos);
@@ -224,13 +224,6 @@ public class Game {
     	for(Iterator<Dragon> it = dragons.descendingIterator(); it.hasNext(); ){
     		Dragon dragon = it.next();
     		if(Position.isAdjacent(dragon.getPos(), hero.getPos())){
-//    			System.out.print("dragon " + dragon.hashCode() + "is adjacent to hero\n" );
-//    			try {
-//					Thread.sleep(2000);
-//				} catch (InterruptedException e) {
-//
-//				}
-    			
     			if(hero.hasSword()){
 		    	map.removeEntity(dragon);
 		    	it.remove();
@@ -261,19 +254,6 @@ public class Game {
     		gameOver = true;
     		won = true;
     	}
-    	
-    	
-    	
-    	/*
-    	System.out.println("Hero (" + hero.getPos());
-    	for (Weapon weapon : hero.getWeapons())
-    		System.out.println(weapon.getType());
-    	for (Dragon dragon : dragons)
-    		System.out.println("" + dragon.hashCode() + dragon.getPos());
-    	for (Weapon weapon : weapons)
-    		System.out.println(weapon.getType() + " " + weapon.getPos());*/
-    	System.out.println("gameOver: " + gameOver);
-    	System.out.println("won: " + won);
     }
 
     // TODO Acabar throw_dart, usar iteradores para remover dragões
