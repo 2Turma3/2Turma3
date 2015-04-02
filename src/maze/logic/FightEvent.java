@@ -20,7 +20,7 @@ public class FightEvent extends Event {
 	
 	@Override
 	public String description() {
-		return this.hero.getClass().getSimpleName() + " at " + hero.getPos() + " is fighting " +
+		return this.hero.getClass().getSimpleName() + " at " + this.hero.getPos() + " is fighting " +
 			   this.dragon.getClass().getSimpleName() + " at " + this.dragon.getPos();
 	}
 
