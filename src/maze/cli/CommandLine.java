@@ -52,6 +52,7 @@ public class CommandLine implements UserInterface{
 		inputMapping.put("at", new Command(Action.ATTACK, Direction.LEFT));
 		inputMapping.put("st", new Command(Action.ATTACK, Direction.DOWN));
 		inputMapping.put("dt", new Command(Action.ATTACK, Direction.RIGHT));
+		inputMapping.put(" ", new Command(Action.STOP, null));
 	}
 	
 	@Override

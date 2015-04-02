@@ -8,17 +8,17 @@ import java.util.Random;
 import maze.logic.Weapon.Type;
 
 public class Game {
-	Hero hero;
-	LinkedList<Dragon> dragons;
-	LinkedList<Weapon> weapons;
-	LinkedList<Flame> fire;
+	public Hero hero;
+	public LinkedList<Dragon> dragons;
+	public LinkedList<Weapon> weapons;
+	public LinkedList<Flame> fire;
 	
 	public MazeMap map;
 	private boolean gameOver;
 	private boolean won;
 	
 	public enum Direction{UP, DOWN, LEFT, RIGHT}
-	public enum Action{MOVE, ATTACK}
+	public enum Action{MOVE, ATTACK, STOP}
 	
 	public Game(int rows, int cols, int numDragons, boolean canMove, boolean canSleep, boolean canAttack){
 		this.map = new MazeMap(rows, cols);
@@ -367,6 +367,8 @@ public class Game {
     		break;
     	case ATTACK:
     		throwDart(direction);
+    		break;
+    	case STOP:
     		break;
     	}
 	}
