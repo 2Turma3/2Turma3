@@ -21,26 +21,45 @@ public class Game {
 	public enum Action{MOVE, ATTACK}
 	
 	public Game(int rows, int cols, int numDragons, boolean canMove, boolean canSleep, boolean canAttack){
-		map = new MazeMap(rows, cols);
-		dragons = new LinkedList<Dragon>();
-		weapons = new LinkedList<Weapon>();
+		this.map = new MazeMap(rows, cols);
+		this.dragons = new LinkedList<Dragon>();
+		this.weapons = new LinkedList<Weapon>();
+		this.fire = new LinkedList<Flame>();
 		gameOver = false;
 		won = false;
 		
 		ArrayList<Position> walkablePos = map.getWalkablePositions();
-		Random rnd = new Random();
-		Position newPos;
+		
 		generateDragons(numDragons, walkablePos, canMove, canSleep, canAttack);
 		generateWeapons(3, walkablePos);
-		fire = new LinkedList<Flame>();
 		
+		Random rnd = new Random();
+		Position newPos;
 		newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
 		hero = new Hero(newPos,true);
 		map.addEntity(hero);
 		walkablePos.remove(newPos);
 	}
+	
+	public Game(MazeMap map,Hero hero, LinkedList<Dragon> dragons, LinkedList<Weapon> weapons){
+		this.map = map;
+		this.dragons = dragons;
+		this.weapons = weapons;
+		this.fire = new LinkedList<Flame>();
+		gameOver = false;
+		won = false;
+		
+		for(Dragon dragon : dragons)
+			map.addEntity(dragon);
+		
+		for(Weapon weapon : weapons)
+			map.addEntity(weapon);
+		
+		this.hero = hero;
+		map.addEntity(hero);
+	}
 
-	private void generateWeapons(int maxDarts,ArrayList<Position> walkablePos){
+	public void generateWeapons(int maxDarts,ArrayList<Position> walkablePos){
 		Position newPos;
 		Random rnd = new Random();
 		newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
@@ -63,7 +82,7 @@ public class Game {
 		
 	}
 
-	private void generateDragons(int numDragons,
+	public void generateDragons(int numDragons,
 			ArrayList<Position> walkablePos, boolean canMove, boolean canSleep, boolean canAttack) {
 		Random rnd = new Random();
 		Position newPos;
@@ -83,7 +102,7 @@ public class Game {
 		return this.hero.getPos().equals(map.getExit());
 	}
 	
-	private boolean moveEntity(Entity entity, Direction direction)
+	public boolean moveEntity(Entity entity, Direction direction)
     {
             Position newPos = entity.getPos().clone();
             switch (direction)
@@ -112,16 +131,19 @@ public class Game {
             	if(newPos.equals(dragon.getPos()))
             		return false;
             
-            map.removeEntity(entity);
-            entity.setPos(newPos);
-            map.addEntity(entity);
+            setEntityPosition(entity, newPos);
+            
             return true;
     }
    
+	public void setEntityPosition(Entity entity, Position newPos){
+        map.removeEntity(entity);
+        entity.setPos(newPos);
+        map.addEntity(entity);		
+	}
 	
 	
-	
-    private void moveDragon(Dragon dragon){
+    public void moveDragon(Dragon dragon){
             Random rnd = new Random();
             Position newPos = dragon.getPos().clone();
             ArrayList<Dragon.Action> availableActions = dragon.getAvailableActions();
@@ -174,7 +196,7 @@ public class Game {
             }
     }
 
-	private void dragonAttack(Dragon dragon) {
+	public void dragonAttack(Dragon dragon) {
 		Position pos = dragon.getPos();
 		if(pos.getCol() == hero.getPos().getCol()){
 			if(hero.getPos().getRow() < pos.getRow())
@@ -195,13 +217,13 @@ public class Game {
 		}
 	}
 	
-	private void setOnFire(Position pos){
+	public void setOnFire(Position pos){
 		Flame flame = new Flame(pos,true);
 		fire.add(flame);
 		map.addEntity(flame);
 	}
 
-	private boolean shouldAttack(Dragon dragon) {
+	public boolean shouldAttack(Dragon dragon) {
 		if(dragon.getAvailableActions().contains(Dragon.Action.ATTACK)){
 			if(map.isInLineOfSight(dragon.getPos(), hero.getPos(), Dragon.ATTACK_RADIUS))
 				return true;
@@ -257,7 +279,7 @@ public class Game {
     }
 
     // TODO Acabar throw_dart, usar iteradores para remover dragões
-    private void throwDart(Direction direction)
+    public void throwDart(Direction direction)
     {
     	for (Weapon weapon : hero.getWeapons()){
     		if (weapon.getType().equals(Weapon.Type.DART)) {
@@ -332,10 +354,14 @@ public class Game {
     		}
     	}
     }
-	
-    public void turn(Action action, Direction direction){
 
-    	switch(action){
+	public void dragonsTurn() {
+		for(Dragon dragon : dragons)
+			moveDragon(dragon);
+	}
+
+	public void heroTurn(Action action, Direction direction) {
+		switch(action){
     	case MOVE:
     		moveEntity(hero,direction);
     		break;
@@ -343,13 +369,6 @@ public class Game {
     		throwDart(direction);
     		break;
     	}
-
-
-		
-		for(Dragon dragon : dragons)
-			moveDragon(dragon);
-			
-		resolutionPhase();
 	}
 
 	public boolean isGameOver() {
@@ -366,6 +385,10 @@ public class Game {
 
 	public void setWon(boolean won) {
 		this.won = won;
+	}
+	
+	public Position getHeroPos(){
+		return hero.getPos();
 	}
 
 	

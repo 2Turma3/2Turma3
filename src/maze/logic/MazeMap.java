@@ -50,7 +50,7 @@ public class MazeMap {
 	
 	Cell[][] map;
 	
-	MazeMap(int rows, int cols){
+	public MazeMap(int rows, int cols){
 		this.setRows(rows);
 		this.setCols(cols);
 		

@@ -32,7 +32,7 @@ public class Labirinto {
 	
 	public static void main(String[] args) throws IOException{
 		Game game = new Game(10,10,3, true, true, true);
-		CommandLine cli	= new CommandLine();
+		UserInterface cli	= new CommandLine();
 		Command command = null;
 		while(!game.isGameOver()){
 			cli.displayMaze(game.map);
@@ -42,12 +42,38 @@ public class Labirinto {
 				cli.displayMessage("Input Inválido\n");
 				continue;
 			}
-			game.turn(command.getAction(), command.getDirection());			
+			
+			
+			playTurn(game, cli, command);
 		}
 		if(game.isWon())
 			cli.displayMessage("Good job!\n");
 		else{
 			cli.displayMessage("Too bad :(\n");
 		}
+	}
+
+	public static void playTurn(Game game, UserInterface cli, Command command) {
+		game.heroTurn(command.getAction(), command.getDirection());	
+		cli.displayMaze(game.map);
+		
+		
+		try{
+			Thread.sleep(1000);
+		}catch(InterruptedException e){}
+		
+		game.dragonsTurn();
+		cli.displayMaze(game.map);
+		
+		try{
+			Thread.sleep(1000);
+		}catch(InterruptedException e){}
+		
+		game.resolutionPhase();
+		cli.displayMaze(game.map);
+		
+		try{
+			Thread.sleep(1000);
+		}catch(InterruptedException e){}
 	}
 }
