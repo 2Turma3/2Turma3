@@ -208,7 +208,7 @@ public class Game {
 		}
 		
 		if(pos.getRow() == hero.getPos().getRow()){
-			if(hero.getPos().getRow() < pos.getRow())
+			if(hero.getPos().getCol() < pos.getCol())
 				for(int i = 1; i <= Dragon.ATTACK_RADIUS && pos.getCol() - i > 0 && map.isWalkable(pos.getRow(), pos.getCol() - i); i++)
 					setOnFire(new Position(pos.getRow(), pos.getCol() - i));
 			else
@@ -251,17 +251,17 @@ public class Game {
 		    	it.remove();
     			}
     			else{
-    			gameOver = true;
-    			won = false;
-    			return;
+    				this.setGameOver(true);
+        			this.setWon(false);
+    				return;
     			}
     		}
     	}
 
     	for(Flame flame : fire){
     		if(flame.getPos().equals(hero.getPos()) && !hero.hasShield()){
-    			gameOver = true;
-    			won = false;
+    			this.setGameOver(true);
+    			this.setWon(false);
     			System.out.println("Morreu queimado");
     			return;
     		}
@@ -273,8 +273,8 @@ public class Game {
     	if (dragons.isEmpty())
     		map.setWalkable(map.getExit(), true);
     	if(isFinished()){
-    		gameOver = true;
-    		won = true;
+    		this.setGameOver(true);
+    		this.setWon(true);
     	}
     }
 

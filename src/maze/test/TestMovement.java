@@ -90,7 +90,7 @@ public class TestMovement extends TestCase {
 		UserInterface cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,3),true);
 		
-		Weapon sword = new Weapon(Weapon.Type.SWORD, new Position(1,2), true);
+		Weapon sword = new Weapon(Weapon.Type.SWORD, null, true);
 		hero.addWeapon(sword);
 		
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
@@ -105,6 +105,73 @@ public class TestMovement extends TestCase {
 		game.resolutionPhase();
 		
 		assertEquals(true, game.dragons.isEmpty());
+	}
+	
+	public void testDragonSleep(){
+		MazeMap map = new MazeMap(3,100);
+		map.setExit(new Position(1,0));
+		UserInterface cli = new CommandLine();
+		Hero hero = new Hero(new Position(1,98),true);
+		
+		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
+		dragons.add(new Dragon(new Position(1,1), true, false, true, false));
+		
+		Game game = new Game(map, hero,dragons,new LinkedList<Weapon>());
+		
+		boolean dragonSlept = false;
+		
+		for(int i = 0; i < 1000; i++){
+			game.heroTurn(Game.Action.MOVE, Game.Direction.LEFT);
+			game.dragonsTurn();
+			game.resolutionPhase();
+			
+			for(Dragon dragon : game.dragons){
+				if(dragon.isSleeping()){
+					dragonSlept = true;
+					break;
+				}
+			}
+			if(dragonSlept)
+				break;
+		}
+		
+		assertEquals(true, dragonSlept);
+	}
+	
+	public void testTwoDragonsInSamePosition(){
+		MazeMap map = new MazeMap(3,200);
+		map.setExit(new Position(1,0));
+		UserInterface cli = new CommandLine();
+		Hero hero = new Hero(new Position(1,198),true);
+		
+		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
+		dragons.add(new Dragon(new Position(1,45), true, true, false, false));
+		dragons.add(new Dragon(new Position(1,46), true, true, false, false));
+		dragons.add(new Dragon(new Position(1,47), true, true, false, false));
+		dragons.add(new Dragon(new Position(1,48), true, true, false, false));
+		dragons.add(new Dragon(new Position(1,49), true, true, false, false));
+		
+		Game game = new Game(map, hero,dragons,new LinkedList<Weapon>());
+		
+		boolean dragonInSamePosition = false;
+		
+		for(int i = 0; i < 1000; i++){
+			game.heroTurn(Game.Action.STOP, null);
+			game.dragonsTurn();
+			game.resolutionPhase();
+			
+			for(Dragon dragon : game.dragons){
+				LinkedList<Entity> entitiesInCell = game.map.getEntities(dragon.getPos());
+				for(Entity entity : entitiesInCell)
+					if(entity != dragon){
+						dragonInSamePosition = false;
+						break;
+					}
+			}
+			if(dragonInSamePosition)
+				break;
+		}
+		assertEquals(false, dragonInSamePosition);
 	}
 	
 	public void testThrowDartLeft(){
@@ -198,6 +265,7 @@ public class TestMovement extends TestCase {
 		
 		assertEquals(true, game.dragons.isEmpty());
 	}
+	
 	
 	public void testWinGame(){
 		MazeMap map = new MazeMap(3,5);
