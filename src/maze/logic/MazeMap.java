@@ -35,7 +35,10 @@ public class MazeMap {
 			return entities;
 		}
 
-		public void addEntity(Entity entity){
+		public void addEntity(Entity entity) throws Exception{
+			for(Entity tempEntity : entities)
+				if(tempEntity.hashCode() == entity.hashCode())
+					throw new Exception();
 			entities.add(entity);
 		}
 		public void removeEntity(Entity entity){
@@ -80,8 +83,18 @@ public class MazeMap {
 		map[position.getRow()][position.getCol()].setWalkable(walkable);;
 	}
 	
-	public void addEntity(Entity entity){
-		map[entity.getPos().getRow()][entity.getPos().getCol()].addEntity(entity);
+	public void addEntity(Entity entity) {
+		boolean loop = true;
+		do{
+			try {
+				map[entity.getPos().getRow()][entity.getPos().getCol()].addEntity(entity);
+				loop = false;
+				break;
+			} catch (Exception e) {
+				map[entity.getPos().getRow()][entity.getPos().getCol()].removeEntity(entity);
+			}
+		}
+		while(loop);
 	}
 	
 	public void removeEntity(Entity entity){

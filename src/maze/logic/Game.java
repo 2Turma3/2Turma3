@@ -29,10 +29,21 @@ public class Game {
 		won = false;
 		
 		ArrayList<Position> walkablePos = map.getWalkablePositions();
+
+		while(true){
+			try {
+				generateDragons(numDragons, walkablePos, canMove, canSleep, canAttack);
+				break;
+			} catch (Exception e) {
+				for(Dragon dragon : this.dragons)
+					map.removeEntity(dragon);
+				this.dragons.clear();
+			}
+		}
 		
-		generateDragons(numDragons, walkablePos, canMove, canSleep, canAttack);
+		
 		generateWeapons(3, walkablePos);
-		
+
 		Random rnd = new Random();
 		Position newPos;
 		newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
@@ -51,12 +62,14 @@ public class Game {
 		
 		for(Dragon dragon : dragons)
 			map.addEntity(dragon);
+
 		
 		for(Weapon weapon : weapons)
 			map.addEntity(weapon);
-		
+
 		this.hero = hero;
 		map.addEntity(hero);
+
 	}
 
 	public void generateWeapons(int maxDarts,ArrayList<Position> walkablePos){
@@ -75,25 +88,31 @@ public class Game {
 			Weapon dart = new Weapon(Weapon.Type.DART, newPos, true);
 			weapons.add(dart);
 		}
-		
-		for(Weapon weapon : weapons){
+
+		for(Weapon weapon : weapons)
 			map.addEntity(weapon);
-		}
-		
+
+
+
 	}
 
 	public void generateDragons(int numDragons,
-			ArrayList<Position> walkablePos, boolean canMove, boolean canSleep, boolean canAttack) {
+			ArrayList<Position> walkablePos, boolean canMove, boolean canSleep, boolean canAttack) throws Exception {
 		Random rnd = new Random();
 		Position newPos;
-		while(numDragons > 0){
+		int tempNumDragons = numDragons;
+		while(tempNumDragons > 0){
 			newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
 			Dragon newDragon = new Dragon(newPos,true, canMove, canSleep, canAttack);
 			dragons.push(newDragon);
 			map.addEntity(newDragon);
 			walkablePos.remove(newPos);
-			numDragons--;
+			tempNumDragons--;
 		}
+		
+		if(this.dragons.size() != numDragons)
+			throw new Exception();
+		
 	}
 	
 
@@ -137,9 +156,10 @@ public class Game {
     }
    
 	public void setEntityPosition(Entity entity, Position newPos){
-        map.removeEntity(entity);
+		map.removeEntity(entity);
         entity.setPos(newPos);
-        map.addEntity(entity);		
+		map.addEntity(entity);
+				
 	}
 	
 	
