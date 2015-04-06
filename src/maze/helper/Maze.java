@@ -89,9 +89,7 @@ public class Maze {
 		getExit().setVisited(true);
 	}
 	
-	private void generateMaze(){
-		
-		
+	private void generateMaze(){		
 		Deque<Cell> path = new ArrayDeque<Cell>();
 
 		selectExit();

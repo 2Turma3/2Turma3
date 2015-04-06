@@ -474,7 +474,18 @@ public class TestMovement extends TestCase {
 	}
 	
 	public void testGenerateRandomMap(){
-		Game game = new Game(20,20, 5, false, false, false);
+		Game game = new Game(20,30, 5, false, false, false);
+		
+		assertEquals(20, game.map.getRows());
+		assertEquals(30, game.map.getCols());
+		
+		assertEquals(5, game.dragons.size());
+		assertEquals(true, game.weapons.size() >= 2);
+		
+		assertEquals(false, game.map.isEmptyCell(game.getHeroPos()));
+		
+		
+		
 		UserInterface cli = new CommandLine();
 		
 		cli.displayMaze(game.map);
