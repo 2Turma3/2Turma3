@@ -2,6 +2,7 @@ package maze.gui;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Frame;
 import java.awt.Graphics;
 
 import javax.swing.JFrame;
@@ -55,11 +56,15 @@ public class Gui {
 	 */
 	private void initialize() {
 		frmDungeon = new JFrame();
+		MainMenuPanel panel = new MainMenuPanel();
+
 		frmDungeon.setTitle("Dungeon Frontiers");
-		frmDungeon.setBounds(10, 10, 866, 677);
+
+		frmDungeon.setBounds(10, 10, panel.background.getWidth(), panel.background.getHeight());
 		frmDungeon.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JPanel panel = new MainMenuPanel();
+		panel.background.getHeight();
+
 		frmDungeon.getContentPane().add(panel);
 		
 		

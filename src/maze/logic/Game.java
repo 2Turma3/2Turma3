@@ -8,10 +8,11 @@ import java.util.Random;
 import maze.logic.Weapon.Type;
 
 public class Game {
-	public Hero hero;
-	public LinkedList<Dragon> dragons;
-	public LinkedList<Weapon> weapons;
-	public LinkedList<Flame> fire;
+	private Hero hero;
+	private LinkedList<Dragon> dragons;
+	private LinkedList<Weapon> weapons;
+	private LinkedList<Flame> fire;
+	private LinkedList<Event> events;
 	
 	public MazeMap map;
 	private boolean gameOver;
@@ -22,9 +23,10 @@ public class Game {
 	
 	public Game(int rows, int cols, int numDragons, boolean canMove, boolean canSleep, boolean canAttack){
 		this.map = new MazeMap(rows, cols);
-		this.dragons = new LinkedList<Dragon>();
-		this.weapons = new LinkedList<Weapon>();
-		this.fire = new LinkedList<Flame>();
+		this.setDragons(new LinkedList<Dragon>());
+		this.setWeapons(new LinkedList<Weapon>());
+		this.setFire(new LinkedList<Flame>());
+		this.setEvents(new LinkedList<Event>());
 		gameOver = false;
 		won = false;
 		
@@ -35,9 +37,9 @@ public class Game {
 				generateDragons(numDragons, walkablePos, canMove, canSleep, canAttack);
 				break;
 			} catch (Exception e) {
-				for(Dragon dragon : this.dragons)
+				for(Dragon dragon : this.getDragons())
 					map.removeEntity(dragon);
-				this.dragons.clear();
+				this.getDragons().clear();
 			}
 		}
 		
@@ -47,16 +49,18 @@ public class Game {
 		Random rnd = new Random();
 		Position newPos;
 		newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
-		hero = new Hero(newPos,true);
-		map.addEntity(hero);
+		setHero(new Hero(newPos,true));
+		map.addEntity(getHero());
 		walkablePos.remove(newPos);
 	}
 	
+	
+
 	public Game(MazeMap map,Hero hero, LinkedList<Dragon> dragons, LinkedList<Weapon> weapons){
 		this.map = map;
-		this.dragons = dragons;
-		this.weapons = weapons;
-		this.fire = new LinkedList<Flame>();
+		this.setDragons(dragons);
+		this.setWeapons(weapons);
+		this.setFire(new LinkedList<Flame>());
 		gameOver = false;
 		won = false;
 		
@@ -67,7 +71,7 @@ public class Game {
 		for(Weapon weapon : weapons)
 			map.addEntity(weapon);
 
-		this.hero = hero;
+		this.setHero(hero);
 		map.addEntity(hero);
 
 	}
@@ -77,19 +81,19 @@ public class Game {
 		Random rnd = new Random();
 		newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
 		Weapon sword = new Weapon(Weapon.Type.SWORD, newPos, true);
-		weapons.add(sword);
+		getWeapons().add(sword);
 		
 		newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
 		Weapon shield = new Weapon(Weapon.Type.SHIELD, newPos, true);
-		weapons.add(shield);
+		getWeapons().add(shield);
 		
 		for(int i = rnd.nextInt(maxDarts); i > 0; i--){
 			newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
 			Weapon dart = new Weapon(Weapon.Type.DART, newPos, true);
-			weapons.add(dart);
+			getWeapons().add(dart);
 		}
 
-		for(Weapon weapon : weapons)
+		for(Weapon weapon : getWeapons())
 			map.addEntity(weapon);
 
 
@@ -104,13 +108,13 @@ public class Game {
 		while(tempNumDragons > 0){
 			newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
 			Dragon newDragon = new Dragon(newPos,true, canMove, canSleep, canAttack);
-			dragons.push(newDragon);
+			getDragons().push(newDragon);
 			map.addEntity(newDragon);
 			walkablePos.remove(newPos);
 			tempNumDragons--;
 		}
 		
-		if(this.dragons.size() != numDragons)
+		if(this.getDragons().size() != numDragons)
 			throw new Exception();
 		
 	}
@@ -118,7 +122,7 @@ public class Game {
 
 	
 	public boolean isFinished(){
-		return this.hero.getPos().equals(map.getExit());
+		return this.getHero().getPos().equals(map.getExit());
 	}
 	
 	public boolean moveEntity(Entity entity, Direction direction)
@@ -143,14 +147,15 @@ public class Game {
             if(!map.isWalkable(newPos))
             	return false; 
             
-            if(newPos.equals(hero.getPos()))
+            if(newPos.equals(getHero().getPos()))
             	return false;
             
-            for(Dragon dragon : dragons)
+            for(Dragon dragon : getDragons())
             	if(newPos.equals(dragon.getPos()))
             		return false;
             
-            setEntityPosition(entity, newPos);
+    		events.add(new MoveEvent(entity,newPos));
+            //setEntityPosition(entity, newPos);
             
             return true;
     }
@@ -218,8 +223,8 @@ public class Game {
 
 	public void dragonAttack(Dragon dragon) {
 		Position pos = dragon.getPos();
-		if(pos.getCol() == hero.getPos().getCol()){
-			if(hero.getPos().getRow() < pos.getRow())
+		if(pos.getCol() == getHero().getPos().getCol()){
+			if(getHero().getPos().getRow() < pos.getRow())
 				for(int i = 1; i <= Dragon.ATTACK_RADIUS && pos.getRow() - i > 0 && map.isWalkable(pos.getRow() - i, pos.getCol()); i++)
 					setOnFire(new Position(pos.getRow() - i, pos.getCol()));
 			else
@@ -227,8 +232,8 @@ public class Game {
 					setOnFire(new Position(pos.getRow() + i, pos.getCol()));
 		}
 		
-		if(pos.getRow() == hero.getPos().getRow()){
-			if(hero.getPos().getCol() < pos.getCol())
+		if(pos.getRow() == getHero().getPos().getRow()){
+			if(getHero().getPos().getCol() < pos.getCol())
 				for(int i = 1; i <= Dragon.ATTACK_RADIUS && pos.getCol() - i > 0 && map.isWalkable(pos.getRow(), pos.getCol() - i); i++)
 					setOnFire(new Position(pos.getRow(), pos.getCol() - i));
 			else
@@ -239,34 +244,34 @@ public class Game {
 	
 	public void setOnFire(Position pos){
 		Flame flame = new Flame(pos,true);
-		fire.add(flame);
+		getFire().add(flame);
 		map.addEntity(flame);
 	}
 
 	public boolean shouldAttack(Dragon dragon) {
 		if(dragon.getAvailableActions().contains(Dragon.Action.ATTACK)){
-			if(map.isInLineOfSight(dragon.getPos(), hero.getPos(), Dragon.ATTACK_RADIUS))
+			if(map.isInLineOfSight(dragon.getPos(), getHero().getPos(), Dragon.ATTACK_RADIUS))
 				return true;
 		}
 		return false;
 	}
     
     public void resolutionPhase(){
-    	for(Iterator<Weapon> it = weapons.descendingIterator(); it.hasNext(); ){
+    	for(Iterator<Weapon> it = getWeapons().descendingIterator(); it.hasNext(); ){
     		Weapon weapon = it.next();
-    		if(weapon.getPos().equals(hero.getPos())){
+    		if(weapon.getPos().equals(getHero().getPos())){
     			System.out.print(weapon.getType() + "\n");
-    			hero.addWeapon(weapon);
+    			getHero().addWeapon(weapon);
     			map.removeEntity(weapon);
     			it.remove();
     			break;
     		}
     	}
     	
-    	for(Iterator<Dragon> it = dragons.descendingIterator(); it.hasNext(); ){
+    	for(Iterator<Dragon> it = getDragons().descendingIterator(); it.hasNext(); ){
     		Dragon dragon = it.next();
-    		if(Position.isAdjacent(dragon.getPos(), hero.getPos())){
-    			if(hero.hasSword()){
+    		if(Position.isAdjacent(dragon.getPos(), getHero().getPos())){
+    			if(getHero().hasSword()){
 		    	map.removeEntity(dragon);
 		    	it.remove();
     			}
@@ -278,8 +283,8 @@ public class Game {
     		}
     	}
 
-    	for(Flame flame : fire){
-    		if(flame.getPos().equals(hero.getPos()) && !hero.hasShield()){
+    	for(Flame flame : getFire()){
+    		if(flame.getPos().equals(getHero().getPos()) && !getHero().hasShield()){
     			this.setGameOver(true);
     			this.setWon(false);
     			System.out.println("Morreu queimado");
@@ -288,9 +293,9 @@ public class Game {
     		map.removeEntity(flame);
     	}
 
-    	fire.clear();
+    	getFire().clear();
     	
-    	if (dragons.isEmpty())
+    	if (getDragons().isEmpty())
     		map.setWalkable(map.getExit(), true);
     	if(isFinished()){
     		this.setGameOver(true);
@@ -301,89 +306,89 @@ public class Game {
     // TODO Acabar throw_dart, usar iteradores para remover dragões
     public void throwDart(Direction direction)
     {
-    	for (Weapon weapon : hero.getWeapons()){
+    	for (Weapon weapon : getHero().getWeapons()){
     		if (weapon.getType().equals(Weapon.Type.DART)) {
     			switch (direction){
     				case UP:
-    					for (Dragon dragon : dragons) {
-    						if (dragon.getPos().getCol() == hero.getPos().getCol() && dragon.getPos().getRow() < hero.getPos().getRow()) {
+    					for (Dragon dragon : getDragons()) {
+    						if (dragon.getPos().getCol() == getHero().getPos().getCol() && dragon.getPos().getRow() < getHero().getPos().getRow()) {
     							boolean canHit = true;
-    							for (int row = hero.getPos().getRow(); row > dragon.getPos().getRow(); --row)
-    								if (!map.isWalkable(row, hero.getPos().getCol())) {
+    							for (int row = getHero().getPos().getRow(); row > dragon.getPos().getRow(); --row)
+    								if (!map.isWalkable(row, getHero().getPos().getCol())) {
     									canHit = false;
     									break;
     								}
     							if (canHit){
     								map.removeEntity(dragon);
-    								dragons.remove(dragon);
+    								getDragons().remove(dragon);
     								break;
     							}
     						}
     					}
     				case DOWN:
-    					for (Dragon dragon : dragons) {
-    						if (dragon.getPos().getCol() == hero.getPos().getCol() && dragon.getPos().getRow() > hero.getPos().getRow()) {
+    					for (Dragon dragon : getDragons()) {
+    						if (dragon.getPos().getCol() == getHero().getPos().getCol() && dragon.getPos().getRow() > getHero().getPos().getRow()) {
     							boolean canHit = true;
-    							for (int row = hero.getPos().getRow(); row < dragon.getPos().getRow(); ++row)
-    								if (!map.isWalkable(row, hero.getPos().getCol())) {
+    							for (int row = getHero().getPos().getRow(); row < dragon.getPos().getRow(); ++row)
+    								if (!map.isWalkable(row, getHero().getPos().getCol())) {
     									canHit = false;
     									break;
     								}
     							if (canHit){
     								map.removeEntity(dragon);
-    								dragons.remove(dragon);
+    								getDragons().remove(dragon);
     								break;
     							}
     						}
     					}
     				case LEFT:
-    					for (Dragon dragon : dragons) {
-    						if (dragon.getPos().getRow() == hero.getPos().getRow() && dragon.getPos().getCol() < hero.getPos().getCol()) {
+    					for (Dragon dragon : getDragons()) {
+    						if (dragon.getPos().getRow() == getHero().getPos().getRow() && dragon.getPos().getCol() < getHero().getPos().getCol()) {
     							boolean canHit = true;
-    							for (int col = hero.getPos().getCol(); col > dragon.getPos().getCol(); --col)
-    								if (!map.isWalkable(hero.getPos().getRow(), col)) {
+    							for (int col = getHero().getPos().getCol(); col > dragon.getPos().getCol(); --col)
+    								if (!map.isWalkable(getHero().getPos().getRow(), col)) {
     									canHit = false;
     									break;
     								}
     							if (canHit){
     								map.removeEntity(dragon);
-    								dragons.remove(dragon);
+    								getDragons().remove(dragon);
     								break;
     							}
     						}
     					}
     				case RIGHT:
-    					for (Dragon dragon : dragons) {
-    						if (dragon.getPos().getRow() == hero.getPos().getRow() && dragon.getPos().getCol() > hero.getPos().getCol()) {
+    					for (Dragon dragon : getDragons()) {
+    						if (dragon.getPos().getRow() == getHero().getPos().getRow() && dragon.getPos().getCol() > getHero().getPos().getCol()) {
     							boolean canHit = true;
-    							for (int col = hero.getPos().getCol(); col < dragon.getPos().getCol(); ++col)
-    								if (!map.isWalkable(hero.getPos().getRow(), col)) {
+    							for (int col = getHero().getPos().getCol(); col < dragon.getPos().getCol(); ++col)
+    								if (!map.isWalkable(getHero().getPos().getRow(), col)) {
     									canHit = false;
     									break;
     								}
     							if (canHit){
     								map.removeEntity(dragon);
-    								dragons.remove(dragon);
+    								getDragons().remove(dragon);
     								break;
     							}
     						}
     					}
     			}
-    			hero.removeWeapon(weapon);
+    			getHero().removeWeapon(weapon);
     			break;
     		}
     	}
     }
 
 	public void dragonsTurn() {
-		for(Dragon dragon : dragons)
+		for(Dragon dragon : getDragons())
 			moveDragon(dragon);
 	}
 
 	public void heroTurn(Action action, Direction direction) {
 		switch(action){
     	case MOVE:
-    		moveEntity(hero,direction);
+    		moveEntity(getHero(),direction);
     		break;
     	case ATTACK:
     		throwDart(direction);
@@ -391,6 +396,17 @@ public class Game {
     	case STOP:
     		break;
     	}
+	}
+	
+	public void update(){
+		while(!events.isEmpty()){
+			Event event = events.pollFirst();
+			
+			if (event instanceof MoveEvent){
+				MoveEvent tempEvent = (MoveEvent) event;
+				setEntityPosition(tempEvent.getEntity(), tempEvent.getNewPosition());
+			}
+		}
 	}
 
 	public boolean isGameOver() {
@@ -410,7 +426,48 @@ public class Game {
 	}
 	
 	public Position getHeroPos(){
-		return hero.getPos();
+		return getHero().getPos();
+	}
+
+	public Hero getHero() {
+		return hero;
+	}
+
+	public void setHero(Hero hero) {
+		this.hero = hero;
+	}
+
+	public LinkedList<Dragon> getDragons() {
+		return dragons;
+	}
+
+	public void setDragons(LinkedList<Dragon> dragons) {
+		this.dragons = dragons;
+	}
+
+	public LinkedList<Weapon> getWeapons() {
+		return weapons;
+	}
+
+	public void setWeapons(LinkedList<Weapon> weapons) {
+		this.weapons = weapons;
+	}
+
+	public LinkedList<Flame> getFire() {
+		return fire;
+	}
+
+	public void setFire(LinkedList<Flame> fire) {
+		this.fire = fire;
+	}
+	
+	//TODO Tratar da questão de segurança da linkedlist não ser unmodifiable
+	public LinkedList<Event> getEvents() {
+		return events;
+	}
+
+	private void setEvents(LinkedList<Event> linkedList) {
+		this.events = linkedList;
 	}
 
 	
