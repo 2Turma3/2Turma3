@@ -406,6 +406,22 @@ public class Game {
 				MoveEvent tempEvent = (MoveEvent) event;
 				setEntityPosition(tempEvent.getEntity(), tempEvent.getNewPosition());
 			}
+			else if (event instanceof DeathEvent){
+				DeathEvent tempEvent = (DeathEvent) event;
+				
+			}
+			else if (event instanceof FightEvent){
+				FightEvent tempEvent = (FightEvent) event;
+			}
+			else if (event instanceof FireSpittingEvent) {
+				FireSpittingEvent tempEvent = (FireSpittingEvent) event;
+			}
+			else if (event instanceof SleepEvent) {
+				SleepEvent tempEvent = (SleepEvent) event;
+			}
+			else if (event instanceof ThrowingDartEvent) {
+				ThrowingDartEvent tempEvent = (ThrowingDartEvent) event;
+			}
 		}
 	}
 
