@@ -22,7 +22,10 @@ public class Game {
 	public enum Action{MOVE, ATTACK, STOP}
 	
 	public Game(int rows, int cols, int numDragons, boolean canMove, boolean canSleep, boolean canAttack){
-		this.map = new MazeMap(rows, cols);
+		MazeMap.Builder builder = new MazeMap.Builder();
+		builder.setRows(rows);
+		builder.setCols(cols);
+		this.map = builder.build();
 		this.setDragons(new LinkedList<Dragon>());
 		this.setWeapons(new LinkedList<Weapon>());
 		this.setFire(new LinkedList<Flame>());
@@ -408,7 +411,8 @@ public class Game {
 			}
 			else if (event instanceof DeathEvent){
 				DeathEvent tempEvent = (DeathEvent) event;
-				
+				if (tempEvent.getEntity() instanceof Dragon)
+					;
 			}
 			else if (event instanceof FightEvent){
 				FightEvent tempEvent = (FightEvent) event;

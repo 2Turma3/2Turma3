@@ -13,7 +13,10 @@ import org.junit.Test;
 public class TestMovement extends TestCase {
 
 	public void testMove(){
-		MazeMap map = new MazeMap(3,5);
+		MazeMap.Builder builder = new MazeMap.Builder();
+		builder.setRows(3);
+		builder.setCols(5);
+		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,2),true);
@@ -27,7 +30,10 @@ public class TestMovement extends TestCase {
 	}
 
 	public void testFalseMove(){
-		MazeMap map = new MazeMap(3,5);
+		MazeMap.Builder builder = new MazeMap.Builder();
+		builder.setRows(3);
+		builder.setCols(5);
+		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,3),true);
@@ -41,7 +47,10 @@ public class TestMovement extends TestCase {
 	}
 	
 	public void testCatchSword(){
-		MazeMap map = new MazeMap(3,5);
+		MazeMap.Builder builder = new MazeMap.Builder();
+		builder.setRows(3);
+		builder.setCols(5);
+		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,3),true);
@@ -64,7 +73,10 @@ public class TestMovement extends TestCase {
 	
 	
 	public void testKilledByDragon(){
-		MazeMap map = new MazeMap(3,5);
+		MazeMap.Builder builder = new MazeMap.Builder();
+		builder.setRows(3);
+		builder.setCols(5);
+		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,3),true);
@@ -85,7 +97,10 @@ public class TestMovement extends TestCase {
 	}
 	
 	public void testKillDragon(){
-		MazeMap map = new MazeMap(3,5);
+		MazeMap.Builder builder = new MazeMap.Builder();
+		builder.setRows(3);
+		builder.setCols(5);
+		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,3),true);
@@ -108,7 +123,10 @@ public class TestMovement extends TestCase {
 	}
 	
 	public void testDragonSleep(){
-		MazeMap map = new MazeMap(3,100);
+		MazeMap.Builder builder = new MazeMap.Builder();
+		builder.setRows(3);
+		builder.setCols(100);
+		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,98),true);
@@ -139,7 +157,10 @@ public class TestMovement extends TestCase {
 	}
 	
 	public void testTwoDragonsInSamePosition(){
-		MazeMap map = new MazeMap(3,200);
+		MazeMap.Builder builder = new MazeMap.Builder();
+		builder.setRows(3);
+		builder.setCols(200);
+		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,198),true);
@@ -175,7 +196,10 @@ public class TestMovement extends TestCase {
 	}
 	
 	public void testThrowDartLeft(){
-		MazeMap map = new MazeMap(3,5);
+		MazeMap.Builder builder = new MazeMap.Builder();
+		builder.setRows(3);
+		builder.setCols(5);
+		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,3),true);
@@ -198,7 +222,10 @@ public class TestMovement extends TestCase {
 	}
 	
 	public void testThrowDartRight(){
-		MazeMap map = new MazeMap(3,5);
+		MazeMap.Builder builder = new MazeMap.Builder();
+		builder.setRows(3);
+		builder.setCols(5);
+		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,1),true);
@@ -221,7 +248,10 @@ public class TestMovement extends TestCase {
 	}
 	
 	public void testThrowDartUp(){
-		MazeMap map = new MazeMap(5,3);
+		MazeMap.Builder builder = new MazeMap.Builder();
+		builder.setRows(5);
+		builder.setCols(3);
+		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
 		Hero hero = new Hero(new Position(3,1),true);
@@ -244,7 +274,10 @@ public class TestMovement extends TestCase {
 	}
 	
 	public void testThrowDartDown(){
-		MazeMap map = new MazeMap(5,3);
+		MazeMap.Builder builder = new MazeMap.Builder();
+		builder.setRows(5);
+		builder.setCols(3);
+		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,1),true);
@@ -268,7 +301,10 @@ public class TestMovement extends TestCase {
 	
 	
 	public void testWinGame(){
-		MazeMap map = new MazeMap(3,5);
+		MazeMap.Builder builder = new MazeMap.Builder();
+		builder.setRows(3);
+		builder.setCols(5);
+		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,3),true);
@@ -300,7 +336,10 @@ public class TestMovement extends TestCase {
 	
 	
 	public void testReachExitFailed(){
-		MazeMap map = new MazeMap(3,5);
+		MazeMap.Builder builder = new MazeMap.Builder();
+		builder.setRows(3);
+		builder.setCols(5);
+		MazeMap map = builder.build();
 		map.setExit(new Position(1,4));
 		UserInterface cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,3),true);
@@ -325,7 +364,10 @@ public class TestMovement extends TestCase {
 	}
 	
 	public void testKilledByFlamesRight(){
-		MazeMap map = new MazeMap(3,5);
+		MazeMap.Builder builder = new MazeMap.Builder();
+		builder.setRows(3);
+		builder.setCols(5);
+		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,3),true);
@@ -346,7 +388,10 @@ public class TestMovement extends TestCase {
 	}
 	
 	public void testKilledByFlamesLeft(){
-		MazeMap map = new MazeMap(3,5);
+		MazeMap.Builder builder = new MazeMap.Builder();
+		builder.setRows(3);
+		builder.setCols(5);
+		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,1),true);
@@ -367,7 +412,10 @@ public class TestMovement extends TestCase {
 	}
 	
 	public void testKilledByFlamesUp(){
-		MazeMap map = new MazeMap(5,3);
+		MazeMap.Builder builder = new MazeMap.Builder();
+		builder.setRows(5);
+		builder.setCols(3);
+		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,1),true);
@@ -388,7 +436,10 @@ public class TestMovement extends TestCase {
 	}
 	
 	public void testKilledByFlamesDown(){
-		MazeMap map = new MazeMap(5,3);
+		MazeMap.Builder builder = new MazeMap.Builder();
+		builder.setRows(5);
+		builder.setCols(3);
+		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
 		Hero hero = new Hero(new Position(3,1),true);
@@ -409,7 +460,10 @@ public class TestMovement extends TestCase {
 	}
 	
 	public void testRandomHorizontalMoveDragon(){
-		MazeMap map = new MazeMap(3,100);
+		MazeMap.Builder builder = new MazeMap.Builder();
+		builder.setRows(3);
+		builder.setCols(100);
+		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,99),true);
@@ -442,7 +496,10 @@ public class TestMovement extends TestCase {
 	
 	
 	public void testRandomVerticalMoveDragon(){
-		MazeMap map = new MazeMap(100,3);
+		MazeMap.Builder builder = new MazeMap.Builder();
+		builder.setRows(100);
+		builder.setCols(3);
+		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
 		Hero hero = new Hero(new Position(99,1),true);
