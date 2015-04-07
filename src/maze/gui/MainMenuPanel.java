@@ -69,16 +69,15 @@ public class MainMenuPanel extends JPanel {
 		
 		
 		JButton btnNewGame = new JButton("New Game");
+		btnNewGame.setSize(100, 100);
 		
 		panel_1.add(btnNewGame);
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			}
 		});
 		
-				
-		JButton btnSaveGame = new JButton("Save Game");
-		panel_1.add(btnSaveGame);
 		
 		JButton btnLoadGame = new JButton("Load Game");
 		panel_1.add(btnLoadGame);
@@ -86,9 +85,16 @@ public class MainMenuPanel extends JPanel {
 		JButton btnQuit = new JButton("Quit");
 		btnQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				
+				int option = JOptionPane.showConfirmDialog(null,"Warning!","Are you sure you want to exit?" , JOptionPane.OK_CANCEL_OPTION);
+				if(option == JOptionPane.YES_OPTION)
+					System.exit(0);
 			}
 		});
+		
+		JButton btnOptions = new JButton("Options");
+		//TODO adicionar menu opções
+		
 		panel_1.add(btnQuit);
 		
 		
