@@ -32,6 +32,83 @@ import java.awt.event.MouseEvent;
 
 public class MainMenuPanel extends JPanel {
 
+	public static class Options{
+		private int rows;
+		private int cols;
+		private int numberDragons;
+		private boolean dragonMove;
+		private boolean dragonSleep;
+		private boolean dragonAttack;
+		
+		public Options(){
+			this.setRows(10);
+			this.setCols(10);
+			this.setNumberDragons(2);
+			this.setDragonMove(true);
+			this.setDragonSleep(true);
+			this.setDragonAttack(true);
+		}
+
+		public int getCols() {
+			return cols;
+		}
+
+		public void setCols(int cols) {
+			this.cols = cols;
+		}
+
+		public int getRows() {
+			return rows;
+		}
+
+		public void setRows(int rows) {
+			this.rows = rows;
+		}
+
+		public int getNumberDragons() {
+			return numberDragons;
+		}
+
+		public void setNumberDragons(int numberDragons) {
+			this.numberDragons = numberDragons;
+		}
+
+		public boolean isDragonMove() {
+			return dragonMove;
+		}
+
+		public void setDragonMove(boolean dragonMove) {
+			this.dragonMove = dragonMove;
+		}
+
+		public boolean isDragonSleep() {
+			return dragonSleep;
+		}
+
+		public void setDragonSleep(boolean dragonSleep) {
+			this.dragonSleep = dragonSleep;
+		}
+
+		public boolean isDragonAttack() {
+			return dragonAttack;
+		}
+
+		public void setDragonAttack(boolean dragonAttack) {
+			this.dragonAttack = dragonAttack;
+		}
+		
+		public Options clone(){
+			Options opt = new Options();
+			opt.rows = this.rows;
+			opt.cols = this.cols;
+			opt.numberDragons = this.numberDragons;
+			opt.dragonMove = this.dragonMove;
+			opt.dragonSleep = this.dragonSleep;
+			opt.dragonAttack = this.dragonAttack;
+			return opt;
+		}
+	}
+	
 	BufferedImage background;
 
 	public void paintComponent(Graphics g) {
@@ -85,11 +162,11 @@ public class MainMenuPanel extends JPanel {
 					System.exit(0);
 			}
 		});
-		
+		panel_1.add(btnQuit);
+
 		JButton btnOptions = new JButton("Options");
 		//TODO adicionar menu opções
 		
-		panel_1.add(btnQuit);
 		
 		
 	}

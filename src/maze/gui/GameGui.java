@@ -87,12 +87,14 @@ public class GameGui extends JFrame {
 		btnSaveGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				int option = JOptionPane.showConfirmDialog(null,"Are you sure!","Are you sure you want to exit?" , JOptionPane.OK_CANCEL_OPTION);
+				int option = JOptionPane.showConfirmDialog(null,"Caution!","Are you sure you want to save?" , JOptionPane.YES_NO_OPTION);
 				if(option == JOptionPane.YES_OPTION)
 					System.exit(0);
 			}
 		});
 		
+		
+
 		
 		buttonPane.add(btnSaveGame);
 		
