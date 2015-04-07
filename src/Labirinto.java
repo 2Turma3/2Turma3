@@ -55,7 +55,9 @@ public class Labirinto {
 
 	public static void playTurn(Game game, UserInterface cli, Command command) {
 		game.heroTurn(command.getAction(), command.getDirection());	
+		
 		cli.displayMaze(game.map);
+		
 		
 		
 		try{

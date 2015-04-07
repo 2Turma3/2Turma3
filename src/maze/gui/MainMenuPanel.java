@@ -68,7 +68,7 @@ public class MainMenuPanel extends JPanel {
 		panel_1.add(btnNewGame);
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				//Game game = new Game();
 			}
 		});
 		

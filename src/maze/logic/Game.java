@@ -64,6 +64,7 @@ public class Game {
 		this.setDragons(dragons);
 		this.setWeapons(weapons);
 		this.setFire(new LinkedList<Flame>());
+		this.setEvents(new LinkedList<Event>());
 		gameOver = false;
 		won = false;
 		
@@ -157,8 +158,10 @@ public class Game {
             	if(newPos.equals(dragon.getPos()))
             		return false;
             
+            
+            
     		events.add(new MoveEvent(entity,newPos));
-            //setEntityPosition(entity, newPos);
+            setEntityPosition(entity, newPos);
             
             return true;
     }

@@ -2,8 +2,8 @@ package maze.logic;
 
 public class MoveEvent extends Event {
 
-	private final Entity entity;
-	private final Position newPosition;
+	private Entity entity;
+	private Position newPosition;
 
 	public MoveEvent(Entity entity, Position newPosition) {
 		this.entity = entity;
