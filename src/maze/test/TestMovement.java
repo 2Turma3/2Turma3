@@ -12,6 +12,7 @@ import org.junit.Test;
 
 public class TestMovement extends TestCase {
 
+	@Test
 	public void testMove(){
 		MazeMap.Builder builder = new MazeMap.Builder();
 		builder.setRows(3);
