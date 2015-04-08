@@ -51,6 +51,7 @@ public class TestMovement extends TestCase {
 		MazeMap.Builder builder = new MazeMap.Builder();
 		builder.setRows(3);
 		builder.setCols(5);
+		
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
@@ -62,7 +63,7 @@ public class TestMovement extends TestCase {
 		Game game = new Game(map, hero,new LinkedList<Dragon>(),weapons);
 		
 		assertEquals(false, game.getHero().hasSword());
-		//cli.displayMaze(game.map);
+		cli.displayMaze(game.map);
 		
 		game.heroTurn(Game.Action.MOVE, Game.Direction.LEFT);
 		game.dragonsTurn();
