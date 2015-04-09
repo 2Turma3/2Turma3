@@ -19,11 +19,13 @@ import java.awt.GridLayout;
 
 import javax.swing.JSlider;
 
+import java.awt.Dialog;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
 import javax.swing.BoxLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
 import javax.swing.GroupLayout;
@@ -38,16 +40,22 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 
 import maze.gui.MainMenuPanel.Options;
+
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
-public class OptionsMenu extends JFrame {
-
-	private JPanel contentPane;
+public class OptionsMenu extends JPanel {
 	private JTextField rowSelection;
 	private JTextField colSelection;
 	private boolean changed;
 	Options unsavedOptions;
+	
+	JSlider rowSlider;
+	JSlider colSlider;
+	JSpinner spinner;
+	JCheckBox chckbxDragonMove;
+	JCheckBox chckbxDragonSleep;
+	JCheckBox chckbxDragonAttack;
 
 	
 	public static void main(String[] args ) {
@@ -63,33 +71,32 @@ public class OptionsMenu extends JFrame {
 		});
 	}
 	
+	
+	private void SaveOptions(Options options){
+		options = unsavedOptions;
+		System.out.println("Rows: " + options.getRows());
+		System.out.println("Cols: " + options.getCols());
+		System.out.println("NumberDragons: " + options.getNumberDragons());
+		System.out.println("DMove: " + options.isDragonMove());
+		System.out.println("DSleep: " + options.isDragonSleep());
+		System.out.println("Dattack: " + options.isDragonAttack());
+
+
+	}
 
 	/**
 	 * Create the frame.
 	 */
-	public OptionsMenu(MainMenuPanel.Options options) {
+	public OptionsMenu(final MainMenuPanel.Options options) {
 		unsavedOptions = options.clone();
 		changed = false;
 		
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 329, 448);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
-		
-		JPanel buttonPane = new JPanel();
-		contentPane.add(buttonPane, BorderLayout.SOUTH);
-		
-		JButton btnSave = new JButton("Save");
-		buttonPane.add(btnSave);
-		
-		JButton btnDefault = new JButton("Default");
-		buttonPane.add(btnDefault);
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		JPanel optionsPane = new JPanel();
-		contentPane.add(optionsPane, BorderLayout.CENTER);
+		add(optionsPane);
 		optionsPane.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JPanel rowPanel = new JPanel();
@@ -105,10 +112,8 @@ public class OptionsMenu extends JFrame {
 		rowPanel.add(panel_1);
 		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.X_AXIS));
 		
-		JSlider rowSlider = new JSlider();
+		this.rowSlider = new JSlider();
 		panel_1.add(rowSlider);
-		rowSlider.setMajorTickSpacing(5);
-		rowSlider.setPaintTicks(true);
 		rowSlider.setPaintLabels(true);
 		rowSlider.setMaximum(30);
 		rowSlider.setMinimum(10);
@@ -131,111 +136,151 @@ public class OptionsMenu extends JFrame {
 		rowSelection.setEditable(false);
 		rowSelection.setColumns(10);
 		rowSelection.setText(((Integer)unsavedOptions.getRows()).toString());
-
-		JPanel ColPanel = new JPanel();
-		ColPanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		ColPanel.setAlignmentY(Component.TOP_ALIGNMENT);
-		optionsPane.add(ColPanel);
-		ColPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JLabel lblCol = new JLabel("Columns");
-		lblCol.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCol.setAlignmentY(Component.TOP_ALIGNMENT);
-		ColPanel.add(lblCol);
-		
-		JPanel panel_2 = new JPanel();
-		ColPanel.add(panel_2);
-		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.X_AXIS));
-		
-		JSlider colSlider = new JSlider();
-		panel_2.add(colSlider);
-		colSlider.setMaximum(20);
-		colSlider.setMinimum(7);
-		colSlider.setValue(unsavedOptions.getCols());
-		colSlider.addChangeListener(new ChangeListener(){
-
-			@Override
-			public void stateChanged(ChangeEvent arg0) {
-				JSlider source = (JSlider) arg0.getSource();
+				JPanel ColPanel = new JPanel();
+				ColPanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+				ColPanel.setAlignmentY(Component.TOP_ALIGNMENT);
+				optionsPane.add(ColPanel);
+				ColPanel.setLayout(new GridLayout(0, 1, 0, 0));
 				
-				unsavedOptions.setCols( ((Integer)source.getValue()).intValue() );
-				colSelection.setText(((Integer) source.getValue()).toString());
-				changed = true;
-			}
-			
-		});
-		colSelection = new JTextField();
-		colSelection.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_2.add(colSelection);
-		colSelection.setEditable(false);
-		colSelection.setText(((Integer)unsavedOptions.getCols()).toString());
-		colSelection.setColumns(10);
-		
-		JPanel panel_3 = new JPanel();
-		optionsPane.add(panel_3);
-		panel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
-		JLabel lblNumberOfDragons = new JLabel("Number of Dragons");
-		lblNumberOfDragons.setEnabled(false);
-		lblNumberOfDragons.setHorizontalAlignment(SwingConstants.CENTER);
-		panel_3.add(lblNumberOfDragons);
-		
-		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(0, 0, (unsavedOptions.getCols()*unsavedOptions.getRows()/2) - 3, 1));
-		spinner.setValue(unsavedOptions.getNumberDragons());
-		spinner.addChangeListener(new ChangeListener(){
+				JLabel lblCol = new JLabel("Columns");
+				lblCol.setHorizontalAlignment(SwingConstants.CENTER);
+				lblCol.setAlignmentY(Component.TOP_ALIGNMENT);
+				ColPanel.add(lblCol);
+				
+				JPanel panel_2 = new JPanel();
+				ColPanel.add(panel_2);
+				panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.X_AXIS));
+				
+				this.colSlider = new JSlider();
+				panel_2.add(colSlider);
+				colSlider.setMaximum(30);
+				colSlider.setMinimum(10);
+				colSlider.setValue(unsavedOptions.getCols());
+				colSlider.addChangeListener(new ChangeListener(){
 
-			@Override
-			public void stateChanged(ChangeEvent arg0) {
-				JSpinner source = (JSpinner) arg0.getSource();
-				unsavedOptions.setNumberDragons(((Integer)source.getValue()).intValue());
-				changed = true;				
-			}
-			
-		});
-		panel_3.add(spinner);
-		
-		JPanel panel = new JPanel();
-		optionsPane.add(panel);
-		panel.setLayout(new GridLayout(3, 0, 0, 0));
-		
-		JCheckBox chckbxDragonMove = new JCheckBox("Dragons can move");
-		panel.add(chckbxDragonMove);
-		chckbxDragonMove.setSelected(unsavedOptions.isDragonMove());
-		chckbxDragonMove.addActionListener(new ActionListener(){
+					@Override
+					public void stateChanged(ChangeEvent arg0) {
+						JSlider source = (JSlider) arg0.getSource();
+						
+						unsavedOptions.setCols( ((Integer)source.getValue()).intValue() );
+						colSelection.setText(((Integer) source.getValue()).toString());
+						changed = true;
+					}
+					
+				});
+				colSelection = new JTextField();
+				colSelection.setHorizontalAlignment(SwingConstants.CENTER);
+				panel_2.add(colSelection);
+				colSelection.setEditable(false);
+				colSelection.setText(((Integer)unsavedOptions.getCols()).toString());
+				colSelection.setColumns(10);
+				
+				JPanel panel_3 = new JPanel();
+				optionsPane.add(panel_3);
+				panel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+				
+				JLabel lblNumberOfDragons = new JLabel("Number of Dragons");
+				lblNumberOfDragons.setEnabled(false);
+				lblNumberOfDragons.setHorizontalAlignment(SwingConstants.CENTER);
+				panel_3.add(lblNumberOfDragons);
+				
+				this.spinner = new JSpinner();
+				//TODO Mudar o spinner para mudar o seu máximo consuante as rows e cols
+				spinner.setModel(new SpinnerNumberModel(0, 0, ((unsavedOptions.getCols()-3)*(unsavedOptions.getRows()-3)/2), 1));
+				spinner.setValue(unsavedOptions.getNumberDragons());
+				spinner.addChangeListener(new ChangeListener(){
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				JCheckBox source = (JCheckBox) arg0.getSource();
-				unsavedOptions.setDragonMove(source.isSelected());
-				changed = true;
-			}
-		});
-		
-		JCheckBox chckbxDragonSleep = new JCheckBox("Dragons can asleep");
-		panel.add(chckbxDragonSleep);
-		chckbxDragonSleep.setSelected(unsavedOptions.isDragonSleep());
-		chckbxDragonSleep.addActionListener(new ActionListener(){
+					@Override
+					public void stateChanged(ChangeEvent arg0) {
+						JSpinner source = (JSpinner) arg0.getSource();
+						unsavedOptions.setNumberDragons(((Integer)source.getValue()).intValue());
+						changed = true;				
+					}
+					
+				});
+				panel_3.add(spinner);
+				
+				JPanel panel = new JPanel();
+				optionsPane.add(panel);
+				panel.setLayout(new GridLayout(3, 0, 0, 0));
+				
+				this.chckbxDragonMove = new JCheckBox("Dragons can move");
+				panel.add(chckbxDragonMove);
+				chckbxDragonMove.setSelected(unsavedOptions.isDragonMove());
+				chckbxDragonMove.addActionListener(new ActionListener(){
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				JCheckBox source = (JCheckBox) arg0.getSource();
-				unsavedOptions.setDragonSleep(source.isSelected());
-				changed = true;
-			}
-		});
-		
-		JCheckBox chckbxDragonAttack = new JCheckBox("Dragons can attack");
-		panel.add(chckbxDragonAttack);
-		chckbxDragonAttack.setSelected(unsavedOptions.isDragonAttack());
-		chckbxDragonAttack.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						JCheckBox source = (JCheckBox) arg0.getSource();
+						unsavedOptions.setDragonMove(source.isSelected());
+						changed = true;
+					}
+				});
+				
+				this.chckbxDragonSleep = new JCheckBox("Dragons can asleep");
+				panel.add(chckbxDragonSleep);
+				chckbxDragonSleep.setSelected(unsavedOptions.isDragonSleep());
+				chckbxDragonSleep.addActionListener(new ActionListener(){
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				JCheckBox source = (JCheckBox) arg0.getSource();
-				unsavedOptions.setDragonAttack(source.isSelected());
-				changed = true;
-			}
-		});
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						JCheckBox source = (JCheckBox) arg0.getSource();
+						unsavedOptions.setDragonSleep(source.isSelected());
+						changed = true;
+					}
+				});
+				
+				this.chckbxDragonAttack = new JCheckBox("Dragons can attack");
+				panel.add(chckbxDragonAttack);
+				chckbxDragonAttack.setSelected(unsavedOptions.isDragonAttack());
+				
+				
+				JPanel buttonPane = new JPanel();
+				add(buttonPane);
+				
+				JButton btnSave = new JButton("Save");
+				buttonPane.add(btnSave);
+				btnSave.addActionListener(new ActionListener(){
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						int option = JOptionPane.showConfirmDialog(null,"Warning!","Are you sure you want to save this options?" , JOptionPane.OK_CANCEL_OPTION);
+						if(option == JOptionPane.YES_OPTION){
+							SaveOptions(options);
+						}
+					}
+					
+				});
+				
+						
+						JButton btnDefault = new JButton("Default");
+						buttonPane.add(btnDefault);
+						btnDefault.addActionListener(new ActionListener(){
+
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								unsavedOptions = new Options();
+								
+								rowSlider.setValue(unsavedOptions.getRows());
+								colSlider.setValue(unsavedOptions.getCols());
+								spinner.setValue(unsavedOptions.getNumberDragons());
+								chckbxDragonMove.setSelected(unsavedOptions.isDragonMove());
+								chckbxDragonSleep.setSelected(unsavedOptions.isDragonSleep());
+								chckbxDragonAttack.setSelected(unsavedOptions.isDragonAttack());
+
+							}
+							
+						});
+				chckbxDragonAttack.addActionListener(new ActionListener(){
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						JCheckBox source = (JCheckBox) arg0.getSource();
+						unsavedOptions.setDragonAttack(source.isSelected());
+						changed = true;
+					}
+				});
+		
 	}
 }
