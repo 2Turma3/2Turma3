@@ -73,7 +73,13 @@ public class OptionsMenu extends JPanel {
 	
 	
 	private void SaveOptions(Options options){
-		options = unsavedOptions;
+		options.setRows(unsavedOptions.getRows());
+		options.setCols(unsavedOptions.getCols());
+		options.setNumberDragons(unsavedOptions.getNumberDragons());
+		options.setDragonMove(unsavedOptions.isDragonMove());
+		options.setDragonSleep(unsavedOptions.isDragonSleep());
+		options.setDragonAttack(unsavedOptions.isDragonAttack());
+
 		System.out.println("Rows: " + options.getRows());
 		System.out.println("Cols: " + options.getCols());
 		System.out.println("NumberDragons: " + options.getNumberDragons());
@@ -218,7 +224,7 @@ public class OptionsMenu extends JPanel {
 					}
 				});
 				
-				this.chckbxDragonSleep = new JCheckBox("Dragons can asleep");
+				this.chckbxDragonSleep = new JCheckBox("Dragons can sleep");
 				panel.add(chckbxDragonSleep);
 				chckbxDragonSleep.setSelected(unsavedOptions.isDragonSleep());
 				chckbxDragonSleep.addActionListener(new ActionListener(){
