@@ -56,7 +56,7 @@ public class Gui {
 	 */
 	private void initialize() {
 		frmDungeon = new JFrame();
-		MainMenuPanel panel = new MainMenuPanel();
+		MainMenuPanel panel = new MainMenuPanel(frmDungeon);
 
 		frmDungeon.setTitle("Dungeon Frontiers");
 

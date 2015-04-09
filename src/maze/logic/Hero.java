@@ -31,6 +31,14 @@ public class Hero extends Entity {
 		return false;
 	}
 	
+	public int getDartsNumber(){
+		int sum = 0;
+		for(Weapon weapon : weapons)
+			if(weapon.getType().equals(Weapon.Type.DART))
+				sum++;
+		return sum;
+	}
+	
 	public boolean hasShield(){
 		for(Weapon weapon: weapons)
 			if(weapon.getType().equals(Weapon.Type.SHIELD))

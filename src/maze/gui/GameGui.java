@@ -1,6 +1,7 @@
 package maze.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -26,7 +27,8 @@ import maze.logic.UserInterface;
 public class GameGui extends JFrame {
 
 	private JPanel contentPane;
-	
+	private final int SIDE_BORDERS_SIZE = 10;
+	private final int BUTTON_PANE_HEIGHT = 35;
 
 	/**
 	 * Launch the application.
@@ -43,7 +45,7 @@ public class GameGui extends JFrame {
 //			}
 //		});
 		
-		Game newGame = new Game(10, 10, 0, false, false, false);
+		/*Game newGame = new Game(10, 10, 0, false, false, false);
 		
 		UserInterface cli = new CommandLine();
 		
@@ -57,25 +59,37 @@ public class GameGui extends JFrame {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+		*/
 	}
 
 	/**
 	 * Create the frame.
 	 */
-	public GameGui(Game game) {
+	public GameGui(JFrame parentFrame, Game game) {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		
 		
+		if(game != null)
+			setBounds(100, 100, MazeImage.CELL_WIDTH*game.map.getCols() + 2*SIDE_BORDERS_SIZE , MazeImage.CELL_HEIGHT*game.map.getRows() + BUTTON_PANE_HEIGHT);
+		else
+			setBounds(100,100,100+20,100+ 35);
 		
-		setBounds(100, 100, MazeImage.CELL_WIDTH*game.map.getCols() + 20 , MazeImage.CELL_WIDTH*game.map.getRows()+35);
+		
 		contentPane = new JPanel();
-		contentPane.setBounds(10,0, MazeImage.CELL_WIDTH*game.map.getCols(), MazeImage.CELL_WIDTH*game.map.getRows());
+		
+		if(game != null)
+			contentPane.setBounds(SIDE_BORDERS_SIZE,0, MazeImage.CELL_WIDTH*game.map.getCols(), MazeImage.CELL_WIDTH*game.map.getRows());
+		else
+			contentPane.setBounds(SIDE_BORDERS_SIZE, 0, 100, 100);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		
+		JPanel statsPanel = new StatsPanel(game);
+		
+		
 		
 		
 		JPanel buttonPane = new JPanel();

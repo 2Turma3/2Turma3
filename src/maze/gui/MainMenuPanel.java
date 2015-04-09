@@ -29,6 +29,8 @@ import java.awt.Insets;
 import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
 
+import maze.logic.Game;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -113,14 +115,15 @@ public class MainMenuPanel extends JPanel {
 	
 	BufferedImage background;
 	private Options options;
+	private JFrame parentFrame;
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(background, 0, 0, null); // see javadoc for more info on the parameters            
 	}
 
-	public MainMenuPanel() {
-		
+	public MainMenuPanel(JFrame parFrame) {
+		this.parentFrame = parFrame;
 		try{
 			background = ImageIO.read(new File("src1/images/Main Menu Background.png"));
 		}catch(IOException e){
@@ -144,12 +147,14 @@ public class MainMenuPanel extends JPanel {
 		
 		
 		JButton btnNewGame = new JButton("New Game");
-		btnNewGame.setSize(100, 100);
-		
+		btnNewGame.setSize(100, 100);		
 		panel_1.add(btnNewGame);
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Game game = new Game();
+				Game game = new Game(options.getRows(),options.getCols(),options.getNumberDragons(),options.isDragonMove(),options.isDragonSleep(),options.isDragonAttack());
+				GameGui gameFrame = new GameGui(parentFrame, game);
+				gameFrame.setVisible(true);
+				parentFrame.setVisible(false);
 			}
 		});
 		
