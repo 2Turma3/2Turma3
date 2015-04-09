@@ -91,43 +91,27 @@ public class MazeMap {
 			//Correcao para numero de colunas ou filas pares
 			if(getRows()%2 == 0){
 				int divisor = 1 + rnd.nextInt(getRows() - 2);
-				for(int i = getRows() - 1; i >= divisor; i--){
+				for(int i = getRows() - 1; i > divisor; i--){
 					for(int j = 0; j < getCols(); j++){
 						map[i][j].setWalkable(map[i-1][j].isWalkable());
 					}
 				}
 				
-				for(int i = 1; i < getCols() -1; i++){
-					if(!map[divisor - 1][i].isWalkable() && !map[divisor+1][i].isWalkable())
-						map[divisor][i].setWalkable(false);
-					else if(map[divisor - 1][i].isWalkable() && map[divisor+1][i].isWalkable())
-						map[divisor][i].setWalkable(true);
-					else if(map[divisor][i-1].isWalkable())
-						map[divisor][i].setWalkable(false);
-					else
-						map[divisor][i].setWalkable(rnd.nextBoolean());
-				}
+				for(int i = 1; i < getCols() -1; i++)
+					map[divisor][i].setWalkable(map[divisor - 1][i].isWalkable() && map[divisor+1][i].isWalkable());
 				
 			}
 			
 			if( getCols()%2 == 0){
 				int divisor = 1 + rnd.nextInt(getCols() - 2);
-				for(int i = getCols() - 1; i >= divisor; i--){
+				for(int i = getCols() - 1; i > divisor; i--){
 					for(int j = 0; j < getRows(); j++){
 						map[j][i].setWalkable(map[j][i-1].isWalkable());
 					}
 				}
 				
-				for(int i = 1; i < getRows() -1; i++){
-					if(!map[i][divisor - 1].isWalkable() && !map[i][divisor+1].isWalkable())
-						map[i][divisor].setWalkable(false);
-					else if(map[i][divisor - 1].isWalkable() && map[i][divisor+1].isWalkable())
-						map[i][divisor].setWalkable(true);
-					else if(map[i-1][divisor].isWalkable())
-						map[i][divisor].setWalkable(false);
-					else
-						map[i][divisor].setWalkable(rnd.nextBoolean());
-				}	
+				for(int i = 1; i < getRows() -1; i++)
+					map[i][divisor].setWalkable(map[i][divisor - 1].isWalkable() && map[i][divisor+1].isWalkable());
 			}
 			
 			switch(rnd.nextInt(4)){
