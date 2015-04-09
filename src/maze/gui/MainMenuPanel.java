@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -27,6 +28,7 @@ import java.awt.Insets;
 
 import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -110,6 +112,7 @@ public class MainMenuPanel extends JPanel {
 	}
 	
 	BufferedImage background;
+	private Options options;
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -125,6 +128,7 @@ public class MainMenuPanel extends JPanel {
 			System.exit(0);
 		}
 		
+		this.options = new Options();
 		repaint();
 		setLayout(new BorderLayout(0, 0));
 		this.setSize(background.getWidth()/4, background.getHeight());
@@ -153,6 +157,19 @@ public class MainMenuPanel extends JPanel {
 		JButton btnLoadGame = new JButton("Load Game");
 		panel_1.add(btnLoadGame);
 		
+		JButton btnOptions = new JButton("Options");
+		panel_1.add(btnOptions);
+		btnOptions.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				OptionsMenu optMenu = new OptionsMenu(options);
+				JOptionPane.showMessageDialog(null, optMenu,"Options",JOptionPane.PLAIN_MESSAGE);
+			}
+			
+		});
+		
+		
 		JButton btnQuit = new JButton("Quit");
 		btnQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -164,8 +181,7 @@ public class MainMenuPanel extends JPanel {
 		});
 		panel_1.add(btnQuit);
 
-		JButton btnOptions = new JButton("Options");
-		//TODO adicionar menu opções
+	
 		
 		
 		
