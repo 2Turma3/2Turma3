@@ -3,6 +3,8 @@ package maze.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,7 +47,7 @@ public class GameGui extends JFrame {
 //			}
 //		});
 		
-		/*Game newGame = new Game(10, 10, 0, false, false, false);
+		Game newGame = new Game(10, 10, 0, false, false, false);
 		
 		UserInterface cli = new CommandLine();
 		
@@ -59,7 +61,7 @@ public class GameGui extends JFrame {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		*/
+		
 	}
 
 	/**
@@ -72,27 +74,18 @@ public class GameGui extends JFrame {
 		
 		
 		if(game != null)
-			setBounds(100, 100, MazeImage.CELL_WIDTH*game.map.getCols() + 2*SIDE_BORDERS_SIZE , MazeImage.CELL_HEIGHT*game.map.getRows() + BUTTON_PANE_HEIGHT);
+			setBounds(100, 100, MazeImage.CELL_WIDTH*game.map.getCols() + 4*SIDE_BORDERS_SIZE , MazeImage.CELL_HEIGHT*game.map.getRows() + BUTTON_PANE_HEIGHT);
 		else
 			setBounds(100,100,100+20,100+ 35);
 		
 		
 		contentPane = new JPanel();
-		
-		if(game != null)
-			contentPane.setBounds(SIDE_BORDERS_SIZE,0, MazeImage.CELL_WIDTH*game.map.getCols(), MazeImage.CELL_WIDTH*game.map.getRows());
-		else
-			contentPane.setBounds(SIDE_BORDERS_SIZE, 0, 100, 100);
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
+		//contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0,0));
 		setContentPane(contentPane);
 		
-		JPanel statsPanel = new StatsPanel(game);
-		
-		
-		
-		
 		JPanel buttonPane = new JPanel();
+		contentPane.add(buttonPane, BorderLayout.SOUTH);
 		//buttonPane.setBounds(10, CELL_WIDTH*game.map.getRows(), 35, CELL_WIDTH*game.map.getCols());
 		
 		
@@ -106,12 +99,30 @@ public class GameGui extends JFrame {
 					System.exit(0);
 			}
 		});
-		
-		
-
-		
 		buttonPane.add(btnSaveGame);
 		
+		JPanel statsPanel = new StatsPanel(game);
+		statsPanel.setPreferredSize(new Dimension((int) (this.getWidth() * 0.15),this.getHeight()-buttonPane.getHeight()));
+		contentPane.add(statsPanel, BorderLayout.EAST);
+		
+		
+		JPanel gameImagePanel = new JPanel(){
+			protected void paintComponent(Graphics g){
+				try {
+					BufferedImage img  = ImageIO.read(new File("src1/images/961676_515475085268327_511962568_n.jpg"));
+					g.drawImage(img, 0, 0,getWidth(), getHeight(), null);
+				} catch (IOException e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Erro a fazer load de ficheiros", "Oops!", JOptionPane.ERROR_MESSAGE);
+					System.exit(1);
+				}
+			}
+		};
+		if(game != null)
+			gameImagePanel.setBounds(SIDE_BORDERS_SIZE,0, MazeImage.CELL_WIDTH*game.map.getCols(), MazeImage.CELL_WIDTH*game.map.getRows());
+		else
+			gameImagePanel.setBounds(SIDE_BORDERS_SIZE, 0, 100, 100);
+		contentPane.add(gameImagePanel, BorderLayout.CENTER);
 	}
 
 }
