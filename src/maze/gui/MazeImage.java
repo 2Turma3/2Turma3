@@ -39,16 +39,36 @@ public class MazeImage {
 			wallImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/Mossy_Wall.png")), 0, 0, wallImage.getWidth(), wallImage.getHeight(), null);			
 			
 			floorImage = new BufferedImage(CELL_WIDTH, CELL_HEIGHT, BufferedImage.TYPE_INT_ARGB);
-			floorImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/Floor.jpg")), 0, 0, floorImage.getWidth(), floorImage.getHeight(), null);
+			floorImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/Floor.png")), 0, 0, floorImage.getWidth(), floorImage.getHeight(), null);
 			
 			heroImage = new BufferedImage(CELL_WIDTH, CELL_HEIGHT, BufferedImage.TYPE_INT_ARGB);
 			heroImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/Hero.png")), 0, 0, heroImage.getWidth(), heroImage.getHeight(), null);
 			
+			dragonImage = new BufferedImage(CELL_WIDTH, CELL_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+			dragonImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/Dragon.png")), 0, 0, dragonImage.getWidth(), dragonImage.getHeight(), null);
+			
+			sleepingDragonImage = new BufferedImage(CELL_WIDTH, CELL_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+			sleepingDragonImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/SleepingDragon.png")), 0, 0, sleepingDragonImage.getWidth(), sleepingDragonImage.getHeight(), null);
+			
+			swordImage = new BufferedImage(CELL_WIDTH, CELL_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+			swordImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/Sword.png")), 0, 0, swordImage.getWidth(), swordImage.getHeight(), null);
+			
+			shieldImage = new BufferedImage(CELL_WIDTH, CELL_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+			shieldImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/Shield.png")), 0, 0, shieldImage.getWidth(), shieldImage.getHeight(), null);
+			
+			dartImage = new BufferedImage(CELL_WIDTH, CELL_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+			dartImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/Dart.png")), 0, 0, dartImage.getWidth(), dartImage.getHeight(), null);
+			
 			closedExitImage = new BufferedImage(CELL_WIDTH, CELL_HEIGHT, BufferedImage.TYPE_INT_ARGB);
 			closedExitImage.getGraphics().drawImage(floorImage, 0, 0, closedExitImage.getWidth(), closedExitImage.getHeight(), null);
 			closedExitImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/ClosedExit.png")), 0, 0, closedExitImage.getWidth(), closedExitImage.getHeight(), null);
+			
+			openExitImage = new BufferedImage(CELL_WIDTH, CELL_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+			openExitImage.getGraphics().drawImage(floorImage, 0, 0, openExitImage.getWidth(), openExitImage.getHeight(), null);
+			openExitImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/OpenExit.png")), 0, 0, openExitImage.getWidth(), openExitImage.getHeight(), null);
 		} catch (IOException e){
 			e.printStackTrace();
+			System.exit(1);
 		}
 	}
 	
@@ -78,6 +98,22 @@ public class MazeImage {
 		
 		if (entity instanceof Hero)
 			img = heroImage;
+		else if (entity instanceof Dragon)
+			img = ((Dragon) entity).isSleeping() ? sleepingDragonImage : dragonImage;
+		else if (entity instanceof Weapon)
+			switch (((Weapon) entity).getType())
+			{
+				case SWORD:
+					img = swordImage;
+					break;
+				case SHIELD:
+					img = shieldImage;
+					break;
+				case DART:
+					img = dartImage;
+					break;
+			}
+	
 		
 		if (img == null)
 			return;
