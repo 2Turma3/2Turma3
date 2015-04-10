@@ -13,7 +13,7 @@ import maze.logic.*;
 
 public class MazeImage {
 	
-	public static final int CELL_HEIGHT = 50;
+	public static final int CELL_HEIGHT = 35;
 	public static final int CELL_WIDTH = 50;
 	
 	private static BufferedImage wallImage;
