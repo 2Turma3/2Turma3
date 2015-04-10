@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
 
@@ -77,6 +78,12 @@ public class MazeImage {
 		this.mazeSprites = new BufferedImage(this.mazeTiles.getWidth(), this.mazeTiles.getHeight(), this.mazeTiles.getType());
 		this.exitPosition = map.getExit();
 		this.exit = this.closedExitImage;
+	}
+	
+	public void addEntities(LinkedList<Entity> entities) {
+		clear();
+		for (Entity entity : entities)
+			addEntity(entity);
 	}
 	
 	public void clear() {
