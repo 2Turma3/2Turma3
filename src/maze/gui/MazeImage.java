@@ -39,7 +39,7 @@ public class MazeImage {
 			wallImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/Mossy_Wall.png")), 0, 0, wallImage.getWidth(), wallImage.getHeight(), null);			
 			
 			floorImage = new BufferedImage(CELL_WIDTH, CELL_HEIGHT, BufferedImage.TYPE_INT_ARGB);
-			floorImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/Floor.jpg")), 0, 0, floorImage.getWidth(), floorImage.getHeight(), null);
+			floorImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/Floor.png")), 0, 0, floorImage.getWidth(), floorImage.getHeight(), null);
 			
 			heroImage = new BufferedImage(CELL_WIDTH, CELL_HEIGHT, BufferedImage.TYPE_INT_ARGB);
 			heroImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/Hero.png")), 0, 0, heroImage.getWidth(), heroImage.getHeight(), null);
@@ -65,7 +65,7 @@ public class MazeImage {
 			
 			openExitImage = new BufferedImage(CELL_WIDTH, CELL_HEIGHT, BufferedImage.TYPE_INT_ARGB);
 			openExitImage.getGraphics().drawImage(floorImage, 0, 0, openExitImage.getWidth(), openExitImage.getHeight(), null);
-			openExitImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/ClosedExit.png")), 0, 0, openExitImage.getWidth(), openExitImage.getHeight(), null);
+			openExitImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/OpenExit.png")), 0, 0, openExitImage.getWidth(), openExitImage.getHeight(), null);
 		} catch (IOException e){
 			e.printStackTrace();
 			System.exit(1);
