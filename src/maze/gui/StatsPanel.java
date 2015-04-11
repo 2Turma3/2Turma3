@@ -145,7 +145,7 @@ public class StatsPanel extends JPanel {
 				this.dartsNumber.setText("" + game.getBoard().getHero().getDartsNumber());
 				this.dartsNumber.setEditable(false);
 				
-				//updateStats();
+				updateStats();
 	}
 
 }

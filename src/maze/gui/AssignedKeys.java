@@ -11,9 +11,9 @@ public class AssignedKeys {
 	int spAttack;
 	int skip;
 	
-	private static final int upDefault = KeyEvent.VK_A;
+	private static final int upDefault = KeyEvent.VK_W;
 	private static final int downDefault = KeyEvent.VK_S;
-	private static final int leftDefault = KeyEvent.VK_D;
+	private static final int leftDefault = KeyEvent.VK_A;
 	private static final int rightDefault = KeyEvent.VK_D;
 	private static final int spAttackDefault = KeyEvent.VK_CONTROL;
 	private static final int skipDefault = KeyEvent.VK_SPACE;

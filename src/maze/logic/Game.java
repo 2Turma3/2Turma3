@@ -11,6 +11,8 @@ public class Game {
 	private GameBoard board;
 	private boolean finished;
 	private boolean won;
+
+	private boolean exitOpen;
 	
 	public enum Direction{UP, DOWN, LEFT, RIGHT}
 	public enum Action{MOVE, ATTACK, STOP}
@@ -66,7 +68,7 @@ public class Game {
 		dragons = generateDragons(numDragons, walkablePos, canMove, canSleep, canAttack);	
 		
 		walkablePos = map.getWalkablePositions();
-		LinkedList<Weapon> weapons = generateWeapons(3, walkablePos);
+		LinkedList<Weapon> weapons = generateWeapons(numDragons, walkablePos);
 
 		Random rnd = new Random();
 		Position newPos;
@@ -75,19 +77,21 @@ public class Game {
 		Hero hero = new Hero(newPos,true);
 		walkablePos.remove(newPos);
 		
+		
+
+		
 		setBoard(new GameBoard(map, hero, dragons, weapons));
+		this.setExitOpen(this.getBoard().getDragons().isEmpty());
 	}
 
 	public Game(MazeMap map, Hero hero, LinkedList<Dragon> dragons, LinkedList<Weapon> weapons){
-		setBoard(new GameBoard(map, hero, dragons, weapons));
-		setFire(new LinkedList<Flame>());
-		finished = false;
-		won = false;
+		this(new GameBoard(map, hero, dragons, weapons));
 	}
 	
 	public Game(GameBoard board) {
 		setBoard(board);
 		setFire(new LinkedList<Flame>());
+		this.setExitOpen(board.getDragons().isEmpty());
 		finished = false;
 		won = false;
 	}
@@ -104,7 +108,7 @@ public class Game {
 		Weapon shield = new Weapon(Weapon.Type.SHIELD, newPos, true);
 		weapons.add(shield);
 		
-		for(int i = rnd.nextInt(maxDarts); i > 0; i--){
+		for(int i = maxDarts; i > 0; i--){
 			newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
 			Weapon dart = new Weapon(Weapon.Type.DART, newPos, true);
 			weapons.add(dart);
@@ -289,8 +293,10 @@ public class Game {
 
     	getFire().clear();
     	
-    	if (getBoard().getDragons().isEmpty())
+    	if (getBoard().getDragons().isEmpty()){
+    		this.setExitOpen(true);
     		getBoard().getMap().setWalkable(getBoard().getMap().getExit(), true);
+    	}
     	if(getBoard().getHero().getPos().equals(getBoard().getMap().getExit())){
     		this.setFinished(true);
     		this.setWon(true);
@@ -421,5 +427,14 @@ public class Game {
 	 */
 	public void setBoard(GameBoard board) {
 		this.board = board;
+	}
+
+	public boolean isExitOpen() {
+		return exitOpen;
+	}
+
+	public void setExitOpen(boolean exitOpen) {
+		this.getBoard().getMap().setWalkable(this.getBoard().getMap().getExit(), exitOpen);
+		this.exitOpen = exitOpen;
 	}
 }

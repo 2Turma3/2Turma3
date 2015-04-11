@@ -25,6 +25,7 @@ import javax.swing.border.EmptyBorder;
 import maze.cli.CommandLine;
 import maze.logic.Dragon;
 import maze.logic.Game;
+import maze.logic.Game.Command;
 import maze.logic.Hero;
 import maze.logic.MazeMap;
 import maze.logic.UserInterface;
@@ -42,17 +43,21 @@ public class GameGui extends JFrame {
 		private boolean attackKeyHold = false;
 		@Override
 		public void keyPressed(KeyEvent e) {
+			System.out.println(e.getKeyText(e.getKeyCode()));
 			Game.Action action = attackKeyHold ? Game.Action.ATTACK : Game.Action.MOVE;
-			if(assignedKeys.up == e.getKeyCode())
-				;
+			if(assignedKeys.up == e.getKeyCode()){
+				play(action, Game.Direction.UP);
+			}
 			else if(assignedKeys.down == e.getKeyCode())
-				;
+				play(action, Game.Direction.DOWN);
 			else if(assignedKeys.left == e.getKeyCode())
-				;
+				play(action, Game.Direction.LEFT);
 			else if(assignedKeys.right == e.getKeyCode())
-				;
+				play(action, Game.Direction.RIGHT);
 			else if(assignedKeys.skip == e.getKeyCode())
-				;
+				play(Game.Action.STOP, null);
+			else if(assignedKeys.spAttack == e.getKeyCode())
+				attackKeyHold = true;
 		}
 
 		@Override
@@ -63,10 +68,11 @@ public class GameGui extends JFrame {
 
 		@Override
 		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
 			
 		}
 	};
+	private GameBoardPanel gameImagePanel;
+	private StatsPanel statsPanel;
 	
 	/**
 	 * Launch the application.
@@ -112,20 +118,35 @@ public class GameGui extends JFrame {
 		}
 		
 		img.addEntity(game.getBoard().getHero());
+		
+		img.setExit(game.isExitOpen());
 		return img.getImage();		
+	}
+	
+	private void play(Game.Action action, Game.Direction direction){
+		this.game.heroTurn(new Command(action, direction));
+		this.game.dragonsTurn();
+		this.game.resolutionPhase();
+		this.gameImagePanel.reloadImage(getGameImage(this.game));
+		this.statsPanel.updateStats();
+		if(this.game.isFinished()){
+			this.removeKeyListener(keyListener);
+		}
 	}
 	
 	/**
 	 * Create the frame.
 	 */
 	public GameGui(final JFrame parentFrame, Game game, AssignedKeys assignedKeys) {
-		
+		super();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
 		
 		this.assignedKeys = assignedKeys;
 		this.game = game;
 		
+		this.setFocusable(true);
+		this.requestFocus();
 		
 		
 		if(game != null)
@@ -168,19 +189,24 @@ public class GameGui extends JFrame {
 		});
 		buttonPane.add(btnExit);
 		
-		JPanel statsPanel = new StatsPanel(game);
+		this.statsPanel = new StatsPanel(game);
 		statsPanel.setPreferredSize(new Dimension((int) (this.getWidth() * 0.15),this.getHeight()-buttonPane.getHeight()));
 		contentPane.add(statsPanel, BorderLayout.EAST);
 		
 		
-		JPanel gameImagePanel = new GameBoardPanel(getGameImage(game));
-		gameImagePanel.addKeyListener(keyListener);
+		this.gameImagePanel = new GameBoardPanel(getGameImage(game));
+		System.out.print(this.getKeyListeners().length);
+		addKeyListener(keyListener);
+		
 		
 		if(game != null)
 			gameImagePanel.setBounds(SIDE_BORDERS_SIZE,0, MazeImage.CELL_WIDTH*game.getBoard().getMap().getCols(), MazeImage.CELL_WIDTH*game.getBoard().getMap().getRows());
 		else
 			gameImagePanel.setBounds(SIDE_BORDERS_SIZE, 0, 100, 100);
 		contentPane.add(gameImagePanel, BorderLayout.CENTER);
+		
+		System.out.print(this.getKeyListeners().length);
+		
 	}
 
 }

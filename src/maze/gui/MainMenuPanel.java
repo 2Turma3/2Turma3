@@ -181,7 +181,7 @@ public class MainMenuPanel extends JPanel {
 		btnQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				int option = JOptionPane.showConfirmDialog(null,"Warning!","Are you sure you want to exit?" , JOptionPane.OK_CANCEL_OPTION);
+				int option = JOptionPane.showConfirmDialog(null,"Are you sure you want to exit?", "Warning!" , JOptionPane.OK_CANCEL_OPTION);
 				if(option == JOptionPane.YES_OPTION)
 					System.exit(0);
 			}

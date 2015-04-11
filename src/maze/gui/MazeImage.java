@@ -127,12 +127,8 @@ public class MazeImage {
 		mazeSprites.getGraphics().drawImage(img, entity.getPos().getCol() * CELL_WIDTH, entity.getPos().getRow() * CELL_HEIGHT, img.getWidth(), img.getHeight(), null);
 	}
 	
-	public void openExit() {
-		this.exit = openExitImage;
-	}
-	
-	public void closeExit() {
-		this.exit = closedExitImage;
+	public void setExit(boolean open){
+		this.exit = open ? openExitImage : closedExitImage;
 	}
 	
 	private BufferedImage mazeToImage(MazeMap map) {
