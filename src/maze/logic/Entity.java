@@ -1,19 +1,19 @@
 package maze.logic;
 
 public abstract class Entity {
-	private Position pos;
+	private Position position;
 	private boolean active;
 	
-	Entity(Position pos, boolean active){
-		this.pos = pos;
+	Entity(Position position, boolean active){
+		setPosition(position);
 		this.active = active;
 	}
 	
 	public Position getPos() {
-		return pos;
+		return position;
 	}
-	public void setPos(Position pos) {
-		this.pos = pos;
+	public void setPosition(Position position) {
+		this.position = position;
 	}
 	public boolean isActive() {
 		return active;

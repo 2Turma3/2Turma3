@@ -1,19 +1,18 @@
 package maze.logic;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Dragon extends Entity {
 	private boolean sleeping;
 	
 	public static enum Action {MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, STOP, SLEEP, ATTACK};
-	private ArrayList<Action> availableActions;
+	private LinkedList<Action> availableActions;
 	public static final int ATTACK_RADIUS = 3;
-	
 	
 	public Dragon(Position pos, boolean active, boolean canMove, boolean canSleep, boolean canAttack) {
 		super(pos, active);
 		setSleeping(false);
-		availableActions = new ArrayList<Action>();
+		availableActions = new LinkedList<Action>();
 		
 		if(canMove){
 			getAvailableActions().add(Action.MOVE_UP);
@@ -29,13 +28,41 @@ public class Dragon extends Entity {
 		
 		getAvailableActions().add(Action.STOP);
 	}
+	
+	public void enableSleeping(boolean canSleep) {
+		getAvailableActions().remove(Action.SLEEP);
+		if (canSleep)
+			getAvailableActions().add(Action.SLEEP);
+	}
+	
+	public void enableMovement(boolean canMove) {
+		getAvailableActions().remove(Action.MOVE_UP);
+		getAvailableActions().remove(Action.MOVE_DOWN);
+		getAvailableActions().remove(Action.MOVE_LEFT);
+		getAvailableActions().remove(Action.MOVE_RIGHT);
+		
+		if (canMove) {
+			getAvailableActions().add(Action.MOVE_UP);
+			getAvailableActions().add(Action.MOVE_DOWN);
+			getAvailableActions().add(Action.MOVE_LEFT);
+			getAvailableActions().add(Action.MOVE_RIGHT);
+		}
+	}
+
+	public void enableAttack(boolean canAttack) {
+		getAvailableActions().remove(Action.ATTACK);
+		
+		if (canAttack)
+			getAvailableActions().add(Action.ATTACK);
+	}
+	
 	public boolean isSleeping() {
 		return sleeping;
 	}
 	public void setSleeping(boolean sleeping) {
 		this.sleeping = sleeping;
 	}
-	public ArrayList<Action> getAvailableActions() {
+	public LinkedList<Action> getAvailableActions() {
 		return availableActions;
 	}
 

@@ -1,6 +1,10 @@
 package maze.logic;
 
-public class Position {
+import java.io.Serializable;
+
+public class Position implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private int row;
 	private int col;
 	
@@ -31,7 +35,7 @@ public class Position {
 				this.equals((Position)obj);
 	}
 	
-	public boolean equals(Position pos){
+	private boolean equals(Position pos){
 		return this.getRow() == pos.getRow() && this.getCol()== pos.getCol();
 	} 
 	
@@ -39,9 +43,8 @@ public class Position {
 		return new Position(this.getRow(), this.getCol());
 	}
 	
-	public static boolean isAdjacent(Position pos1, Position pos2){
-		return pos1.getCol() == pos2.getCol() && Math.abs(pos1.getRow() - pos2.getRow()) == 1 ||
-				pos1.getRow() == pos2.getRow() && Math.abs(pos1.getCol() - pos2.getCol()) == 1;
+	public static double distance(Position pos1, Position pos2){
+		return Math.sqrt(Math.pow(pos1.getRow() - pos2.getRow(), 2) + Math.pow(pos1.getCol() - pos2.getCol(), 2));
 	}
 	
 	

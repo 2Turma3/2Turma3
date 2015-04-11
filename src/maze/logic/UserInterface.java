@@ -7,7 +7,7 @@ import maze.logic.Game.Direction;
 
 public interface UserInterface {
 	public Command getInput() throws IOException;
-	public void displayMaze(MazeMap map);
+	public void displayBoard(GameBoard board);
 	public void displayMessage(String message);
 	
 	public class Command {

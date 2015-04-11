@@ -2,14 +2,16 @@ package maze.logic;
 
 import maze.helper.Maze;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Random;
 
 
 
-public class MazeMap {
-	
+public class MazeMap implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	public static class Builder {
 		private int rows;
 		private int cols;
@@ -37,7 +39,7 @@ public class MazeMap {
 		
 		public void useDefault() {
 			this.defaultMaze = true;
-			this.rows = Builder.defaulCols;
+			this.rows = Builder.defaultRows;
 			this.cols = Builder.defaulCols;
 			this.map = Builder.defaultMap;
 			this.exit = Builder.defaultExit;
@@ -158,37 +160,17 @@ public class MazeMap {
 	
 	public static class Cell{
 		private boolean walkable;
-		private LinkedList<Entity> entities;
 		
 		Cell(boolean walkable){
 			this.setWalkable(walkable);
-			entities = new LinkedList<Entity>();
 		}
 
-		public boolean isEmpty(){
-			return entities.isEmpty();
-		}
-		
 		public boolean isWalkable() {
 			return walkable;
 		}
 
 		public void setWalkable(boolean walkable) {
 			this.walkable = walkable;
-		}
-
-		public LinkedList<Entity> getEntities() {
-			return entities;
-		}
-
-		public void addEntity(Entity entity) throws Exception{
-			for(Entity tempEntity : entities)
-				if(tempEntity.hashCode() == entity.hashCode())
-					throw new Exception();
-			entities.add(entity);
-		}
-		public void removeEntity(Entity entity){
-			entities.remove(entity);
 		}
 	}
 	
@@ -206,8 +188,8 @@ public class MazeMap {
 		this.exit = exit;
 	}
 	
-	public ArrayList<Position> getWalkablePositions(){
-		ArrayList<Position> walkablePos = new ArrayList<Position>();
+	public LinkedList<Position> getWalkablePositions(){
+		LinkedList<Position> walkablePos = new LinkedList<Position>();
 		
 		for (int row = 0; row < map.length; row++)
 			for(int col = 0; col < map[row].length; col++){
@@ -227,33 +209,6 @@ public class MazeMap {
 	
 	public void setWalkable(Position position, boolean walkable){
 		map[position.getRow()][position.getCol()].setWalkable(walkable);;
-	}
-	
-	public void addEntity(Entity entity) {
-		boolean loop = true;
-		do{
-			try {
-				map[entity.getPos().getRow()][entity.getPos().getCol()].addEntity(entity);
-				loop = false;
-				break;
-			} catch (Exception e) {
-				map[entity.getPos().getRow()][entity.getPos().getCol()].removeEntity(entity);
-			}
-		}
-		while(loop);
-	}
-	
-	public void removeEntity(Entity entity){
-		map[entity.getPos().getRow()][entity.getPos().getCol()].removeEntity(entity);
-	}
-	
-	public LinkedList<Entity> getEntities(Position position)
-	{
-		return map[position.getRow()][position.getCol()].getEntities();
-	}
-	
-	public boolean isEmptyCell(Position position){
-		return map[position.getRow()][position.getCol()].isEmpty();
 	}
 		
 	public boolean isInLineOfSight(Position pos1, Position pos2, int distance){
