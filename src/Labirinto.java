@@ -31,51 +31,51 @@ public class Labirinto {
 	
 	
 	public static void main(String[] args) throws IOException{
-		Game game = new Game(10,10,3, true, true, true);
-		UserInterface cli	= new CommandLine();
-		Command command = null;
-		while(!game.isGameOver()){
-			cli.displayMaze(game.map);
-			try{
-			command = cli.getInput();
-			}catch(IOException e){
-				cli.displayMessage("Input Inválido\n");
-				continue;
-			}
-			
-			
-			playTurn(game, cli, command);
-		}
-		if(game.isWon())
-			cli.displayMessage("Good job!\n");
-		else{
-			cli.displayMessage("Too bad :(\n");
-		}
+//		Game game = new Game(10,10,3, true, true, true);
+//		UserInterface cli	= new CommandLine();
+//		Command command = null;
+//		//while(!game.isGameOver()){
+//			cli.displayMaze(game.map);
+//			try{
+//			command = cli.getInput();
+//			}catch(IOException e){
+//				cli.displayMessage("Input Inválido\n");
+//				continue;
+//			}
+//			
+//			
+//			playTurn(game, cli, command);
+//		}
+//		if(game.isWon())
+//			cli.displayMessage("Good job!\n");
+//		else{
+//			cli.displayMessage("Too bad :(\n");
+//		}
 	}
 
 	public static void playTurn(Game game, UserInterface cli, Command command) {
-		game.heroTurn(command.getAction(), command.getDirection());	
-		
-		cli.displayMaze(game.map);
-		
-		
-		
-		try{
-			Thread.sleep(1000);
-		}catch(InterruptedException e){}
-		
-		game.dragonsTurn();
-		cli.displayMaze(game.map);
-		
-		try{
-			Thread.sleep(1000);
-		}catch(InterruptedException e){}
-		
-		game.resolutionPhase();
-		cli.displayMaze(game.map);
-		
-		try{
-			Thread.sleep(1000);
-		}catch(InterruptedException e){}
+//		game.heroTurn(command.getAction(), command.getDirection());	
+//		
+//		cli.displayMaze(game.map);
+//		
+//		
+//		
+//		try{
+//			Thread.sleep(1000);
+//		}catch(InterruptedException e){}
+//		
+//		game.dragonsTurn();
+//		cli.displayMaze(game.map);
+//		
+//		try{
+//			Thread.sleep(1000);
+//		}catch(InterruptedException e){}
+//		
+//		game.resolutionPhase();
+//		cli.displayMaze(game.map);
+//		
+//		try{
+//			Thread.sleep(1000);
+//		}catch(InterruptedException e){}
 	}
 }

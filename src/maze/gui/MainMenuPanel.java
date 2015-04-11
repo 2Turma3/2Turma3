@@ -45,9 +45,9 @@ public class MainMenuPanel extends JPanel {
 		private boolean dragonAttack;
 		
 		public Options(){
-			this.setRows(10);
-			this.setCols(10);
-			this.setNumberDragons(2);
+			this.setRows(15);
+			this.setCols(21);
+			this.setNumberDragons(3);
 			this.setDragonMove(true);
 			this.setDragonSleep(true);
 			this.setDragonAttack(true);
@@ -116,6 +116,7 @@ public class MainMenuPanel extends JPanel {
 	BufferedImage background;
 	private Options options;
 	private JFrame parentFrame;
+	private AssignedKeys assignedKeys;
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -132,6 +133,7 @@ public class MainMenuPanel extends JPanel {
 		}
 		
 		this.options = new Options();
+		this.assignedKeys = new AssignedKeys();
 		repaint();
 		setLayout(new BorderLayout(0, 0));
 		this.setSize(background.getWidth()/4, background.getHeight());
@@ -152,7 +154,7 @@ public class MainMenuPanel extends JPanel {
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Game game = new Game(options.getRows(),options.getCols(),options.getNumberDragons(),options.isDragonMove(),options.isDragonSleep(),options.isDragonAttack());
-				GameGui gameFrame = new GameGui(parentFrame, game);
+				GameGui gameFrame = new GameGui(parentFrame, game, new AssignedKeys());
 				gameFrame.setVisible(true);
 				parentFrame.setVisible(false);
 			}
@@ -168,7 +170,7 @@ public class MainMenuPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				OptionsMenu optMenu = new OptionsMenu(options);
+				OptionsMenu optMenu = new OptionsMenu(options, assignedKeys);
 				JOptionPane.showMessageDialog(null, optMenu,"Options",JOptionPane.PLAIN_MESSAGE);
 			}
 			

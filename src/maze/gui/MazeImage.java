@@ -37,10 +37,10 @@ public class MazeImage {
 	static {
 		try {
 			wallImage = new BufferedImage(CELL_WIDTH, CELL_HEIGHT, BufferedImage.TYPE_INT_ARGB);
-			wallImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/Mossy_Wall.png")), 0, 0, wallImage.getWidth(), wallImage.getHeight(), null);			
+			wallImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/Mossy_Wall.jpg")), 0, 0, wallImage.getWidth(), wallImage.getHeight(), null);			
 			
 			floorImage = new BufferedImage(CELL_WIDTH, CELL_HEIGHT, BufferedImage.TYPE_INT_ARGB);
-			floorImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/Floor.png")), 0, 0, floorImage.getWidth(), floorImage.getHeight(), null);
+			floorImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/Floor.jpg")), 0, 0, floorImage.getWidth(), floorImage.getHeight(), null);
 			
 			heroImage = new BufferedImage(CELL_WIDTH, CELL_HEIGHT, BufferedImage.TYPE_INT_ARGB);
 			heroImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/Hero.png")), 0, 0, heroImage.getWidth(), heroImage.getHeight(), null);
@@ -81,7 +81,6 @@ public class MazeImage {
 	}
 	
 	public void addEntities(LinkedList<Entity> entities) {
-		clear();
 		for (Entity entity : entities)
 			addEntity(entity);
 	}

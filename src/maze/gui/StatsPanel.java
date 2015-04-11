@@ -39,11 +39,11 @@ public class StatsPanel extends JPanel {
 	
 	
 	public void updateStats(){
-		swordPanel.setVisible(game.getHero().hasSword());
+		swordPanel.setVisible(game.getBoard().getHero().hasSword());
 
-		shieldPanel.setVisible(game.getHero().hasShield());
+		shieldPanel.setVisible(game.getBoard().getHero().hasShield());
 	
-		dartsNumber.setText("" + game.getHero().getDartsNumber());
+		dartsNumber.setText("" + game.getBoard().getHero().getDartsNumber());
 	}
 	
 	public StatsPanel(Game game) {
@@ -57,7 +57,7 @@ public class StatsPanel extends JPanel {
 				JPanel playerIconPanel = new JPanel(){
 					protected void paintComponent(java.awt.Graphics g) {
 						try {
-							BufferedImage img  = ImageIO.read(getClass().getResource("/images/Hero_ClosePicture.png"));
+							BufferedImage img  = ImageIO.read(ClassLoader.getSystemResource("images/Hero_ClosePicture.png"));
 							g.drawImage(img, 0, 0, getWidth(), getHeight(), null);
 						} catch (IOException e1) {
 							e1.printStackTrace();
@@ -97,6 +97,8 @@ public class StatsPanel extends JPanel {
 					}
 				};
 				weaponsPanel.add(swordPanel);
+				swordPanel.setLayout(new BoxLayout(swordPanel, BoxLayout.X_AXIS));
+				//this.swordPanel.setPreferredSize(new Dimension((int)(panel.getWidth()*0.75), (int)(panel.getHeight()*0.75)));
 				
 				
 				this.shieldPanel = new JPanel(){
@@ -119,7 +121,7 @@ public class StatsPanel extends JPanel {
 				JPanel dartPanel = new JPanel(){
 					protected void paintComponent(Graphics g){
 						try {
-							BufferedImage img  = ImageIO.read(new File("src1/images/arrow.png"));
+							BufferedImage img  = ImageIO.read(new File("src1/images/Dart.png"));
 							g.drawImage(img, 0, 0,getWidth(), getHeight(), null);
 						} catch (IOException e) {
 							e.printStackTrace();
@@ -140,10 +142,10 @@ public class StatsPanel extends JPanel {
 				this.dartsNumber = new JTextField();
 				panel_1.add(dartsNumber);
 				//this.dartsNumber.setMaximumSize(new Dimension( dartsInfoPanel.getWidth() / 4, dartsInfoPanel.getHeight() / 4) );
-				this.dartsNumber.setText("" + game.getHero().getDartsNumber());
+				this.dartsNumber.setText("" + game.getBoard().getHero().getDartsNumber());
 				this.dartsNumber.setEditable(false);
 				
-				updateStats();
+				//updateStats();
 	}
 
 }

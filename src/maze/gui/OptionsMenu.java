@@ -62,7 +62,7 @@ public class OptionsMenu extends JPanel {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					OptionsMenu frame = new OptionsMenu(new MainMenuPanel.Options());
+					OptionsMenu frame = new OptionsMenu(new MainMenuPanel.Options(), new AssignedKeys());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -72,7 +72,7 @@ public class OptionsMenu extends JPanel {
 	}
 	
 	
-	private void SaveOptions(Options options){
+	private void SaveOptions(Options options, AssignedKeys AS){
 		options.setRows(unsavedOptions.getRows());
 		options.setCols(unsavedOptions.getCols());
 		options.setNumberDragons(unsavedOptions.getNumberDragons());
@@ -80,12 +80,12 @@ public class OptionsMenu extends JPanel {
 		options.setDragonSleep(unsavedOptions.isDragonSleep());
 		options.setDragonAttack(unsavedOptions.isDragonAttack());
 
-		System.out.println("Rows: " + options.getRows());
+		/*System.out.println("Rows: " + options.getRows());
 		System.out.println("Cols: " + options.getCols());
 		System.out.println("NumberDragons: " + options.getNumberDragons());
 		System.out.println("DMove: " + options.isDragonMove());
 		System.out.println("DSleep: " + options.isDragonSleep());
-		System.out.println("Dattack: " + options.isDragonAttack());
+		System.out.println("Dattack: " + options.isDragonAttack());*/
 
 
 	}
@@ -93,7 +93,7 @@ public class OptionsMenu extends JPanel {
 	/**
 	 * Create the frame.
 	 */
-	public OptionsMenu(final MainMenuPanel.Options options) {
+	public OptionsMenu(final MainMenuPanel.Options options, final AssignedKeys AS) {
 		unsavedOptions = options.clone();
 		changed = false;
 		
@@ -253,7 +253,7 @@ public class OptionsMenu extends JPanel {
 					public void actionPerformed(ActionEvent arg0) {
 						int option = JOptionPane.showConfirmDialog(null,"Warning!","Are you sure you want to save this options?" , JOptionPane.OK_CANCEL_OPTION);
 						if(option == JOptionPane.YES_OPTION){
-							SaveOptions(options);
+							SaveOptions(options, AS);
 						}
 					}
 					
