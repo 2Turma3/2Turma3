@@ -2,36 +2,33 @@ package maze.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Graphics;
-import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 import maze.cli.CommandLine;
 import maze.logic.Dragon;
 import maze.logic.Game;
 import maze.logic.Game.Command;
-import maze.logic.Hero;
-import maze.logic.MazeMap;
 import maze.logic.Weapon;
 
 public class GameGui extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private final int SIDE_BORDERS_SIZE = 10;
 	private final int BUTTON_PANE_HEIGHT = 35;
@@ -129,6 +126,8 @@ public class GameGui extends JFrame {
 		this.statsPanel.updateStats();
 		if(this.game.isFinished()){
 			this.removeKeyListener(keyListener);
+			
+			JOptionPane.showMessageDialog(this, game.getEndOfGameMessage(), game.isWon() ? "Hurray" : "OHH NO!", JOptionPane.PLAIN_MESSAGE);
 		}
 	}
 	

@@ -6,7 +6,6 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JWindow;
 
 public class PressKeyWindow extends JDialog  implements KeyListener{
 	
