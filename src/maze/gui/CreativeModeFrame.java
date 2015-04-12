@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
@@ -175,7 +174,6 @@ public class CreativeModeFrame extends JFrame {
 			@Override
 			public void mousePressed(MouseEvent arg0) {
 				CreativeModeFrame.this.mousePressed(arg0.getX(), arg0.getY());
-				
 			}
 
 			@Override
