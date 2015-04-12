@@ -19,13 +19,11 @@ public class TestMovement extends TestCase {
 		builder.setCols(5);
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
-		CommandLine cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,2));
 		
 		Game game = new Game(map, hero,new LinkedList<Dragon>(), new LinkedList<Weapon>());
 		
 		game.heroTurn(new Game.Command(Game.Action.MOVE, Game.Direction.RIGHT));
-		//cli.displayMaze(game.map);
 		
 		assertEquals( new Position(1,3), game.getBoard().getHero().getPos());
 	}
@@ -36,14 +34,12 @@ public class TestMovement extends TestCase {
 		builder.setCols(5);
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
-		CommandLine cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,3));
 		
 		Game game = new Game(map, hero,new LinkedList<Dragon>(), new LinkedList<Weapon>());
 		
 		game.heroTurn(new Game.Command(Game.Action.MOVE, Game.Direction.RIGHT));
-		//cli.displayMaze(game.map);
-		
+
 		assertEquals( new Position(1,3), game.getBoard().getHero().getPos());
 	}
 	
@@ -54,7 +50,6 @@ public class TestMovement extends TestCase {
 		
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
-		CommandLine cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,3));
 		LinkedList<Weapon> weapons = new LinkedList<Weapon>();
 		Weapon sword = new Weapon(Weapon.Type.SWORD, new Position(1,2));
@@ -63,12 +58,10 @@ public class TestMovement extends TestCase {
 		Game game = new Game(map, hero,new LinkedList<Dragon>(),weapons);
 		
 		assertEquals(false, game.getBoard().getHero().hasSword());
-	//	cli.displayMaze(game.getBoard().getMap());
 		
 		game.heroTurn(new Game.Command(Game.Action.MOVE, Game.Direction.LEFT));
 		game.dragonsTurn();
 		game.resolutionPhase();
-		//cli.displayMaze(game.map);
 		
 		assertEquals(true, game.getBoard().getHero().hasSword());	
 	}
@@ -103,7 +96,6 @@ public class TestMovement extends TestCase {
 		builder.setCols(5);
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
-		CommandLine cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,3));
 		
 		Weapon sword = new Weapon(Weapon.Type.SWORD, null);
@@ -129,7 +121,6 @@ public class TestMovement extends TestCase {
 		builder.setCols(100);
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
-		CommandLine cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,98));
 		
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
@@ -163,7 +154,6 @@ public class TestMovement extends TestCase {
 		builder.setCols(200);
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
-		CommandLine cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,198));
 		
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
@@ -199,7 +189,6 @@ public class TestMovement extends TestCase {
 		builder.setCols(5);
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
-		CommandLine cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,3));
 		
 		Weapon dart = new Weapon(Weapon.Type.DART, null);
@@ -227,7 +216,6 @@ public class TestMovement extends TestCase {
 		builder.setCols(5);
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
-		CommandLine cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,1));
 		
 
@@ -256,7 +244,6 @@ public class TestMovement extends TestCase {
 		builder.setCols(3);
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
-		CommandLine cli = new CommandLine();
 		Hero hero = new Hero(new Position(3,1));
 		
 		Weapon dart = new Weapon(Weapon.Type.DART, null);
@@ -284,7 +271,6 @@ public class TestMovement extends TestCase {
 		builder.setCols(3);
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
-		CommandLine cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,1));
 		
 		Weapon dart = new Weapon(Weapon.Type.DART, null);
@@ -313,7 +299,6 @@ public class TestMovement extends TestCase {
 		builder.setCols(5);
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
-		CommandLine cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,3));
 		LinkedList<Weapon> weapons = new LinkedList<Weapon>();
 		Weapon sword = new Weapon(Weapon.Type.SWORD, new Position(1,2));
@@ -348,7 +333,6 @@ public class TestMovement extends TestCase {
 		builder.setCols(5);
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,4));
-		CommandLine cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,3));
 		LinkedList<Weapon> weapons = new LinkedList<Weapon>();
 		Weapon sword = new Weapon(Weapon.Type.SWORD, new Position(1,2));
@@ -376,7 +360,6 @@ public class TestMovement extends TestCase {
 		builder.setCols(5);
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
-		CommandLine cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,3));
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
 		
@@ -400,7 +383,6 @@ public class TestMovement extends TestCase {
 		builder.setCols(5);
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
-		CommandLine cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,1));
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
 		
@@ -424,7 +406,6 @@ public class TestMovement extends TestCase {
 		builder.setCols(3);
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
-		CommandLine cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,1));
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
 		
@@ -448,7 +429,6 @@ public class TestMovement extends TestCase {
 		builder.setCols(3);
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
-		CommandLine cli = new CommandLine();
 		Hero hero = new Hero(new Position(3,1));
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
 		
@@ -472,7 +452,6 @@ public class TestMovement extends TestCase {
 		builder.setCols(100);
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
-		CommandLine cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,99));
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
 		
@@ -508,7 +487,6 @@ public class TestMovement extends TestCase {
 		builder.setCols(3);
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
-		CommandLine cli = new CommandLine();
 		Hero hero = new Hero(new Position(99,1));
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
 		

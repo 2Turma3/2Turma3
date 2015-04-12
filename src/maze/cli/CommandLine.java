@@ -2,11 +2,9 @@ package maze.cli;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.Map;
 
-import maze.logic.Entity;
 import maze.logic.Game.Action;
 import maze.logic.Game.Direction;
 import maze.logic.*;
@@ -16,7 +14,160 @@ public class CommandLine {
 	private Map<String, Game.Command> inputMapping;
 	private enum CellData {EMPTY, WALL, HERO, HERO_SWORD, DRAGON, DRAGON_SLEEP, SWORD, DART, SHIELD, DRAGON_ON_WEAPON, DRAGON_SLEEP_WEAPON, EXIT, FLAME}
 	private Map<CellData, Character> cellMapping;
+	private Game game;
 	
+	public static void main(String[] args) {
+		CommandLine cli = new CommandLine();
+		cli.run();
+	}
+
+	public void run() {
+		boolean validInput;
+		boolean canSleep = false;
+		boolean canMove = false;
+		boolean canAttack = false;
+		boolean staticMap = false;
+		int numDragons = 0;
+		String input;
+		
+		validInput = false;
+		while (!validInput) {
+			System.out.print("Number of dragons? ");
+			input = scanner.nextLine();
+			
+			try {
+				numDragons = Integer.parseUnsignedInt(input);
+				validInput = true;
+			}
+			catch (Exception e) {
+			}
+		}
+
+		if (numDragons > 0) {
+			validInput = false;
+			while (!validInput) {
+				System.out.print("Dragons can move (y or n)? ");
+				input = scanner.nextLine();
+				
+				if (input.equals("y")) {
+					canMove = true;
+					validInput = true;
+				}
+				else if (input.equals("n")) {
+					canMove = false;
+					validInput = true;
+				}
+			}
+			
+			validInput = false;
+			while (!validInput) {
+				System.out.print("Dragons can sleep (y or n)? ");
+				input = scanner.nextLine();
+				
+				if (input.equals("y")) {
+					canSleep = true;
+					validInput = true;
+				}
+				else if (input.equals("n")) {
+					canSleep = false;
+					validInput = true;
+				}
+			}
+			validInput = false;
+			while (!validInput) {
+				System.out.print("Dragons can spit fire (y or n)? ");
+				input = scanner.nextLine();
+				
+				if (input.equals("y")) {
+					canAttack = true;
+					validInput = true;
+				}
+				else if (input.equals("n")) {
+					canAttack = false;
+					validInput = true;
+				}
+			}
+		}
+		validInput = false;
+		while (!validInput) {
+			System.out.print("Use default map (y or n)? ");
+			input = scanner.nextLine();
+			
+			if (input.equals("y")) {
+				staticMap = true;
+				validInput = true;
+			}
+			else if (input.equals("n")) {
+				staticMap = false;
+				validInput = true;
+			}
+		}
+		
+		if (!staticMap) {
+			int rows = 10;
+			int columns = 10;
+			
+			validInput = false;
+			while (!validInput) {
+				System.out.print("Number of rows (>= 10)? ");
+				input = scanner.nextLine();
+				
+				try {
+					rows = Integer.parseUnsignedInt(input);
+					validInput = rows >= 10;
+				}
+				catch (Exception e) {
+				}
+			}
+			
+			validInput = false;
+			while (!validInput) {
+				System.out.print("Number of columns (>= 10)? ");
+				input = scanner.nextLine();
+				
+				try {
+					columns = Integer.parseUnsignedInt(input);
+					validInput = columns >= 10;
+				}
+				catch (Exception e) {
+				}
+			}
+			
+			game = new Game(rows, columns, numDragons, canMove, canSleep, canAttack);
+		}
+		else
+			game = new Game(numDragons, canMove, canSleep, canAttack);
+		
+		play();
+	}
+		
+
+	private void play() {
+		System.out.println("Commands: w - UP, a - LEFT, s - DOWN, d - RIGHT, [directio]t - throw dart, SPACE - Skip turn");
+		
+		while (!game.isFinished()) {
+			displayBoard(game.getBoard());
+			
+			Game.Command command = null;
+			while (command == null) {
+				try {
+					System.out.print("Command? ");
+					command = getInput();
+				} catch (IOException e) {
+				}
+			}
+			
+			game.heroTurn(command);
+			game.dragonsTurn();
+			game.resolutionPhase();
+		}
+		
+		System.out.println(game.getEndOfGameMessage());
+		if (game.isWon())
+			System.out.println("Congratulations, you won!");
+		else
+			System.out.println("Better luck next time...");
+	}
 
 	public CommandLine() {
 		scanner = new Scanner(System.in);
@@ -106,10 +257,5 @@ public class CommandLine {
 			System.out.println();
 		}
 		
-	}
-
-	public void displayMessage(String message) {
-		System.out.println(message);
-	}
-	
+	}	
 }

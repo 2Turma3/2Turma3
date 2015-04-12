@@ -15,6 +15,7 @@ public class Game implements Serializable {
 	private GameBoard board;
 	private boolean finished;
 	private boolean won;
+	private String endOfGameMessage = "";
 
 	private boolean exitOpen;
 	
@@ -58,6 +59,44 @@ public class Game implements Serializable {
 		}
 	}
 	
+	public Game(MazeMap map, int numDragons, boolean canMove, boolean canSleep, boolean canAttack) {
+		finished = false;
+		won = false;
+		Random rnd = new Random();
+		Position newPos;
+		LinkedList<Position> walkablePos = map.getWalkablePositions();
+		newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
+		Hero hero = new Hero(newPos);
+		walkablePos.remove(newPos);
+		
+		LinkedList<Weapon> weapons = generateWeapons(numDragons, walkablePos);
+		
+		LinkedList<Dragon> dragons = generateDragons(numDragons, walkablePos, canMove, canSleep, canAttack);	
+		
+		setBoard(new GameBoard(map, hero, dragons, weapons));
+		this.setExitOpen(this.getBoard().getDragons().isEmpty() && getBoard().getHero().hasSword());
+	}
+	public Game(int numDragons, boolean canMove, boolean canSleep, boolean canAttack) {
+		MazeMap.Builder builder = new MazeMap.Builder();
+		MazeMap map = builder.build();
+		setFire(new LinkedList<Flame>());
+		finished = false;
+		won = false;
+		Random rnd = new Random();
+		Position newPos;
+		LinkedList<Position> walkablePos = map.getWalkablePositions();
+		newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
+		Hero hero = new Hero(newPos);
+		walkablePos.remove(newPos);
+		
+		LinkedList<Weapon> weapons = generateWeapons(numDragons, walkablePos);
+		
+		LinkedList<Dragon> dragons = generateDragons(numDragons, walkablePos, canMove, canSleep, canAttack);	
+		
+		setBoard(new GameBoard(map, hero, dragons, weapons));
+		this.setExitOpen(this.getBoard().getDragons().isEmpty() && getBoard().getHero().hasSword());
+	}
+	
 	public Game(int rows, int cols, int numDragons, boolean canMove, boolean canSleep, boolean canAttack){
 		MazeMap.Builder builder = new MazeMap.Builder();
 		builder.setRows(rows);
@@ -67,25 +106,19 @@ public class Game implements Serializable {
 		finished = false;
 		won = false;
 		
-		LinkedList<Position> walkablePos = map.getWalkablePositions();
-		LinkedList<Dragon> dragons;
-		dragons = generateDragons(numDragons, walkablePos, canMove, canSleep, canAttack);	
-		
-		walkablePos = map.getWalkablePositions();
-		LinkedList<Weapon> weapons = generateWeapons(numDragons, walkablePos);
-
 		Random rnd = new Random();
 		Position newPos;
-		walkablePos = map.getWalkablePositions();
+		LinkedList<Position> walkablePos = map.getWalkablePositions();
 		newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
 		Hero hero = new Hero(newPos);
 		walkablePos.remove(newPos);
 		
+		LinkedList<Weapon> weapons = generateWeapons(numDragons, walkablePos);
 		
-
+		LinkedList<Dragon> dragons = generateDragons(numDragons, walkablePos, canMove, canSleep, canAttack);	
 		
 		setBoard(new GameBoard(map, hero, dragons, weapons));
-		this.setExitOpen(this.getBoard().getDragons().isEmpty());
+		this.setExitOpen(this.getBoard().getDragons().isEmpty() && getBoard().getHero().hasSword());
 	}
 
 	public Game(MazeMap map, Hero hero, LinkedList<Dragon> dragons, LinkedList<Weapon> weapons){
@@ -104,18 +137,27 @@ public class Game implements Serializable {
 		Position newPos;
 		LinkedList<Weapon> weapons = new LinkedList<Weapon>();
 		Random rnd = new Random();
-		newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
-		Weapon sword = new Weapon(Weapon.Type.SWORD, newPos);
-		weapons.add(sword);
 		
-		newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
-		Weapon shield = new Weapon(Weapon.Type.SHIELD, newPos);
-		weapons.add(shield);
+
+		if (!walkablePos.isEmpty()) {
+			newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
+			Weapon sword = new Weapon(Weapon.Type.SWORD, newPos);
+			weapons.add(sword);
+			walkablePos.remove(newPos);
+		}
 		
-		for(int i = maxDarts; i > 0; i--){
+		if (!walkablePos.isEmpty()) {
+			newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
+			Weapon shield = new Weapon(Weapon.Type.SHIELD, newPos);
+			weapons.add(shield);
+			walkablePos.remove(newPos);
+		}
+		
+		for(int i = maxDarts; i > 0 && !walkablePos.isEmpty(); --i){
 			newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
 			Weapon dart = new Weapon(Weapon.Type.DART, newPos);
 			weapons.add(dart);
+			walkablePos.remove(newPos);
 		}
 		
 		return weapons;
@@ -126,13 +168,11 @@ public class Game implements Serializable {
 		Random rnd = new Random();
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
 		Position newPos;
-		int tempNumDragons = numDragons;
-		while(tempNumDragons > 0){
+		for(int i = numDragons; i > 0 && !walkablePos.isEmpty(); --i){
 			newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
 			Dragon newDragon = new Dragon(newPos, canMove, canSleep, canAttack);
 			dragons.add(newDragon);
 			walkablePos.remove(newPos);
-			tempNumDragons--;
 		}
 		
 		return dragons;
@@ -262,6 +302,9 @@ public class Game implements Serializable {
 	}
     
     public void resolutionPhase(){
+    	if (isFinished())
+			return;
+    	
     	for(Iterator<Weapon> it = getBoard().getWeapons().descendingIterator(); it.hasNext(); ){
     		Weapon weapon = it.next();
     		if(weapon.getPos().equals(getBoard().getHero().getPos())){
@@ -278,9 +321,10 @@ public class Game implements Serializable {
     			if(getBoard().getHero().hasSword()){
 		    	it.remove();
     			}
-    			else{
+    			else if (!dragon.isSleeping()){
     				this.setFinished(true);
         			this.setWon(false);
+        			setEndOfGameMessage("A dragon killed our hero...");
     				return;
     			}
     		}
@@ -290,20 +334,21 @@ public class Game implements Serializable {
     		if(flame.getPos().equals(getBoard().getHero().getPos()) && !getBoard().getHero().hasShield()){
     			setFinished(true);
     			setWon(false);
-    			System.out.println("Morreu queimado");
+    			setEndOfGameMessage("A dragon turned our hero into coal...");
     			return;
     		}
     	}
 
     	getFire().clear();
     	
-    	if (getBoard().getDragons().isEmpty()){
+    	if (getBoard().getDragons().isEmpty() && getBoard().getHero().hasSword()){
     		this.setExitOpen(true);
     		getBoard().getMap().setWalkable(getBoard().getMap().getExit(), true);
     	}
     	if(getBoard().getHero().getPos().equals(getBoard().getMap().getExit())){
     		this.setFinished(true);
     		this.setWon(true);
+    		setEndOfGameMessage("You reached the exit of the maze!");
     	}
     }
 
@@ -381,11 +426,15 @@ public class Game implements Serializable {
     }
 
 	public void dragonsTurn() {
+		if (isFinished())
+			return;
 		for(Dragon dragon : board.getDragons())
 			moveDragon(dragon);
 	}
 
 	public void heroTurn(Command command) {
+		if (isFinished())
+			return;
 		switch(command.getAction()){
     	case MOVE:
     		moveEntity(board.getHero(),command.getDirection());
@@ -440,5 +489,19 @@ public class Game implements Serializable {
 	public void setExitOpen(boolean exitOpen) {
 		this.getBoard().getMap().setWalkable(this.getBoard().getMap().getExit(), exitOpen);
 		this.exitOpen = exitOpen;
+	}
+
+	/**
+	 * @return the endOfGameMessage
+	 */
+	public String getEndOfGameMessage() {
+		return endOfGameMessage;
+	}
+
+	/**
+	 * @param endOfGameMessage the endOfGameMessage to set
+	 */
+	public void setEndOfGameMessage(String endOfGameMessage) {
+		this.endOfGameMessage = endOfGameMessage;
 	}
 }
