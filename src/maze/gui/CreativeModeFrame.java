@@ -5,19 +5,15 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JList;
 import javax.swing.JRadioButton;
 import javax.swing.BoxLayout;
 
 import maze.logic.CreativeMode;
-import maze.logic.GameBoard;
 
 public class CreativeModeFrame extends JFrame {
 
