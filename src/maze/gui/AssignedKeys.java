@@ -4,6 +4,8 @@ import java.awt.event.KeyEvent;
 
 public class AssignedKeys {
 
+	public enum Key{UP, DOWN, LEFT, RIGHT, ATTACK, SKIP}
+	
 	int up;
 	int down;
 	int left;

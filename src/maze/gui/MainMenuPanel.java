@@ -12,29 +12,20 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import java.awt.CardLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.BoxLayout;
 
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-
-import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
 
 import maze.logic.Game;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
 public class MainMenuPanel extends JPanel {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public static class Options{
 		private int rows;
@@ -46,7 +37,7 @@ public class MainMenuPanel extends JPanel {
 		
 		public Options(){
 			this.setRows(15);
-			this.setCols(21);
+			this.setCols(19);
 			this.setNumberDragons(3);
 			this.setDragonMove(true);
 			this.setDragonSleep(true);
@@ -140,21 +131,21 @@ public class MainMenuPanel extends JPanel {
 		
 		setOpaque(false);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setOpaque(false);
-		panel_1.setBounds(3*background.getWidth()/4, 0, background.getWidth()/4, background.getHeight());
-		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.Y_AXIS));
-		panel_1.setBorder(new EmptyBorder(300,0,100,60));
-		add(panel_1, BorderLayout.EAST);
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setOpaque(false);
+		buttonPanel.setBounds(3*background.getWidth()/4, 0, background.getWidth()/4, background.getHeight());
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+		buttonPanel.setBorder(new EmptyBorder(300,0,100,60));
+		add(buttonPanel, BorderLayout.EAST);
 		
 		
 		JButton btnNewGame = new JButton("New Game");
 		btnNewGame.setSize(100, 100);		
-		panel_1.add(btnNewGame);
+		buttonPanel.add(btnNewGame);
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Game game = new Game(options.getRows(),options.getCols(),options.getNumberDragons(),options.isDragonMove(),options.isDragonSleep(),options.isDragonAttack());
-				GameGui gameFrame = new GameGui(parentFrame, game, new AssignedKeys());
+				GameGui gameFrame = new GameGui(parentFrame, game, assignedKeys);
 				gameFrame.setVisible(true);
 				parentFrame.setVisible(false);
 			}
@@ -162,10 +153,22 @@ public class MainMenuPanel extends JPanel {
 		
 		
 		JButton btnLoadGame = new JButton("Load Game");
-		panel_1.add(btnLoadGame);
+		buttonPanel.add(btnLoadGame);
+		
+		JButton btnCreativeMode = new JButton("Creative Mode");
+		buttonPanel.add(btnCreativeMode);
+		btnCreativeMode.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+			
+				
+ 			}
+			
+		});
 		
 		JButton btnOptions = new JButton("Options");
-		panel_1.add(btnOptions);
+		buttonPanel.add(btnOptions);
 		btnOptions.addActionListener(new ActionListener(){
 
 			@Override
@@ -175,8 +178,7 @@ public class MainMenuPanel extends JPanel {
 			}
 			
 		});
-		
-		
+				
 		JButton btnQuit = new JButton("Quit");
 		btnQuit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -186,7 +188,7 @@ public class MainMenuPanel extends JPanel {
 					System.exit(0);
 			}
 		});
-		panel_1.add(btnQuit);
+		buttonPanel.add(btnQuit);
 
 	
 		
