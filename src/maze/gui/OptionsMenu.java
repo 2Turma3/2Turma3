@@ -118,8 +118,8 @@ public class OptionsMenu extends JPanel {
 		this.rowSlider = new JSlider();
 		panel_1.add(rowSlider);
 		rowSlider.setPaintLabels(true);
-		rowSlider.setMaximum(30);
-		rowSlider.setMinimum(10);
+		rowSlider.setMaximum(20);
+		rowSlider.setMinimum(9);
 		rowSlider.setValue(unsavedOptions.getRows());
 		rowSlider.addChangeListener(new ChangeListener(){
 
@@ -156,8 +156,8 @@ public class OptionsMenu extends JPanel {
 
 		this.colSlider = new JSlider();
 		panel_2.add(colSlider);
-		colSlider.setMaximum(30);
-		colSlider.setMinimum(10);
+		colSlider.setMaximum(20);
+		colSlider.setMinimum(9);
 		colSlider.setValue(unsavedOptions.getCols());
 		colSlider.addChangeListener(new ChangeListener(){
 

@@ -44,6 +44,7 @@ public class Gui {
 		frmDungeon.setTitle("Dungeon Frontiers");
 
 		frmDungeon.setBounds(10, 10, panel.background.getWidth(), panel.background.getHeight());
+		frmDungeon.setResizable(false);
 		frmDungeon.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		panel.background.getHeight();
