@@ -18,7 +18,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.BoxLayout;
 import javax.swing.border.EmptyBorder;
 
-import maze.logic.CreativeMode;
 import maze.logic.Game;
 
 public class MainMenuPanel extends JPanel {
