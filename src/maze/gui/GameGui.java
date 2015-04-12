@@ -43,7 +43,6 @@ public class GameGui extends JFrame {
 		private boolean attackKeyHold = false;
 		@Override
 		public void keyPressed(KeyEvent e) {
-			System.out.println(e.getKeyText(e.getKeyCode()));
 			Game.Action action = attackKeyHold ? Game.Action.ATTACK : Game.Action.MOVE;
 			if(assignedKeys.up == e.getKeyCode()){
 				play(action, Game.Direction.UP);
@@ -205,7 +204,6 @@ public class GameGui extends JFrame {
 			gameImagePanel.setBounds(SIDE_BORDERS_SIZE, 0, 100, 100);
 		contentPane.add(gameImagePanel, BorderLayout.CENTER);
 		
-		System.out.print(this.getKeyListeners().length);
 		
 	}
 
