@@ -88,11 +88,23 @@ public class MazeImage {
 		this.mazeSprites = new BufferedImage(this.mazeTiles.getWidth(), this.mazeTiles.getHeight(), this.mazeTiles.getType());
 	}
 	
+	public void updateEntities(GameBoard board){
+		clear();
+		for(Weapon weapon : board.getWeapons())
+			addEntity(weapon);
+		
+		for(Dragon dragon : board.getDragons())
+			addEntity(dragon);
+		
+		addEntity(board.getHero());
+	}
+	
+	
 	public BufferedImage getImage() {
 		BufferedImage mazeImage = new BufferedImage(this.mazeTiles.getWidth(), this.mazeTiles.getHeight(), this.mazeTiles.getType());
 		Graphics g2 = mazeImage.getGraphics();
 		g2.drawImage(this.mazeTiles, 0, 0, null);
-		g2.drawImage(this.exit, exitPosition.getCol() * CELL_WIDTH, exitPosition.getRow() * CELL_HEIGHT, null);
+		g2.drawImage(this.exit, exitPosition.getColumn() * CELL_WIDTH, exitPosition.getRow() * CELL_HEIGHT, null);
 		g2.drawImage(this.mazeSprites, 0, 0, null);
 		
 		return mazeImage;
@@ -123,7 +135,7 @@ public class MazeImage {
 		if (img == null)
 			return;
 		
-		mazeSprites.getGraphics().drawImage(img, entity.getPos().getCol() * CELL_WIDTH, entity.getPos().getRow() * CELL_HEIGHT, img.getWidth(), img.getHeight(), null);
+		mazeSprites.getGraphics().drawImage(img, entity.getPosition().getColumn() * CELL_WIDTH, entity.getPosition().getRow() * CELL_HEIGHT, img.getWidth(), img.getHeight(), null);
 	}
 	
 	public void setExit(boolean open){

@@ -36,7 +36,7 @@ public class TestMovement extends TestCase {
 		map.setExit(new Position(1,0));
 		Hero hero = new Hero(new Position(1,3));
 		
-		Game game = new Game(map, hero,new LinkedList<Dragon>(), new LinkedList<Weapon>());
+		Game game = new Game(map, hero,new LinkedList<Dragon>(), new LinkedList<Weapon>(), true, true, true);
 		
 		game.heroTurn(new Game.Command(Game.Action.MOVE, Game.Direction.RIGHT));
 

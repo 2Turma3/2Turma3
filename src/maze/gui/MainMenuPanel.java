@@ -14,10 +14,11 @@ import javax.swing.JPanel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.BoxLayout;
 
+import javax.swing.BoxLayout;
 import javax.swing.border.EmptyBorder;
 
+import maze.logic.CreativeMode;
 import maze.logic.Game;
 
 public class MainMenuPanel extends JPanel {
@@ -161,8 +162,9 @@ public class MainMenuPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-			
-				
+				CreativeModeFrame creative = new CreativeModeFrame(parentFrame, options, assignedKeys);
+				parentFrame.setVisible(false);
+				creative.setVisible(true);
  			}
 			
 		});
