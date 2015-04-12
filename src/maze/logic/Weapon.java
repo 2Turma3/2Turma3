@@ -4,8 +4,8 @@ public class Weapon extends Entity {
 	public enum Type{SWORD, DART, SHIELD}
 	private Type type;
 	
-	public Weapon(Type type, Position pos, boolean active) {
-		super(pos, active);
+	public Weapon(Type type, Position pos) {
+		super(pos);
 		this.setType(type);
 	}
 	

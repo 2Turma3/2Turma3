@@ -9,8 +9,8 @@ public class Dragon extends Entity {
 	private LinkedList<Action> availableActions;
 	public static final int ATTACK_RADIUS = 3;
 	
-	public Dragon(Position pos, boolean active, boolean canMove, boolean canSleep, boolean canAttack) {
-		super(pos, active);
+	public Dragon(Position pos, boolean canMove, boolean canSleep, boolean canAttack) {
+		super(pos);
 		setSleeping(false);
 		availableActions = new LinkedList<Action>();
 		

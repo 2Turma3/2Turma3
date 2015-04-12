@@ -1,6 +1,5 @@
 package maze.test;
 
-import static org.junit.Assert.*;
 
 import java.util.LinkedList;
 
@@ -21,7 +20,7 @@ public class TestMovement extends TestCase {
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
-		Hero hero = new Hero(new Position(1,2),true);
+		Hero hero = new Hero(new Position(1,2));
 		
 		Game game = new Game(map, hero,new LinkedList<Dragon>(), new LinkedList<Weapon>());
 		
@@ -38,7 +37,7 @@ public class TestMovement extends TestCase {
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
-		Hero hero = new Hero(new Position(1,3),true);
+		Hero hero = new Hero(new Position(1,3));
 		
 		Game game = new Game(map, hero,new LinkedList<Dragon>(), new LinkedList<Weapon>());
 		
@@ -56,9 +55,9 @@ public class TestMovement extends TestCase {
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
-		Hero hero = new Hero(new Position(1,3),true);
+		Hero hero = new Hero(new Position(1,3));
 		LinkedList<Weapon> weapons = new LinkedList<Weapon>();
-		Weapon sword = new Weapon(Weapon.Type.SWORD, new Position(1,2), true);
+		Weapon sword = new Weapon(Weapon.Type.SWORD, new Position(1,2));
 		weapons.add(sword);
 		
 		Game game = new Game(map, hero,new LinkedList<Dragon>(),weapons);
@@ -81,10 +80,10 @@ public class TestMovement extends TestCase {
 		builder.setCols(5);
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
-		Hero hero = new Hero(new Position(1,3),true);
+		Hero hero = new Hero(new Position(1,3));
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
 		
-		dragons.add(new Dragon(new Position(1,1), true, false, false, false));
+		dragons.add(new Dragon(new Position(1,1), false, false, false));
 		
 		Game game = new Game(map, hero,dragons,new LinkedList<Weapon>());
 		
@@ -105,13 +104,13 @@ public class TestMovement extends TestCase {
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
-		Hero hero = new Hero(new Position(1,3),true);
+		Hero hero = new Hero(new Position(1,3));
 		
-		Weapon sword = new Weapon(Weapon.Type.SWORD, null, true);
+		Weapon sword = new Weapon(Weapon.Type.SWORD, null);
 		hero.addWeapon(sword);
 		
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
-		dragons.add(new Dragon(new Position(1,1), true, false, false, false));
+		dragons.add(new Dragon(new Position(1,1), false, false, false));
 		
 		Game game = new Game(map, hero,dragons,new LinkedList<Weapon>());
 		
@@ -131,10 +130,10 @@ public class TestMovement extends TestCase {
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
-		Hero hero = new Hero(new Position(1,98),true);
+		Hero hero = new Hero(new Position(1,98));
 		
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
-		dragons.add(new Dragon(new Position(1,1), true, false, true, false));
+		dragons.add(new Dragon(new Position(1,1), false, true, false));
 		
 		Game game = new Game(map, hero,dragons,new LinkedList<Weapon>());
 		
@@ -165,14 +164,14 @@ public class TestMovement extends TestCase {
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
-		Hero hero = new Hero(new Position(1,198),true);
+		Hero hero = new Hero(new Position(1,198));
 		
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
-		dragons.add(new Dragon(new Position(1,45), true, true, false, false));
-		dragons.add(new Dragon(new Position(1,46), true, true, false, false));
-		dragons.add(new Dragon(new Position(1,47), true, true, false, false));
-		dragons.add(new Dragon(new Position(1,48), true, true, false, false));
-		dragons.add(new Dragon(new Position(1,49), true, true, false, false));
+		dragons.add(new Dragon(new Position(1,45), true, false, false));
+		dragons.add(new Dragon(new Position(1,46), true, false, false));
+		dragons.add(new Dragon(new Position(1,47), true, false, false));
+		dragons.add(new Dragon(new Position(1,48), true, false, false));
+		dragons.add(new Dragon(new Position(1,49), true, false, false));
 		
 		Game game = new Game(map, hero,dragons,new LinkedList<Weapon>());
 		
@@ -201,13 +200,13 @@ public class TestMovement extends TestCase {
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
-		Hero hero = new Hero(new Position(1,3),true);
+		Hero hero = new Hero(new Position(1,3));
 		
-		Weapon dart = new Weapon(Weapon.Type.DART, null, true);
+		Weapon dart = new Weapon(Weapon.Type.DART, null);
 		hero.addWeapon(dart);
 		
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
-		dragons.add(new Dragon(new Position(1,1), true, false, false, false));
+		dragons.add(new Dragon(new Position(1,1), false, false, false));
 		
 		Game game = new Game(map, hero,dragons,new LinkedList<Weapon>());
 		
@@ -227,13 +226,13 @@ public class TestMovement extends TestCase {
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
-		Hero hero = new Hero(new Position(1,1),true);
+		Hero hero = new Hero(new Position(1,1));
 		
-		Weapon dart = new Weapon(Weapon.Type.DART, null, true);
+		Weapon dart = new Weapon(Weapon.Type.DART, null);
 		hero.addWeapon(dart);
 		
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
-		dragons.add(new Dragon(new Position(1,4), true, false, false, false));
+		dragons.add(new Dragon(new Position(1,4), false, false, false));
 		
 		Game game = new Game(map, hero,dragons,new LinkedList<Weapon>());
 		
@@ -253,13 +252,13 @@ public class TestMovement extends TestCase {
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
-		Hero hero = new Hero(new Position(3,1),true);
+		Hero hero = new Hero(new Position(3,1));
 		
-		Weapon dart = new Weapon(Weapon.Type.DART, null, true);
+		Weapon dart = new Weapon(Weapon.Type.DART, null);
 		hero.addWeapon(dart);
 		
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
-		dragons.add(new Dragon(new Position(1,1), true, false, false, false));
+		dragons.add(new Dragon(new Position(1,1), false, false, false));
 		
 		Game game = new Game(map, hero,dragons,new LinkedList<Weapon>());
 		
@@ -279,13 +278,13 @@ public class TestMovement extends TestCase {
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
-		Hero hero = new Hero(new Position(1,1),true);
+		Hero hero = new Hero(new Position(1,1));
 		
-		Weapon dart = new Weapon(Weapon.Type.DART, null, true);
+		Weapon dart = new Weapon(Weapon.Type.DART, null);
 		hero.addWeapon(dart);
 		
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
-		dragons.add(new Dragon(new Position(3,1), true, false, false, false));
+		dragons.add(new Dragon(new Position(3,1), false, false, false));
 		
 		Game game = new Game(map, hero,dragons,new LinkedList<Weapon>());
 		
@@ -306,13 +305,13 @@ public class TestMovement extends TestCase {
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
-		Hero hero = new Hero(new Position(1,3),true);
+		Hero hero = new Hero(new Position(1,3));
 		LinkedList<Weapon> weapons = new LinkedList<Weapon>();
-		Weapon sword = new Weapon(Weapon.Type.SWORD, new Position(1,2), true);
+		Weapon sword = new Weapon(Weapon.Type.SWORD, new Position(1,2));
 		weapons.add(sword);
 		
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
-		dragons.add(new Dragon(new Position(1,1), true, false, false, false));
+		dragons.add(new Dragon(new Position(1,1), false, false, false));
 		
 		Game game = new Game(map, hero,dragons,weapons);
 		
@@ -341,13 +340,13 @@ public class TestMovement extends TestCase {
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,4));
 		UserInterface cli = new CommandLine();
-		Hero hero = new Hero(new Position(1,3),true);
+		Hero hero = new Hero(new Position(1,3));
 		LinkedList<Weapon> weapons = new LinkedList<Weapon>();
-		Weapon sword = new Weapon(Weapon.Type.SWORD, new Position(1,2), true);
+		Weapon sword = new Weapon(Weapon.Type.SWORD, new Position(1,2));
 		weapons.add(sword);
 		
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
-		dragons.add(new Dragon(new Position(1,1), true, false, false, false));
+		dragons.add(new Dragon(new Position(1,1), false, false, false));
 		
 		Game game = new Game(map, hero,dragons,weapons);
 		
@@ -369,10 +368,10 @@ public class TestMovement extends TestCase {
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
-		Hero hero = new Hero(new Position(1,3),true);
+		Hero hero = new Hero(new Position(1,3));
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
 		
-		dragons.add(new Dragon(new Position(1,1), true, false, false, true));
+		dragons.add(new Dragon(new Position(1,1), false, false, true));
 		
 		Game game = new Game(map, hero,dragons,new LinkedList<Weapon>());
 		
@@ -393,10 +392,10 @@ public class TestMovement extends TestCase {
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
-		Hero hero = new Hero(new Position(1,1),true);
+		Hero hero = new Hero(new Position(1,1));
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
 		
-		dragons.add(new Dragon(new Position(1,3), true, false, false, true));
+		dragons.add(new Dragon(new Position(1,3), false, false, true));
 		
 		Game game = new Game(map, hero,dragons,new LinkedList<Weapon>());
 		
@@ -417,10 +416,10 @@ public class TestMovement extends TestCase {
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
-		Hero hero = new Hero(new Position(1,1),true);
+		Hero hero = new Hero(new Position(1,1));
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
 		
-		dragons.add(new Dragon(new Position(3,1), true, false, false, true));
+		dragons.add(new Dragon(new Position(3,1), false, false, true));
 		
 		Game game = new Game(map, hero,dragons,new LinkedList<Weapon>());
 		
@@ -441,10 +440,10 @@ public class TestMovement extends TestCase {
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
-		Hero hero = new Hero(new Position(3,1),true);
+		Hero hero = new Hero(new Position(3,1));
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
 		
-		dragons.add(new Dragon(new Position(1,1), true, false, false, true));
+		dragons.add(new Dragon(new Position(1,1), false, false, true));
 		
 		Game game = new Game(map, hero,dragons,new LinkedList<Weapon>());
 		
@@ -465,10 +464,10 @@ public class TestMovement extends TestCase {
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
-		Hero hero = new Hero(new Position(1,99),true);
+		Hero hero = new Hero(new Position(1,99));
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
 		
-		dragons.add(new Dragon(new Position(1,50), true, true, false, false));
+		dragons.add(new Dragon(new Position(1,50), true, false, false));
 		
 		Game game = new Game(map, hero,dragons,new LinkedList<Weapon>());
 		
@@ -501,10 +500,10 @@ public class TestMovement extends TestCase {
 		MazeMap map = builder.build();
 		map.setExit(new Position(1,0));
 		UserInterface cli = new CommandLine();
-		Hero hero = new Hero(new Position(99,1),true);
+		Hero hero = new Hero(new Position(99,1));
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
 		
-		dragons.add(new Dragon(new Position(50,1), true, true, false, false));
+		dragons.add(new Dragon(new Position(50,1), true, false, false));
 		
 		Game game = new Game(map, hero,dragons,new LinkedList<Weapon>());
 		

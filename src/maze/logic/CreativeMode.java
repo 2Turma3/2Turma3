@@ -60,7 +60,7 @@ public class CreativeMode {
 			
 			placeFloor(position);
 			if (getBoard().getHero() == null)
-				getBoard().setHero(new Hero(position, true));
+				getBoard().setHero(new Hero(position));
 			else
 				getBoard().getHero().setPosition(position);
 		}
@@ -70,7 +70,7 @@ public class CreativeMode {
 		if (notInBorder(position)) {
 			removeEntityAt(position);
 			placeFloor(position);
-			getBoard().getDragons().add(new Dragon(position, true, true, true, true));
+			getBoard().getDragons().add(new Dragon(position, true, true, true));
 		}
 	}
 	
@@ -78,7 +78,7 @@ public class CreativeMode {
 		if (notInBorder(position)) {
 			removeEntityAt(position);
 			placeFloor(position);
-			getBoard().getWeapons().add(new Weapon(type, position, true));
+			getBoard().getWeapons().add(new Weapon(type, position));
 		}
 	}
 	

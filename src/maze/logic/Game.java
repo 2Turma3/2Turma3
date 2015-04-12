@@ -1,6 +1,6 @@
 package maze.logic;
 
-import java.util.ArrayList;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
@@ -74,7 +74,7 @@ public class Game {
 		Position newPos;
 		walkablePos = map.getWalkablePositions();
 		newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
-		Hero hero = new Hero(newPos,true);
+		Hero hero = new Hero(newPos);
 		walkablePos.remove(newPos);
 		
 		
@@ -101,16 +101,16 @@ public class Game {
 		LinkedList<Weapon> weapons = new LinkedList<Weapon>();
 		Random rnd = new Random();
 		newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
-		Weapon sword = new Weapon(Weapon.Type.SWORD, newPos, true);
+		Weapon sword = new Weapon(Weapon.Type.SWORD, newPos);
 		weapons.add(sword);
 		
 		newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
-		Weapon shield = new Weapon(Weapon.Type.SHIELD, newPos, true);
+		Weapon shield = new Weapon(Weapon.Type.SHIELD, newPos);
 		weapons.add(shield);
 		
 		for(int i = maxDarts; i > 0; i--){
 			newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
-			Weapon dart = new Weapon(Weapon.Type.DART, newPos, true);
+			Weapon dart = new Weapon(Weapon.Type.DART, newPos);
 			weapons.add(dart);
 		}
 		
@@ -125,7 +125,7 @@ public class Game {
 		int tempNumDragons = numDragons;
 		while(tempNumDragons > 0){
 			newPos = walkablePos.get(rnd.nextInt(walkablePos.size())); 
-			Dragon newDragon = new Dragon(newPos,true, canMove, canSleep, canAttack);
+			Dragon newDragon = new Dragon(newPos, canMove, canSleep, canAttack);
 			dragons.add(newDragon);
 			walkablePos.remove(newPos);
 			tempNumDragons--;
@@ -245,7 +245,7 @@ public class Game {
 	}
 	
 	public void setOnFire(Position pos){
-		Flame flame = new Flame(pos,true);
+		Flame flame = new Flame(pos);
 		getFire().add(flame);
 	}
 
@@ -303,7 +303,7 @@ public class Game {
     	}
     }
 
-    // TODO Acabar throw_dart, usar iteradores para remover dragões
+    
     public void throwDart(Direction direction)
     {
     	for (Weapon weapon : board.getHero().getWeapons()){

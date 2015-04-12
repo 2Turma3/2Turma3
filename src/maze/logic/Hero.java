@@ -5,11 +5,8 @@ import java.util.LinkedList;
 public class Hero extends Entity {
 	private LinkedList<Weapon> weapons;
 	
-	public enum Action{MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT}
-	
-	
-	public Hero(Position pos, boolean active) {
-		super(pos, active);
+	public Hero(Position pos) {
+		super(pos);
 		weapons = new LinkedList<Weapon>();
 	}
 	public LinkedList<Weapon> getWeapons() {
