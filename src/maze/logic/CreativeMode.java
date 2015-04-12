@@ -19,6 +19,9 @@ public class CreativeMode {
 		builder.setRows(rows);
 		builder.setCols(columns);
 		setBoard(new GameBoard(builder.build(), null, null, null));
+		for(int row = 0; row < rows; row++)
+			for(int col = 0; col < columns;col++)
+				placeWall(new Position(row,col));
 	}
 	
 	/**

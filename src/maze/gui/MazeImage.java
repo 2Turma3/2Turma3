@@ -36,7 +36,7 @@ public class MazeImage {
 	static {
 		try {
 			wallImage = new BufferedImage(CELL_WIDTH, CELL_HEIGHT, BufferedImage.TYPE_INT_ARGB);
-			wallImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/Mossy_Wall.jpg")), 0, 0, wallImage.getWidth(), wallImage.getHeight(), null);			
+			wallImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/Stone_Wall.jpg")), 0, 0, wallImage.getWidth(), wallImage.getHeight(), null);			
 			
 			floorImage = new BufferedImage(CELL_WIDTH, CELL_HEIGHT, BufferedImage.TYPE_INT_ARGB);
 			floorImage.getGraphics().drawImage(ImageIO.read(ClassLoader.getSystemResource("images/Floor.jpg")), 0, 0, floorImage.getWidth(), floorImage.getHeight(), null);
