@@ -116,35 +116,31 @@ public class MazeMap implements Serializable {
 					map[i][divisor].setWalkable(map[i][divisor - 1].isWalkable() && map[i][divisor+1].isWalkable());
 			}
 			
-			switch(rnd.nextInt(4)){
-			case 0:
-				do{
+			boolean exitChosen = false;
+			while (!exitChosen) {
+				
+				switch(Game.Direction.values()[rnd.nextInt(Game.Direction.values().length)]){
+				case UP:
 					this.exit = new Position(0,rnd.nextInt(cols-2) + 1 );
 					if(map[this.exit.getRow()+1][this.exit.getCol()].isWalkable())
-						break;
-				} while(true);
-				break;
-			case 1:
-				do{
+						exitChosen = true;
+					break;
+				case DOWN:
 					this.exit = new Position(rows-1, rnd.nextInt(cols-2) + 1);
 					if(map[this.exit.getRow()-1][this.exit.getCol()].isWalkable())
-						break;
-				} while(true);
-				break;
-			case 2:
-				do{
+						exitChosen = true;
+					break;
+				case LEFT:
 					this.exit = new Position(rnd.nextInt(rows-2) + 1, 0);
 					if(map[this.exit.getRow()][this.exit.getCol()+1].isWalkable())
-						break;
-				} while(true);
-				break;
-			case 3:
-				do{
+						exitChosen = true;
+					break;
+				case RIGHT:
 					this.exit = new Position(rnd.nextInt(rows-2) + 1, cols-1);
 					if(map[this.exit.getRow()][this.exit.getCol()-1].isWalkable())
-						break;
-				} while(true);
-				break;
+						exitChosen = true;
+					break;
+				}
 			}
 		}
 		
