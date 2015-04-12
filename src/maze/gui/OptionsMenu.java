@@ -54,7 +54,7 @@ public class OptionsMenu extends JPanel {
 	private boolean changed;
 	Options unsavedOptions;
 	AssignedKeys unsavedKeys;
-	
+
 	JSlider rowSlider;
 	JSlider colSlider;
 	JSpinner spinner;
@@ -62,7 +62,7 @@ public class OptionsMenu extends JPanel {
 	JCheckBox chckbxDragonSleep;
 	JCheckBox chckbxDragonAttack;
 
-	
+
 	public static void main(String[] args ) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -75,8 +75,8 @@ public class OptionsMenu extends JPanel {
 			}
 		});
 	}
-	
-	
+
+
 	private void SaveOptions(Options options, AssignedKeys AS){
 		options.setRows(unsavedOptions.getRows());
 		options.setCols(unsavedOptions.getCols());
@@ -102,15 +102,15 @@ public class OptionsMenu extends JPanel {
 		unsavedOptions = options.clone();
 		unsavedKeys = AS;
 		changed = false;
-		
-		
+
+
 		setBounds(100, 100, 329, 448);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		
+
 		JPanel optionsPane = new JPanel();
 		add(optionsPane);
 		optionsPane.setLayout(new GridLayout(0, 1, 0, 0));
-		
+
 		JPanel rowPanel = new JPanel();
 		optionsPane.add(rowPanel);
 		rowPanel.setLayout(new GridLayout(0, 1, 0, 0));
@@ -259,89 +259,89 @@ public class OptionsMenu extends JPanel {
 		JPanel assignKeysPanel = new JPanel();
 		add(assignKeysPanel);
 		assignKeysPanel.setLayout(new GridLayout(6, 2, 0, 0));
-				
-						JLabel lblUpKey = new JLabel("Up key");
-						assignKeysPanel.add(lblUpKey);
-								
-										JButton btnUp = new JButton(KeyEvent.getKeyText(AS.up));
-										assignKeysPanel.add(btnUp);
-										btnUp.addActionListener(new ActionListener(){
 
-											@Override
-											public void actionPerformed(ActionEvent e) {
-												// TODO Auto-generated method stub
+		JLabel lblUpKey = new JLabel("Up key");
+		assignKeysPanel.add(lblUpKey);
 
-											}
-										});
-						
-								JLabel lblDownKey = new JLabel("Down key");
-								assignKeysPanel.add(lblDownKey);
-												
-														JButton btnDown = new JButton(KeyEvent.getKeyText(AS.down));
-														assignKeysPanel.add(btnDown);
-														btnDown.addActionListener(new ActionListener(){
+		JButton btnUp = new JButton(KeyEvent.getKeyText(AS.up));
+		assignKeysPanel.add(btnUp);
+		btnUp.addActionListener(new ActionListener(){
 
-															@Override
-															public void actionPerformed(ActionEvent e) {
-																// TODO Auto-generated method stub
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
 
-															}
-														});
-										
-												JLabel lblLeftKey = new JLabel("Left key");
-												assignKeysPanel.add(lblLeftKey);
-												
-														JButton btnLeft = new JButton(KeyEvent.getKeyText(AS.left));
-														assignKeysPanel.add(btnLeft);
-														btnLeft.addActionListener(new ActionListener(){
+			}
+		});
 
-															@Override
-															public void actionPerformed(ActionEvent e) {
-																// TODO Auto-generated method stub
+		JLabel lblDownKey = new JLabel("Down key");
+		assignKeysPanel.add(lblDownKey);
 
-															}
-														});
-										
-												JLabel lblRightKey = new JLabel("Right key");
-												assignKeysPanel.add(lblRightKey);
-												
-														JButton btnRight = new JButton(KeyEvent.getKeyText(AS.right));
-														assignKeysPanel.add(btnRight);
-														btnRight.addActionListener(new ActionListener(){
+		JButton btnDown = new JButton(KeyEvent.getKeyText(AS.down));
+		assignKeysPanel.add(btnDown);
+		btnDown.addActionListener(new ActionListener(){
 
-															@Override
-															public void actionPerformed(ActionEvent e) {
-																// TODO Auto-generated method stub
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
 
-															}
-														});
-										
-												JLabel lblSPAtkKey = new JLabel("Special Attack key");
-												assignKeysPanel.add(lblSPAtkKey);
-												
-														JButton btnSPAtk = new JButton(KeyEvent.getKeyText(AS.spAttack));
-														assignKeysPanel.add(btnSPAtk);
-														btnSPAtk.addActionListener(new ActionListener(){
+			}
+		});
 
-															@Override
-															public void actionPerformed(ActionEvent e) {
-																// TODO Auto-generated method stub
+		JLabel lblLeftKey = new JLabel("Left key");
+		assignKeysPanel.add(lblLeftKey);
 
-															}
-														});
-										
-												JLabel lblSkip = new JLabel("Skip key");
-												assignKeysPanel.add(lblSkip);
-																		
-																				JButton btnSkip = new JButton(KeyEvent.getKeyText(AS.skip));
-																				assignKeysPanel.add(btnSkip);
-																				btnSkip.addActionListener(new ActionListener(){
+		JButton btnLeft = new JButton(KeyEvent.getKeyText(AS.left));
+		assignKeysPanel.add(btnLeft);
+		btnLeft.addActionListener(new ActionListener(){
 
-																					@Override
-																					public void actionPerformed(ActionEvent e) {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
 
-																					}
-																				});
+			}
+		});
+
+		JLabel lblRightKey = new JLabel("Right key");
+		assignKeysPanel.add(lblRightKey);
+
+		JButton btnRight = new JButton(KeyEvent.getKeyText(AS.right));
+		assignKeysPanel.add(btnRight);
+		btnRight.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		JLabel lblSPAtkKey = new JLabel("Special Attack key");
+		assignKeysPanel.add(lblSPAtkKey);
+
+		JButton btnSPAtk = new JButton(KeyEvent.getKeyText(AS.spAttack));
+		assignKeysPanel.add(btnSPAtk);
+		btnSPAtk.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		JLabel lblSkip = new JLabel("Skip key");
+		assignKeysPanel.add(lblSkip);
+
+		JButton btnSkip = new JButton(KeyEvent.getKeyText(AS.skip));
+		assignKeysPanel.add(btnSkip);
+		btnSkip.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
 
 		JPanel buttonPane = new JPanel();
 		add(buttonPane);
@@ -350,20 +350,20 @@ public class OptionsMenu extends JPanel {
 
 		JButton btnDefault = new JButton("Default");
 		buttonPane.add(btnDefault);
-		
-				JButton btnSave = new JButton("Save");
-				buttonPane.add(btnSave);
-				btnSave.addActionListener(new ActionListener(){
 
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						int option = JOptionPane.showConfirmDialog(null,"Warning!","Are you sure you want to save this options?" , JOptionPane.OK_CANCEL_OPTION);
-						if(option == JOptionPane.YES_OPTION){
-							SaveOptions(options, AS);
-						}
-					}
+		JButton btnSave = new JButton("Save");
+		buttonPane.add(btnSave);
+		btnSave.addActionListener(new ActionListener(){
 
-				});
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int option = JOptionPane.showConfirmDialog(null,"Warning!","Are you sure you want to save this options?" , JOptionPane.OK_CANCEL_OPTION);
+				if(option == JOptionPane.YES_OPTION){
+					SaveOptions(options, AS);
+				}
+			}
+
+		});
 		btnDefault.addActionListener(new ActionListener(){
 
 			@Override
