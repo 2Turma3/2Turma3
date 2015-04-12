@@ -25,7 +25,7 @@ public class TestMovement extends TestCase {
 		
 		game.heroTurn(new Game.Command(Game.Action.MOVE, Game.Direction.RIGHT));
 		
-		assertEquals( new Position(1,3), game.getBoard().getHero().getPos());
+		assertEquals( new Position(1,3), game.getBoard().getHero().getPosition());
 	}
 
 	public void testFalseMove(){
@@ -40,7 +40,7 @@ public class TestMovement extends TestCase {
 		
 		game.heroTurn(new Game.Command(Game.Action.MOVE, Game.Direction.RIGHT));
 
-		assertEquals( new Position(1,3), game.getBoard().getHero().getPos());
+		assertEquals( new Position(1,3), game.getBoard().getHero().getPosition());
 	}
 	
 	public void testCatchSword(){
@@ -174,7 +174,7 @@ public class TestMovement extends TestCase {
 			
 			for(Dragon dragon1 : game.getBoard().getDragons()){
 				for (Dragon dragon2 : game.getBoard().getDragons())
-					if (dragon1 != dragon2 && dragon1.getPos().equals(dragon2.getPos()))
+					if (dragon1 != dragon2 && dragon1.getPosition().equals(dragon2.getPosition()))
 						dragonInSamePosition = true;
 			}
 			if(dragonInSamePosition)
@@ -349,7 +349,7 @@ public class TestMovement extends TestCase {
 		game.dragonsTurn();
 		game.resolutionPhase();
 		
-		assertEquals(new Position(1,3), game.getBoard().getHero().getPos());
+		assertEquals(new Position(1,3), game.getBoard().getHero().getPosition());
 		assertEquals(false, game.isFinished());	
 		assertEquals(false, game.isWon());
 	}
@@ -460,7 +460,7 @@ public class TestMovement extends TestCase {
 		Game game = new Game(map, hero,dragons,new LinkedList<Weapon>());
 		
 		
-		Position oldPos = game.getBoard().getDragons().get(0).getPos();
+		Position oldPos = game.getBoard().getDragons().get(0).getPosition();
 		boolean hasMoved = false;
 		
 		
@@ -469,11 +469,11 @@ public class TestMovement extends TestCase {
 			game.dragonsTurn();
 			game.resolutionPhase();
 			
-			if(!oldPos.equals(game.getBoard().getDragons().get(0).getPos())){
+			if(!oldPos.equals(game.getBoard().getDragons().get(0).getPosition())){
 				hasMoved = true;
-				assertEquals(1, game.getBoard().getDragons().get(0).getPos().getRow());
-				assertEquals(1, Math.abs(oldPos.getCol() - game.getBoard().getDragons().get(0).getPos().getCol()));
-				oldPos = game.getBoard().getDragons().get(0).getPos();
+				assertEquals(1, game.getBoard().getDragons().get(0).getPosition().getRow());
+				assertEquals(1, Math.abs(oldPos.getColumn() - game.getBoard().getDragons().get(0).getPosition().getColumn()));
+				oldPos = game.getBoard().getDragons().get(0).getPosition();
 			}
 		}
 		
@@ -495,7 +495,7 @@ public class TestMovement extends TestCase {
 		Game game = new Game(map, hero,dragons,new LinkedList<Weapon>());
 		
 		
-		Position oldPos = game.getBoard().getDragons().get(0).getPos();
+		Position oldPos = game.getBoard().getDragons().get(0).getPosition();
 		boolean hasMoved = false;
 		
 		
@@ -504,11 +504,11 @@ public class TestMovement extends TestCase {
 			game.dragonsTurn();
 			game.resolutionPhase();
 			
-			if(!oldPos.equals(game.getBoard().getDragons().get(0).getPos())){
+			if(!oldPos.equals(game.getBoard().getDragons().get(0).getPosition())){
 				hasMoved = true;
-				assertEquals(1, game.getBoard().getDragons().get(0).getPos().getCol());
-				assertEquals(1, Math.abs(oldPos.getRow() - game.getBoard().getDragons().get(0).getPos().getRow()));
-				oldPos = game.getBoard().getDragons().get(0).getPos();
+				assertEquals(1, game.getBoard().getDragons().get(0).getPosition().getColumn());
+				assertEquals(1, Math.abs(oldPos.getRow() - game.getBoard().getDragons().get(0).getPosition().getRow()));
+				oldPos = game.getBoard().getDragons().get(0).getPosition();
 			}
 		}
 		

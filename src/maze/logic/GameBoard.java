@@ -3,14 +3,34 @@ package maze.logic;
 import java.io.Serializable;
 import java.util.LinkedList;
 
+/**
+ * The Class GameBoard.
+ */
 public class GameBoard implements Serializable {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 8459426522971236426L;
+	
+	/** The map. */
 	private MazeMap map;
+	
+	/** The hero. */
 	private Hero hero;
+	
+	/** The dragons. */
 	private LinkedList<Dragon> dragons;
+	
+	/** The weapons. */
 	private LinkedList<Weapon> weapons;
 	
+	/**
+	 * Instantiates a new game board.
+	 *
+	 * @param map the map
+	 * @param hero the hero
+	 * @param dragons the dragons
+	 * @param weapons the weapons
+	 */
 	public GameBoard(MazeMap map, Hero hero, LinkedList<Dragon> dragons, LinkedList<Weapon> weapons) {
 		setMap(map);
 		setHero(hero);
@@ -19,6 +39,8 @@ public class GameBoard implements Serializable {
 	}
 
 	/**
+	 * Gets the map.
+	 *
 	 * @return the map
 	 */
 	public MazeMap getMap() {
@@ -26,6 +48,8 @@ public class GameBoard implements Serializable {
 	}
 
 	/**
+	 * Sets the map.
+	 *
 	 * @param map the map to set
 	 */
 	public void setMap(MazeMap map) {
@@ -33,6 +57,8 @@ public class GameBoard implements Serializable {
 	}
 
 	/**
+	 * Gets the hero.
+	 *
 	 * @return the hero
 	 */
 	public Hero getHero() {
@@ -40,6 +66,8 @@ public class GameBoard implements Serializable {
 	}
 
 	/**
+	 * Sets the hero.
+	 *
 	 * @param hero the hero to set
 	 */
 	public void setHero(Hero hero) {
@@ -47,6 +75,8 @@ public class GameBoard implements Serializable {
 	}
 
 	/**
+	 * Gets the dragons.
+	 *
 	 * @return the dragons
 	 */
 	public LinkedList<Dragon> getDragons() {
@@ -54,6 +84,8 @@ public class GameBoard implements Serializable {
 	}
 
 	/**
+	 * Sets the dragons.
+	 *
 	 * @param dragons the dragons to set
 	 */
 	public void setDragons(LinkedList<Dragon> dragons) {
@@ -61,6 +93,8 @@ public class GameBoard implements Serializable {
 	}
 
 	/**
+	 * Gets the weapons.
+	 *
 	 * @return the weapons
 	 */
 	public LinkedList<Weapon> getWeapons() {
@@ -68,6 +102,8 @@ public class GameBoard implements Serializable {
 	}
 
 	/**
+	 * Sets the weapons.
+	 *
 	 * @param weapons the weapons to set
 	 */
 	public void setWeapons(LinkedList<Weapon> weapons) {

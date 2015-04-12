@@ -223,30 +223,30 @@ public class CommandLine {
 			for (int j = 0; j < map.getCols(); j++)
 				printableMap[i][j] = map.isWalkable(i, j) ? cellMapping.get(CellData.EMPTY) : cellMapping.get(CellData.WALL);
 			
-		printableMap[map.getExit().getRow()][map.getExit().getCol()] =  cellMapping.get(CellData.EXIT);	
+		printableMap[map.getExit().getRow()][map.getExit().getColumn()] =  cellMapping.get(CellData.EXIT);	
 		
 		if (board.getHero() != null)
-			printableMap[board.getHero().getPos().getRow()][board.getHero().getPos().getCol()] = board.getHero().hasSword() ? cellMapping.get(CellData.HERO_SWORD) : cellMapping.get(CellData.HERO);
+			printableMap[board.getHero().getPosition().getRow()][board.getHero().getPosition().getColumn()] = board.getHero().hasSword() ? cellMapping.get(CellData.HERO_SWORD) : cellMapping.get(CellData.HERO);
 		
 		for (Dragon dragon : board.getDragons())
-			printableMap[dragon.getPos().getRow()][dragon.getPos().getCol()] = dragon.isSleeping() ? cellMapping.get(CellData.DRAGON_SLEEP) : cellMapping.get(CellData.DRAGON);
+			printableMap[dragon.getPosition().getRow()][dragon.getPosition().getColumn()] = dragon.isSleeping() ? cellMapping.get(CellData.DRAGON_SLEEP) : cellMapping.get(CellData.DRAGON);
 		
 		for (Weapon weapon : board.getWeapons())
 		{
-			if (printableMap[weapon.getPos().getRow()][weapon.getPos().getCol()] == cellMapping.get(CellData.DRAGON))
-				printableMap[weapon.getPos().getRow()][weapon.getPos().getCol()] = cellMapping.get(CellData.DRAGON_ON_WEAPON);
-			else if (printableMap[weapon.getPos().getRow()][weapon.getPos().getCol()] == cellMapping.get(CellData.DRAGON_SLEEP))
-				printableMap[weapon.getPos().getRow()][weapon.getPos().getCol()] = cellMapping.get(CellData.DRAGON_SLEEP_WEAPON);
+			if (printableMap[weapon.getPosition().getRow()][weapon.getPosition().getColumn()] == cellMapping.get(CellData.DRAGON))
+				printableMap[weapon.getPosition().getRow()][weapon.getPosition().getColumn()] = cellMapping.get(CellData.DRAGON_ON_WEAPON);
+			else if (printableMap[weapon.getPosition().getRow()][weapon.getPosition().getColumn()] == cellMapping.get(CellData.DRAGON_SLEEP))
+				printableMap[weapon.getPosition().getRow()][weapon.getPosition().getColumn()] = cellMapping.get(CellData.DRAGON_SLEEP_WEAPON);
 			else
 				switch (weapon.getType()) {
 					case SWORD:
-						printableMap[weapon.getPos().getRow()][weapon.getPos().getCol()] = cellMapping.get(CellData.SWORD);
+						printableMap[weapon.getPosition().getRow()][weapon.getPosition().getColumn()] = cellMapping.get(CellData.SWORD);
 						break;
 					case SHIELD:
-						printableMap[weapon.getPos().getRow()][weapon.getPos().getCol()] = cellMapping.get(CellData.SHIELD);
+						printableMap[weapon.getPosition().getRow()][weapon.getPosition().getColumn()] = cellMapping.get(CellData.SHIELD);
 						break;
 					case DART:
-						printableMap[weapon.getPos().getRow()][weapon.getPos().getCol()] = cellMapping.get(CellData.DART);
+						printableMap[weapon.getPosition().getRow()][weapon.getPosition().getColumn()] = cellMapping.get(CellData.DART);
 						break;
 			}
 		}
