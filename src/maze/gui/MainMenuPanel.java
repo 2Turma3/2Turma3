@@ -12,29 +12,20 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import java.awt.CardLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.BoxLayout;
 
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-
-import javax.swing.JLabel;
 import javax.swing.border.EmptyBorder;
 
 import maze.logic.Game;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
 public class MainMenuPanel extends JPanel {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public static class Options{
 		private int rows;
@@ -154,7 +145,7 @@ public class MainMenuPanel extends JPanel {
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Game game = new Game(options.getRows(),options.getCols(),options.getNumberDragons(),options.isDragonMove(),options.isDragonSleep(),options.isDragonAttack());
-				GameGui gameFrame = new GameGui(parentFrame, game, new AssignedKeys());
+				GameGui gameFrame = new GameGui(parentFrame, game, assignedKeys);
 				gameFrame.setVisible(true);
 				parentFrame.setVisible(false);
 			}

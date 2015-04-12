@@ -1,16 +1,11 @@
 package maze.gui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.JButton;
-import javax.swing.JRadioButton;
-
 import java.awt.FlowLayout;
 
 import javax.swing.JCheckBox;
@@ -19,22 +14,10 @@ import java.awt.GridLayout;
 
 import javax.swing.JSlider;
 
-import java.awt.Dialog;
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.HeadlessException;
-import java.awt.Insets;
-import java.awt.Rectangle;
-
 import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
-import javax.swing.JTextPane;
 import javax.swing.JLabel;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-
-import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -49,9 +32,12 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
 public class OptionsMenu extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField rowSelection;
 	private JTextField colSelection;
-	private boolean changed;
 	Options unsavedOptions;
 	AssignedKeys unsavedKeys;
 
@@ -84,6 +70,14 @@ public class OptionsMenu extends JPanel {
 		options.setDragonMove(unsavedOptions.isDragonMove());
 		options.setDragonSleep(unsavedOptions.isDragonSleep());
 		options.setDragonAttack(unsavedOptions.isDragonAttack());
+		
+		
+		AS.up = unsavedKeys.up;
+		AS.down = unsavedKeys.down;
+		AS.left = unsavedKeys.left;
+		AS.right = unsavedKeys.right;
+		AS.spAttack = unsavedKeys.spAttack;
+		AS.skip = unsavedKeys.skip;
 
 		/*System.out.println("Rows: " + options.getRows());
 		System.out.println("Cols: " + options.getCols());
@@ -101,9 +95,6 @@ public class OptionsMenu extends JPanel {
 	public OptionsMenu(final MainMenuPanel.Options options, final AssignedKeys AS) {
 		unsavedOptions = options.clone();
 		unsavedKeys = AS;
-		changed = false;
-
-
 		setBounds(100, 100, 329, 448);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -137,7 +128,6 @@ public class OptionsMenu extends JPanel {
 				JSlider source = (JSlider) arg0.getSource();
 				unsavedOptions.setRows((Integer) source.getValue());
 				rowSelection.setText(((Integer) source.getValue()).toString());
-				changed = true;
 			}
 
 		});
@@ -177,7 +167,6 @@ public class OptionsMenu extends JPanel {
 
 				unsavedOptions.setCols( ((Integer)source.getValue()).intValue() );
 				colSelection.setText(((Integer) source.getValue()).toString());
-				changed = true;
 			}
 
 		});
@@ -190,7 +179,7 @@ public class OptionsMenu extends JPanel {
 
 		JPanel dragonNumberPanel = new JPanel();
 		optionsPane.add(dragonNumberPanel);
-		dragonNumberPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		dragonNumberPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 10));
 
 		JLabel lblNumberOfDragons = new JLabel("Number of Dragons");
 		lblNumberOfDragons.setEnabled(false);
@@ -206,8 +195,7 @@ public class OptionsMenu extends JPanel {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
 				JSpinner source = (JSpinner) arg0.getSource();
-				unsavedOptions.setNumberDragons(((Integer)source.getValue()).intValue());
-				changed = true;				
+				unsavedOptions.setNumberDragons(((Integer)source.getValue()).intValue());				
 			}
 
 		});
@@ -226,7 +214,6 @@ public class OptionsMenu extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				JCheckBox source = (JCheckBox) arg0.getSource();
 				unsavedOptions.setDragonMove(source.isSelected());
-				changed = true;
 			}
 		});
 
@@ -239,7 +226,6 @@ public class OptionsMenu extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				JCheckBox source = (JCheckBox) arg0.getSource();
 				unsavedOptions.setDragonSleep(source.isSelected());
-				changed = true;
 			}
 		});
 
@@ -252,104 +238,101 @@ public class OptionsMenu extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				JCheckBox source = (JCheckBox) arg0.getSource();
 				unsavedOptions.setDragonAttack(source.isSelected());
-				changed = true;
 			}
 		});
 
 		JPanel assignKeysPanel = new JPanel();
 		add(assignKeysPanel);
-		assignKeysPanel.setLayout(new GridLayout(6, 2, 0, 0));
+		assignKeysPanel.setLayout(new GridLayout(6, 2, 0, 2));
 
 		JLabel lblUpKey = new JLabel("Up key");
 		assignKeysPanel.add(lblUpKey);
+		
+				final JButton btnUp = new JButton(KeyEvent.getKeyText(AS.up));
+				assignKeysPanel.add(btnUp);
+				btnUp.setPreferredSize(new Dimension(50,25));
+				btnUp.addActionListener(new ActionListener(){
 
-		JButton btnUp = new JButton(KeyEvent.getKeyText(AS.up));
-		assignKeysPanel.add(btnUp);
-		btnUp.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						PressKeyWindow pkWindow = new PressKeyWindow(unsavedKeys, AssignedKeys.Key.UP);
+						btnUp.setText(KeyEvent.getKeyText(AS.up));
+					}
+				});
 
 		JLabel lblDownKey = new JLabel("Down key");
 		assignKeysPanel.add(lblDownKey);
+		
+				final JButton btnDown = new JButton(KeyEvent.getKeyText(AS.down));
+				assignKeysPanel.add(btnDown);
+				btnDown.addActionListener(new ActionListener(){
 
-		JButton btnDown = new JButton(KeyEvent.getKeyText(AS.down));
-		assignKeysPanel.add(btnDown);
-		btnDown.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						PressKeyWindow pkWindow = new PressKeyWindow(unsavedKeys, AssignedKeys.Key.DOWN);
+						btnDown.setText(KeyEvent.getKeyText(AS.down));
+					}
+				});
 
 		JLabel lblLeftKey = new JLabel("Left key");
 		assignKeysPanel.add(lblLeftKey);
+		
+				final JButton btnLeft = new JButton(KeyEvent.getKeyText(AS.left));
+				assignKeysPanel.add(btnLeft);
+				btnLeft.addActionListener(new ActionListener(){
 
-		JButton btnLeft = new JButton(KeyEvent.getKeyText(AS.left));
-		assignKeysPanel.add(btnLeft);
-		btnLeft.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						PressKeyWindow pkWindow = new PressKeyWindow(unsavedKeys, AssignedKeys.Key.LEFT);
+						btnLeft.setText(KeyEvent.getKeyText(AS.left));
+					}
+				});
 
 		JLabel lblRightKey = new JLabel("Right key");
 		assignKeysPanel.add(lblRightKey);
+		
+				final JButton btnRight = new JButton(KeyEvent.getKeyText(AS.right));
+				assignKeysPanel.add(btnRight);
+				btnRight.addActionListener(new ActionListener(){
 
-		JButton btnRight = new JButton(KeyEvent.getKeyText(AS.right));
-		assignKeysPanel.add(btnRight);
-		btnRight.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						PressKeyWindow pkWindow = new PressKeyWindow(unsavedKeys, AssignedKeys.Key.RIGHT);
+						btnRight.setText(KeyEvent.getKeyText(AS.right));
+					}
+				});
 
 		JLabel lblSPAtkKey = new JLabel("Special Attack key");
 		assignKeysPanel.add(lblSPAtkKey);
+		
+				final JButton btnSPAtk = new JButton(KeyEvent.getKeyText(AS.spAttack));
+				assignKeysPanel.add(btnSPAtk);
+				btnSPAtk.addActionListener(new ActionListener(){
 
-		JButton btnSPAtk = new JButton(KeyEvent.getKeyText(AS.spAttack));
-		assignKeysPanel.add(btnSPAtk);
-		btnSPAtk.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						PressKeyWindow pkWindow = new PressKeyWindow(unsavedKeys, AssignedKeys.Key.ATTACK);
+						btnSPAtk.setText(KeyEvent.getKeyText(AS.spAttack));
+					}
+				});
 
 		JLabel lblSkip = new JLabel("Skip key");
 		assignKeysPanel.add(lblSkip);
+		
+				final JButton btnSkip = new JButton(KeyEvent.getKeyText(AS.skip));
+				assignKeysPanel.add(btnSkip);
+				btnSkip.addActionListener(new ActionListener(){
 
-		JButton btnSkip = new JButton(KeyEvent.getKeyText(AS.skip));
-		assignKeysPanel.add(btnSkip);
-		btnSkip.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-			}
-		});
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						PressKeyWindow pkWindow = new PressKeyWindow(unsavedKeys, AssignedKeys.Key.SKIP);
+						btnSkip.setText(KeyEvent.getKeyText(AS.skip));
+					}
+				});
 
 		JPanel buttonPane = new JPanel();
 		add(buttonPane);
-		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.X_AXIS));
-
-
-		JButton btnDefault = new JButton("Default");
-		buttonPane.add(btnDefault);
+		buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JButton btnSave = new JButton("Save");
 		buttonPane.add(btnSave);
@@ -364,6 +347,9 @@ public class OptionsMenu extends JPanel {
 			}
 
 		});
+		
+		JButton btnDefault = new JButton("Default");
+		buttonPane.add(btnDefault);
 		btnDefault.addActionListener(new ActionListener(){
 
 			@Override

@@ -15,17 +15,19 @@ import javax.swing.BoxLayout;
 
 import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.CardLayout;
 import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.BorderLayout;
-import javax.swing.JLabel;
 import java.awt.Component;
 
 public class StatsPanel extends JPanel {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	Game game;
 	
@@ -51,6 +53,11 @@ public class StatsPanel extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 				JPanel playerIconPanel = new JPanel(){
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+
 					protected void paintComponent(java.awt.Graphics g) {
 						try {
 							BufferedImage img  = ImageIO.read(ClassLoader.getSystemResource("images/Hero_ClosePicture.png"));
@@ -81,6 +88,11 @@ public class StatsPanel extends JPanel {
 				add(weaponsPanel, gbc_weaponsPanel);
 				weaponsPanel.setLayout(new GridLayout(0, 1, 0, 0));
 				this.swordPanel = new JPanel(){
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+
 					protected void paintComponent(Graphics g){
 						try {
 							BufferedImage img = ImageIO.read(new File("src1/images/Sword.png"));
@@ -98,6 +110,11 @@ public class StatsPanel extends JPanel {
 				
 				
 				this.shieldPanel = new JPanel(){
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+
 					protected void paintComponent(Graphics g){
 						try {
 							BufferedImage img  = ImageIO.read(new File("src1/images/Shield.png"));
@@ -115,6 +132,11 @@ public class StatsPanel extends JPanel {
 				weaponsPanel.add(dartsInfoPanel);
 				dartsInfoPanel.setLayout(new BoxLayout(dartsInfoPanel, BoxLayout.X_AXIS));
 				JPanel dartPanel = new JPanel(){
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+
 					protected void paintComponent(Graphics g){
 						try {
 							BufferedImage img  = ImageIO.read(new File("src1/images/Dart.png"));
