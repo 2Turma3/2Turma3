@@ -2,7 +2,6 @@ import maze.cli.CommandLine;
 import maze.logic.*;
 import maze.logic.Game.Action;
 import maze.logic.Game.Direction;
-import maze.logic.UserInterface.Command;
 
 import java.io.IOException;
 import java.util.Random;
@@ -53,7 +52,7 @@ public class Labirinto {
 //		}
 	}
 
-	public static void playTurn(Game game, UserInterface cli, Command command) {
+	public static void playTurn(Game game, CommandLine cli, Game.Command command) {
 //		game.heroTurn(command.getAction(), command.getDirection());	
 //		
 //		cli.displayMaze(game.map);

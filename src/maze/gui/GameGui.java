@@ -28,7 +28,6 @@ import maze.logic.Game;
 import maze.logic.Game.Command;
 import maze.logic.Hero;
 import maze.logic.MazeMap;
-import maze.logic.UserInterface;
 import maze.logic.Weapon;
 
 public class GameGui extends JFrame {
@@ -90,7 +89,7 @@ public class GameGui extends JFrame {
 		
 		Game newGame = new Game(10, 10, 0, false, false, false);
 		
-		UserInterface cli = new CommandLine();
+		CommandLine cli = new CommandLine();
 		
 		cli.displayBoard(newGame.getBoard());
 		

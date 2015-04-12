@@ -11,16 +11,16 @@ import maze.logic.Game.Action;
 import maze.logic.Game.Direction;
 import maze.logic.*;
 
-public class CommandLine implements UserInterface{
+public class CommandLine {
 	private Scanner scanner;
-	private Map<String, Command> inputMapping;
+	private Map<String, Game.Command> inputMapping;
 	private enum CellData {EMPTY, WALL, HERO, HERO_SWORD, DRAGON, DRAGON_SLEEP, SWORD, DART, SHIELD, DRAGON_ON_WEAPON, DRAGON_SLEEP_WEAPON, EXIT, FLAME}
 	private Map<CellData, Character> cellMapping;
 	
 
 	public CommandLine() {
 		scanner = new Scanner(System.in);
-		inputMapping = new HashMap<String, Command>();
+		inputMapping = new HashMap<String, Game.Command>();
 		cellMapping = new HashMap<CellData, Character>();
 		initInputMapping();
 		initCellMapping();
@@ -44,24 +44,23 @@ public class CommandLine implements UserInterface{
 	
 	private void initInputMapping()
 	{
-		inputMapping.put("w", new Command(Action.MOVE, Direction.UP));
-		inputMapping.put("a", new Command(Action.MOVE, Direction.LEFT));
-		inputMapping.put("s", new Command(Action.MOVE, Direction.DOWN));
-		inputMapping.put("d", new Command(Action.MOVE, Direction.RIGHT));
-		inputMapping.put("wt", new Command(Action.ATTACK, Direction.UP));
-		inputMapping.put("at", new Command(Action.ATTACK, Direction.LEFT));
-		inputMapping.put("st", new Command(Action.ATTACK, Direction.DOWN));
-		inputMapping.put("dt", new Command(Action.ATTACK, Direction.RIGHT));
-		inputMapping.put(" ", new Command(Action.STOP, null));
+		inputMapping.put("w", new Game.Command(Action.MOVE, Direction.UP));
+		inputMapping.put("a", new Game.Command(Action.MOVE, Direction.LEFT));
+		inputMapping.put("s", new Game.Command(Action.MOVE, Direction.DOWN));
+		inputMapping.put("d", new Game.Command(Action.MOVE, Direction.RIGHT));
+		inputMapping.put("wt", new Game.Command(Action.ATTACK, Direction.UP));
+		inputMapping.put("at", new Game.Command(Action.ATTACK, Direction.LEFT));
+		inputMapping.put("st", new Game.Command(Action.ATTACK, Direction.DOWN));
+		inputMapping.put("dt", new Game.Command(Action.ATTACK, Direction.RIGHT));
+		inputMapping.put(" ", new Game.Command(Action.STOP, null));
 	}
 	
-	@Override
-	public Command getInput() throws IOException {
+	public Game.Command getInput() throws IOException {
 		String line = scanner.nextLine();
 		if (!inputMapping.containsKey(line))
 			throw new IOException();
 		
-		Command command = inputMapping.get(line);
+		Game.Command command = inputMapping.get(line);
 		return command;
 	}
 
@@ -109,7 +108,6 @@ public class CommandLine implements UserInterface{
 		
 	}
 
-	@Override
 	public void displayMessage(String message) {
 		System.out.println(message);
 	}

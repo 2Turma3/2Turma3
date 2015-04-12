@@ -1,6 +1,11 @@
 package maze.logic;
 
-public class Weapon extends Entity {
+import java.io.Serializable;
+
+public class Weapon extends Entity implements Serializable {
+
+	private static final long serialVersionUID = 838252283178966858L;
+
 	public enum Type{SWORD, DART, SHIELD}
 	private Type type;
 	
