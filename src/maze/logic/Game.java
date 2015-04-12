@@ -1,11 +1,15 @@
 package maze.logic;
 
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
 
-public class Game {
+public class Game implements Serializable {
+	
+	private static final long serialVersionUID = -1104019170956261774L;
+
 	private LinkedList<Flame> fire;
 	
 	private GameBoard board;

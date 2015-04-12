@@ -1,6 +1,10 @@
 package maze.logic;
 
-public abstract class Entity {
+import java.io.Serializable;
+
+public abstract class Entity implements Serializable {
+
+	private static final long serialVersionUID = -2744807344964284190L;
 	private Position position;
 	
 	Entity(Position position){

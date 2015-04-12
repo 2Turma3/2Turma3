@@ -3,6 +3,8 @@ package maze.logic;
 import java.util.LinkedList;
 
 public class Hero extends Entity {
+
+	private static final long serialVersionUID = 3062730048433352896L;
 	private LinkedList<Weapon> weapons;
 	
 	public Hero(Position pos) {

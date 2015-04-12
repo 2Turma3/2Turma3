@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.LinkedList;
 
 public class GameBoard implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
+
+	private static final long serialVersionUID = 8459426522971236426L;
 	private MazeMap map;
 	private Hero hero;
 	private LinkedList<Dragon> dragons;

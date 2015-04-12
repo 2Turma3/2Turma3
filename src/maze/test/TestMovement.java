@@ -203,7 +203,9 @@ public class TestMovement extends TestCase {
 		Hero hero = new Hero(new Position(1,3));
 		
 		Weapon dart = new Weapon(Weapon.Type.DART, null);
+		assertEquals(0, hero.getDartsNumber());
 		hero.addWeapon(dart);
+		assertEquals(1, hero.getDartsNumber());
 		
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
 		dragons.add(new Dragon(new Position(1,1), false, false, false));
@@ -228,8 +230,11 @@ public class TestMovement extends TestCase {
 		CommandLine cli = new CommandLine();
 		Hero hero = new Hero(new Position(1,1));
 		
+
 		Weapon dart = new Weapon(Weapon.Type.DART, null);
+		assertEquals(0, hero.getDartsNumber());
 		hero.addWeapon(dart);
+		assertEquals(1, hero.getDartsNumber());
 		
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
 		dragons.add(new Dragon(new Position(1,4), false, false, false));
@@ -255,7 +260,9 @@ public class TestMovement extends TestCase {
 		Hero hero = new Hero(new Position(3,1));
 		
 		Weapon dart = new Weapon(Weapon.Type.DART, null);
+		assertEquals(0, hero.getDartsNumber());
 		hero.addWeapon(dart);
+		assertEquals(1, hero.getDartsNumber());
 		
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
 		dragons.add(new Dragon(new Position(1,1), false, false, false));
@@ -281,7 +288,9 @@ public class TestMovement extends TestCase {
 		Hero hero = new Hero(new Position(1,1));
 		
 		Weapon dart = new Weapon(Weapon.Type.DART, null);
+		assertEquals(0, hero.getDartsNumber());
 		hero.addWeapon(dart);
+		assertEquals(1, hero.getDartsNumber());
 		
 		LinkedList<Dragon> dragons = new LinkedList<Dragon>();
 		dragons.add(new Dragon(new Position(3,1), false, false, false));

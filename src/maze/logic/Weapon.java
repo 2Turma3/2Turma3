@@ -1,8 +1,6 @@
 package maze.logic;
 
-import java.io.Serializable;
-
-public class Weapon extends Entity implements Serializable {
+public class Weapon extends Entity {
 
 	private static final long serialVersionUID = 838252283178966858L;
 

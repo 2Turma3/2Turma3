@@ -3,6 +3,8 @@ package maze.logic;
 import java.util.LinkedList;
 
 public class Dragon extends Entity {
+
+	private static final long serialVersionUID = -8399521267325161472L;
 	private boolean sleeping;
 	
 	public static enum Action {MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, STOP, SLEEP, ATTACK};

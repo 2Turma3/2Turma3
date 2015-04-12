@@ -9,8 +9,7 @@ import java.util.Random;
 
 
 public class MazeMap implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 6551901065595105913L;
 
 	public static class Builder {
 		private int rows;
