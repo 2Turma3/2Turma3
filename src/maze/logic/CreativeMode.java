@@ -72,7 +72,7 @@ public class CreativeMode {
 		if (notInBorder(position))
 		{
 			removeEntityAt(position);
-			getBoard().getMap().setWalkable(position, true);
+			getBoard().getMap().setWalkable(position, false);
 		}
 	}
 	
