@@ -9,7 +9,21 @@ import javax.swing.JLabel;
 
 public class PressKeyWindow extends JDialog  implements KeyListener{
 	
-	
+	private boolean validKey(int newKey){
+		if(newKey == keys.up && selectedKey != AssignedKeys.Key.UP)
+			return false;
+		if(newKey == keys.down && selectedKey != AssignedKeys.Key.DOWN)
+			return false;
+		if(newKey == keys.left && selectedKey != AssignedKeys.Key.LEFT)
+			return false;
+		if(newKey == keys.right && selectedKey != AssignedKeys.Key.RIGHT)
+			return false;
+		if(newKey == keys.spAttack && selectedKey != AssignedKeys.Key.ATTACK)
+			return false;
+		if(newKey == keys.skip && selectedKey != AssignedKeys.Key.SKIP)
+			return false;
+		return true;
+	}
 	
 	/**
 	 * 
@@ -37,22 +51,28 @@ public class PressKeyWindow extends JDialog  implements KeyListener{
 	public void keyPressed(KeyEvent arg0) {
 		switch(selectedKey){
 		case UP:
-			keys.up = arg0.getKeyCode();
+			if(validKey(arg0.getKeyCode()))
+				keys.up = arg0.getKeyCode();
 			break;
 		case DOWN:
-			keys.down = arg0.getKeyCode();
+			if(validKey(arg0.getKeyCode()))
+				keys.down = arg0.getKeyCode();
 			break;
 		case LEFT:
-			keys.left = arg0.getKeyCode();
+			if(validKey(arg0.getKeyCode()))
+				keys.left = arg0.getKeyCode();
 			break;
 		case RIGHT:
-			keys.right = arg0.getKeyCode();
+			if(validKey(arg0.getKeyCode()))
+				keys.right = arg0.getKeyCode();
 			break;
 		case ATTACK:
-			keys.spAttack = arg0.getKeyCode();
+			if(validKey(arg0.getKeyCode()))
+				keys.spAttack = arg0.getKeyCode();
 			break;
 		case SKIP:
-			keys.skip = arg0.getKeyCode();
+			if(validKey(arg0.getKeyCode()))
+				keys.skip = arg0.getKeyCode();
 			break;
 		}
 		dispose();
