@@ -95,7 +95,7 @@ public class StatsPanel extends JPanel {
 
 					protected void paintComponent(Graphics g){
 						try {
-							BufferedImage img = ImageIO.read(new File("src1/images/Sword.png"));
+							BufferedImage img = ImageIO.read(ClassLoader.getSystemResource("images/Sword.png"));
 							g.drawImage(img, 0, 0,getWidth(), getHeight(), null);
 						} catch (IOException e) {
 							e.printStackTrace();
@@ -106,7 +106,6 @@ public class StatsPanel extends JPanel {
 				};
 				weaponsPanel.add(swordPanel);
 				swordPanel.setLayout(new BoxLayout(swordPanel, BoxLayout.X_AXIS));
-				//this.swordPanel.setPreferredSize(new Dimension((int)(panel.getWidth()*0.75), (int)(panel.getHeight()*0.75)));
 				
 				
 				this.shieldPanel = new JPanel(){
@@ -117,7 +116,7 @@ public class StatsPanel extends JPanel {
 
 					protected void paintComponent(Graphics g){
 						try {
-							BufferedImage img  = ImageIO.read(new File("src1/images/Shield.png"));
+							BufferedImage img  = ImageIO.read(ClassLoader.getSystemResource("images/Shield.png"));
 							g.drawImage(img, 0, 0,getWidth(), getHeight(), null);
 						} catch (IOException e) {
 							e.printStackTrace();
@@ -139,7 +138,7 @@ public class StatsPanel extends JPanel {
 
 					protected void paintComponent(Graphics g){
 						try {
-							BufferedImage img  = ImageIO.read(new File("src1/images/Dart.png"));
+							BufferedImage img  = ImageIO.read(ClassLoader.getSystemResource("images/Dart.png"));
 							g.drawImage(img, 0, 0,getWidth(), getHeight(), null);
 						} catch (IOException e) {
 							e.printStackTrace();
@@ -159,7 +158,6 @@ public class StatsPanel extends JPanel {
 				
 				this.dartsNumber = new JTextField();
 				panel_1.add(dartsNumber);
-				//this.dartsNumber.setMaximumSize(new Dimension( dartsInfoPanel.getWidth() / 4, dartsInfoPanel.getHeight() / 4) );
 				this.dartsNumber.setText("" + game.getBoard().getHero().getDartsNumber());
 				this.dartsNumber.setEditable(false);
 				
