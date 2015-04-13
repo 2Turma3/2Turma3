@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.BoxLayout;
 
@@ -103,6 +104,29 @@ public class CreativeModeFrame extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if(creative.getBoard().getHero() == null){
+					JOptionPane.showMessageDialog(CreativeModeFrame.this, "There are some missing components!", "Error!", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				if(creative.getBoard().getDragons().size() > 0){
+					boolean hasSword = false;
+					boolean hasShield = false;
+					
+					for(Weapon weapon : creative.getBoard().getWeapons()){
+						if(weapon.getType() == Weapon.Type.SWORD)
+							hasSword = true;
+						if(weapon.getType() == Weapon.Type.SHIELD)
+							hasShield = true;
+						if(hasSword && hasShield)
+							break;
+					}
+					
+					if(!(hasSword && hasShield)){
+						JOptionPane.showMessageDialog(CreativeModeFrame.this, "There are some missing components!", "Error!", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+				}
+				 
 				Game game = new Game(creative.getBoard(), options.isDragonMove(),options.isDragonSleep(),options.isDragonAttack());
 				GameGui gameGuiFrame = new GameGui(parentFrame,game,keys);
 				gameGuiFrame.setVisible(true);
