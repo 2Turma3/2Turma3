@@ -202,6 +202,9 @@ public class Game implements Serializable {
 	public Game(MazeMap map, Hero hero, LinkedList<Dragon> dragons, LinkedList<Weapon> weapons, boolean canMove, boolean canSleep, boolean canAttack){
 		this(new GameBoard(map, hero, dragons, weapons), canMove, canSleep, canAttack);
 	}
+	public Game(MazeMap map, Hero hero, LinkedList<Dragon> dragons, LinkedList<Weapon> weapons){
+		this(new GameBoard(map, hero, dragons, weapons));
+	}
 	
 	/**
 	 * Instantiates a new game.
@@ -215,6 +218,14 @@ public class Game implements Serializable {
 			dragon.enableSleeping(canSleep);
 			dragon.enableAttack(canAttack);
 		}
+		setFire(new LinkedList<Flame>());
+		this.setExitOpen(board.getDragons().isEmpty());
+		finished = false;
+		won = false;
+	}
+	
+	public Game(GameBoard board) {
+		setBoard(board);
 		setFire(new LinkedList<Flame>());
 		this.setExitOpen(board.getDragons().isEmpty());
 		finished = false;
