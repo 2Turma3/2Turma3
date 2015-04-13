@@ -354,7 +354,6 @@ public class Game implements Serializable {
             LinkedList<Dragon.Action> availableActions = dragon.getAvailableActions();
             
             if(shouldAttack(dragon)){
-            	System.out.println("Vai atacar");
             	dragonAttack(dragon);
             }
             else{
@@ -362,24 +361,20 @@ public class Game implements Serializable {
             	do {
             		switch(availableActions.get(rnd.nextInt(availableActions.size()))){
             		case MOVE_UP:
-            			//            		System.out.print("Dragon " + dragon.hashCode() + "moved up\n");
             			validAction = moveEntity(dragon, Direction.UP);
             			dragon.setSleeping(false);
             			break;
             		case MOVE_DOWN:
-            			//            		System.out.print("Dragon " + dragon.hashCode() + "moved down\n");
             			validAction = moveEntity(dragon, Direction.DOWN);
             			dragon.setSleeping(false);
             			break;
 
             		case MOVE_LEFT:
-            			//            		System.out.print("Dragon " + dragon.hashCode() + "moved left\n");
             			validAction = moveEntity(dragon, Direction.LEFT);
             			dragon.setSleeping(false);
             			break;
 
             		case MOVE_RIGHT:
-            			//            		System.out.print("Dragon " + dragon.hashCode() + "moved right\n");
             			validAction = moveEntity(dragon, Direction.RIGHT);
             			dragon.setSleeping(false);
             			break;
@@ -460,7 +455,6 @@ public class Game implements Serializable {
     	for(Iterator<Weapon> it = getBoard().getWeapons().descendingIterator(); it.hasNext(); ){
     		Weapon weapon = it.next();
     		if(weapon.getPosition().equals(getBoard().getHero().getPosition())){
-    			System.out.print(weapon.getType() + "\n");
     			getBoard().getHero().addWeapon(weapon);
     			it.remove();
     			break;
