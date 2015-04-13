@@ -8,13 +8,17 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import maze.cli.CommandLine;
 import maze.logic.Dragon;
@@ -130,6 +134,48 @@ public class GameGui extends JFrame {
 		}
 	}
 	
+	private void saveGame(){
+		JFileChooser chooser = new JFileChooser();
+		chooser.setDialogTitle("Specify a file to save");
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Illuminati MLG Files", "mlg");
+		chooser.setFileFilter(filter);
+		if(chooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION){
+			String ext;
+			if(chooser.getSelectedFile().getName().lastIndexOf('.') == -1)
+				ext = ".mlg";
+			else
+				ext = (chooser.getSelectedFile().getName().substring(chooser.getSelectedFile().getName().lastIndexOf('.'))).equals(".mlg") ? "" : ".mlg";
+			File file = new File(chooser.getSelectedFile().getParentFile(), chooser.getSelectedFile().getName() + ext);			
+			if(file.exists()){
+				int option = JOptionPane.showConfirmDialog(this, "There is already a file with that name. Do you wish to overwrite?", "Error",JOptionPane.YES_NO_OPTION);
+				if(option == JOptionPane.NO_OPTION){
+					GameGui.this.requestFocus();
+					return;
+				}
+			}
+			
+			ObjectOutputStream os = null;
+			
+			try{
+				os = new ObjectOutputStream(new FileOutputStream(file));
+				os.writeObject(game);
+			}catch(IOException e){
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(this, "An error occurred. File not saved", "Error",JOptionPane.ERROR_MESSAGE);
+			}
+			finally{ if (os != null)
+				try {
+					os.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+					GameGui.this.requestFocus();
+				}}
+			
+			GameGui.this.requestFocus();
+		}
+		
+	}
+	
 	/**
 	 * Create the frame.
 	 */
@@ -166,9 +212,11 @@ public class GameGui extends JFrame {
 		btnSaveGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				int option = JOptionPane.showConfirmDialog(null,"Caution!","Are you sure you want to save?" , JOptionPane.YES_NO_OPTION);
-				if(option == JOptionPane.YES_OPTION)
-					System.exit(0);
+				int option = JOptionPane.showConfirmDialog(null,"Are you sure you want to save?","Caution!", JOptionPane.YES_NO_OPTION);
+				if(option == JOptionPane.YES_OPTION){
+					
+					saveGame();
+				}
 			}
 		});
 		buttonPane.add(btnSaveGame);

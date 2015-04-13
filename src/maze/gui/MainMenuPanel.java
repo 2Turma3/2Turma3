@@ -4,10 +4,15 @@ import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -17,6 +22,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import maze.logic.Game;
 
@@ -117,7 +123,7 @@ public class MainMenuPanel extends JPanel {
 	public MainMenuPanel(JFrame parFrame) {
 		this.parentFrame = parFrame;
 		try{
-			background = ImageIO.read(new File("src1/images/Main Menu Background.png"));
+			background = ImageIO.read(ClassLoader.getSystemResource("images/Main Menu Background.png"));
 		}catch(IOException e){
 			JOptionPane.showMessageDialog(null, "Erro a fazer load de ficheiros", "Oops!", JOptionPane.ERROR_MESSAGE);
 			System.exit(0);
@@ -154,6 +160,44 @@ public class MainMenuPanel extends JPanel {
 		
 		JButton btnLoadGame = new JButton("Load Game");
 		buttonPanel.add(btnLoadGame);
+		btnLoadGame.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser chooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Illuminati MLG Files", "mlg");
+				chooser.setFileFilter(filter);
+				Game game = null;
+				if(chooser.showOpenDialog(MainMenuPanel.this) == JFileChooser.APPROVE_OPTION){
+					ObjectInputStream is = null;
+					try{
+						is = new ObjectInputStream(new FileInputStream(chooser.getSelectedFile()));
+						game = (Game) is.readObject();
+					}catch(IOException | ClassNotFoundException o){
+						o.printStackTrace();
+						JOptionPane.showMessageDialog(MainMenuPanel.this, "Failed to load file!", "Error" ,JOptionPane.ERROR_MESSAGE);
+					}
+					finally{ if (is != null)
+						try {
+							is.close();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}}
+				}else{
+					return;
+				}
+				
+				if(game == null)
+					return;
+				
+				GameGui gameGui = new GameGui(parentFrame, game, assignedKeys);
+				parentFrame.setVisible(false);
+				gameGui.setVisible(true);
+					
+			}
+			
+		});
 		
 		JButton btnCreativeMode = new JButton("Creative Mode");
 		buttonPanel.add(btnCreativeMode);

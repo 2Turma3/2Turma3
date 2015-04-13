@@ -219,7 +219,9 @@ public class MazeMap implements Serializable {
 	/**
 	 * The Class Cell.
 	 */
-	public static class Cell{
+	public static class Cell implements Serializable{
+		
+		private static final long serialVersionUID = 2913051952374543429L;
 		
 		/** The walkable. */
 		private boolean walkable;
